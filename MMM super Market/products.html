@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MMM Super Market - Products</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    background:#f3f4f6;
+    color:#111827;
+}
+
+/* ================================
+   SIDEBAR
+================================ */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    width:230px;
+    height:100vh;
+    background:#111827;
+    color:white;
+    padding:20px 14px;
+}
+
+.logo{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.logo-circle{
+    width:58px;
+    height:58px;
+    background:#2563eb;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:auto;
+    font-size:19px;
+    font-weight:bold;
+}
+
+.logo h2{
+    font-size:19px;
+    margin-top:10px;
+}
+
+.menu-title{
+    color:#6b7280;
+    font-size:11px;
+    text-transform:uppercase;
+    margin:0 0 10px 12px;
+    font-weight:bold;
+}
+
+.menu a{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    color:#d1d5db;
+    text-decoration:none;
+    padding:13px 12px;
+    margin-bottom:5px;
+    border-radius:8px;
+    font-size:14px;
+    transition:0.2s;
+}
+
+.menu a:hover{
+    background:#1f2937;
+    color:white;
+}
+
+/* CURRENT PAGE */
+
+.menu a.active{
+    background:#2563eb;
+    color:white;
+}
+
+.logout{
+    position:absolute;
+    left:14px;
+    right:14px;
+    bottom:20px;
+}
+
+.logout a{
+    display:block;
+    text-align:center;
+    background:#dc2626;
+    color:white;
+    padding:12px;
+    border-radius:8px;
+    text-decoration:none;
+}
+
+.logout a:hover{
+    background:#7f1d1d;
+    color:white;
+}
+
+/* ================================
+   MAIN
+================================ */
+
+.main{
+    margin-left:230px;
+    min-height:100vh;
+}
+
+.topbar{
+    height:70px;
+    background:white;
+    border-bottom:1px solid #e5e7eb;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 25px;
+}
+
+.topbar h1{
+    font-size:22px;
+}
+
+.user{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.user-icon{
+    width:40px;
+    height:40px;
+    background:#dbeafe;
+    color:#2563eb;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+}
+
+/* ================================
+   CONTENT
+================================ */
+
+.content{
+    padding:25px;
+}
+
+.page-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.page-header h2{
+    font-size:24px;
+}
+
+.page-header p{
+    color:#6b7280;
+    margin-top:5px;
+    font-size:14px;
+}
+
+.add-btn{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:12px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.add-btn:hover{
+    background:#1d4ed8;
+}
+
+/* ================================
+   TOOLBAR
+================================ */
+
+.toolbar{
+    background:white;
+    padding:18px;
+    border-radius:12px;
+    margin-bottom:20px;
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.05);
+}
+
+.search{
+    flex:1;
+    max-width:450px;
+}
+
+.search input{
+    width:100%;
+    padding:12px 15px;
+    border:1px solid #d1d5db;
+    border-radius:8px;
+    outline:none;
+    font-size:14px;
+}
+
+.search input:focus{
+    border-color:#2563eb;
+}
+
+.filter{
+    padding:12px;
+    border:1px solid #d1d5db;
+    border-radius:8px;
+    outline:none;
+    min-width:160px;
+    background:white;
+}
+
+/* ================================
+   TABLE
+================================ */
+
+.table-card{
+    background:white;
+    border-radius:12px;
+    padding:20px;
+    overflow-x:auto;
+    box-shadow:0 2px 8px rgba(0,0,0,0.05);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:750px;
+}
+
+th,
+td{
+    padding:14px;
+    text-align:left;
+    border-bottom:1px solid #e5e7eb;
+}
+
+th{
+    background:#f9fafb;
+    color:#374151;
+    font-size:13px;
+}
+
+td{
+    font-size:14px;
+}
+
+tr:hover td{
+    background:#f9fafb;
+}
+
+.product-name{
+    font-weight:bold;
+}
+
+.category{
+    color:#6b7280;
+    font-size:12px;
+}
+
+/* ================================
+   STOCK STATUS
+================================ */
+
+.stock-good{
+    color:#15803d;
+    background:#dcfce7;
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:11px;
+}
+
+.stock-low{
+    color:#b45309;
+    background:#fef3c7;
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:11px;
+}
+
+.stock-out{
+    color:#b91c1c;
+    background:#fee2e2;
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:11px;
+}
+
+/* ================================
+   BUTTONS
+================================ */
+
+.actions{
+    display:flex;
+    gap:7px;
+}
+
+.edit-btn,
+.delete-btn{
+    border:none;
+    padding:7px 10px;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:12px;
+}
+
+.edit-btn{
+    background:#dbeafe;
+    color:#1d4ed8;
+}
+
+.delete-btn{
+    background:#fee2e2;
+    color:#dc2626;
+}
+
+.empty-products{
+    text-align:center;
+    padding:40px;
+    color:#9ca3af;
+}
+
+/* ================================
+   MODAL
+================================ */
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.55);
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:1000;
+}
+
+.modal-box{
+    background:white;
+    width:500px;
+    max-width:100%;
+    border-radius:14px;
+    padding:25px;
+}
+
+.modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.modal-header h2{
+    font-size:20px;
+}
+
+.close{
+    border:none;
+    background:none;
+    font-size:25px;
+    cursor:pointer;
+    color:#6b7280;
+}
+
+.form-group{
+    margin-bottom:15px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:7px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.form-group input,
+.form-group select{
+    width:100%;
+    padding:11px;
+    border:1px solid #d1d5db;
+    border-radius:7px;
+    outline:none;
+}
+
+.form-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+.save-btn{
+    width:100%;
+    padding:13px;
+    border:none;
+    background:#2563eb;
+    color:white;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:15px;
+    font-weight:bold;
+    margin-top:5px;
+}
+
+.save-btn:hover{
+    background:#1d4ed8;
+}
+
+/* ================================
+   MOBILE
+================================ */
+
+@media(max-width:700px){
+
+    .sidebar{
+        width:65px;
+        padding:15px 7px;
+    }
+
+    .logo h2,
+    .menu-title,
+    .menu a span:last-child,
+    .logout span:last-child{
+        display:none;
+    }
+
+    .logo-circle{
+        width:45px;
+        height:45px;
+        font-size:13px;
+    }
+
+    .menu a{
+        justify-content:center;
+        padding:13px 5px;
+    }
+
+    .logout{
+        left:7px;
+        right:7px;
+    }
+
+    .main{
+        margin-left:65px;
+    }
+
+    .content{
+        padding:15px;
+    }
+
+    .topbar{
+        padding:0 15px;
+    }
+
+    .page-header{
+        align-items:flex-start;
+        gap:10px;
+    }
+
+    .page-header h2{
+        font-size:20px;
+    }
+
+    .toolbar{
+        flex-direction:column;
+    }
+
+    .search{
+        max-width:none;
+    }
+
+    .form-row{
+        grid-template-columns:1fr;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- ================================
+     SIDEBAR
+================================ -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+
+        <div class="logo-circle">
+            MMM
+        </div>
+
+        <h2>
+            MMM Super Market
+        </h2>
+
+    </div>
+
+
+    <div class="menu-title">
+        Main Menu
+    </div>
+
+
+    <div class="menu">
+
+        <a href="sales.html">
+            <span>🛒</span>
+            <span>New Sale</span>
+        </a>
+
+
+        <!-- PRODUCTS ACTIVE -->
+
+        <a href="products.html" class="active">
+            <span>📦</span>
+            <span>Products</span>
+        </a>
+
+
+        <a href="stock.html">
+            <span>📊</span>
+            <span>Stock</span>
+        </a>
+
+
+        <a href="customers.html">
+            <span>👥</span>
+            <span>Customers</span>
+        </a>
+
+
+        <a href="sales-history.html">
+            <span>💰</span>
+            <span>Sales</span>
+        </a>
+
+
+        <a href="reports.html">
+            <span>📈</span>
+            <span>Reports</span>
+        </a>
+
+
+        <a href="dashboard.html">
+            <span>🏠</span>
+            <span>Dashboard</span>
+        </a>
+
+    </div>
+
+
+    <div class="logout">
+
+        <a href="MMM Super Market Login.html">
+
+            <span>🚪</span>
+
+            <span>
+                Logout
+            </span>
+
+        </a>
+
+    </div>
+
+</aside>
+
+
+<!-- ================================
+     MAIN
+================================ -->
+
+<main class="main">
+
+
+    <!-- TOP BAR -->
+
+    <div class="topbar">
+
+        <h1>
+            Products
+        </h1>
+
+
+        <div class="user">
+
+            <div class="user-icon">
+                M
+            </div>
+
+            <div>
+                <strong>
+                    Admin
+                </strong>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- CONTENT -->
+
+    <div class="content">
+
+
+        <!-- HEADER -->
+
+        <div class="page-header">
+
+            <div>
+
+                <h2>
+                    Products
+                </h2>
+
+                <p>
+                    Manage all products in your supermarket
+                </p>
+
+            </div>
+
+
+            <button
+                class="add-btn"
+                onclick="openAddProduct()"
+            >
+                + Add Product
+            </button>
+
+        </div>
+
+
+        <!-- SEARCH -->
+
+        <div class="toolbar">
+
+            <div class="search">
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search product..."
+                    oninput="displayProducts()"
+                >
+
+            </div>
+
+
+            <select
+                class="filter"
+                id="categoryFilter"
+                onchange="displayProducts()"
+            >
+
+                <option value="all">
+                    All Categories
+                </option>
+
+                <option value="Grocery">
+                    Grocery
+                </option>
+
+                <option value="Dairy">
+                    Dairy
+                </option>
+
+                <option value="Snacks">
+                    Snacks
+                </option>
+
+                <option value="Beverages">
+                    Beverages
+                </option>
+
+                <option value="Bakery">
+                    Bakery
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- TABLE -->
+
+        <div class="table-card">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Product
+                        </th>
+
+                        <th>
+                            Category
+                        </th>
+
+                        <th>
+                            Price
+                        </th>
+
+                        <th>
+                            Stock
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Actions
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="productTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- ================================
+     PRODUCT MODAL
+================================ -->
+
+<div
+    class="modal"
+    id="productModal"
+>
+
+    <div class="modal-box">
+
+
+        <div class="modal-header">
+
+            <h2 id="modalTitle">
+                Add Product
+            </h2>
+
+
+            <button
+                class="close"
+                onclick="closeModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <form id="productForm">
+
+
+            <div class="form-group">
+
+                <label>
+                    Product Name
+                </label>
+
+                <input
+                    type="text"
+                    id="productName"
+                    placeholder="Enter product name"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-row">
+
+
+                <div class="form-group">
+
+                    <label>
+                        Price (Rs.)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="productPrice"
+                        min="0"
+                        placeholder="0"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Stock
+                    </label>
+
+                    <input
+                        type="number"
+                        id="productStock"
+                        min="0"
+                        placeholder="0"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Category
+                </label>
+
+                <select
+                    id="productCategory"
+                    required
+                >
+
+                    <option value="">
+                        Select Category
+                    </option>
+
+                    <option value="Grocery">
+                        Grocery
+                    </option>
+
+                    <option value="Dairy">
+                        Dairy
+                    </option>
+
+                    <option value="Snacks">
+                        Snacks
+                    </option>
+
+                    <option value="Beverages">
+                        Beverages
+                    </option>
+
+                    <option value="Bakery">
+                        Bakery
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="save-btn"
+            >
+                Save Product
+            </button>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================
+   DEFAULT PRODUCTS
+========================================= */
+
+let products = JSON.parse(
+    localStorage.getItem("mmm_products")
+) || [
+
+    {
+        id:1,
+        name:"Rice 5kg",
+        price:1250,
+        stock:45,
+        category:"Grocery"
+    },
+
+    {
+        id:2,
+        name:"Sugar 1kg",
+        price:280,
+        stock:80,
+        category:"Grocery"
+    },
+
+    {
+        id:3,
+        name:"Milk Powder",
+        price:1150,
+        stock:30,
+        category:"Dairy"
+    },
+
+    {
+        id:4,
+        name:"Biscuits",
+        price:180,
+        stock:100,
+        category:"Snacks"
+    },
+
+    {
+        id:5,
+        name:"Coca Cola",
+        price:250,
+        stock:65,
+        category:"Beverages"
+    },
+
+    {
+        id:6,
+        name:"Bread",
+        price:180,
+        stock:35,
+        category:"Bakery"
+    },
+
+    {
+        id:7,
+        name:"Eggs 10",
+        price:450,
+        stock:50,
+        category:"Dairy"
+    },
+
+    {
+        id:8,
+        name:"Cooking Oil",
+        price:750,
+        stock:25,
+        category:"Grocery"
+    },
+
+    {
+        id:9,
+        name:"Noodles",
+        price:160,
+        stock:70,
+        category:"Grocery"
+    }
+
+];
+
+
+/* SAVE PRODUCTS */
+
+function saveProducts(){
+
+    localStorage.setItem(
+        "mmm_products",
+        JSON.stringify(products)
+    );
+
+}
+
+
+/* DISPLAY PRODUCTS */
+
+function displayProducts(){
+
+    const table =
+        document.getElementById("productTable");
+
+    const search =
+        document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase();
+
+    const category =
+        document
+        .getElementById("categoryFilter")
+        .value;
+
+
+    const filtered =
+        products.filter(product => {
+
+            const nameMatch =
+                product.name
+                .toLowerCase()
+                .includes(search);
+
+
+            const categoryMatch =
+                category === "all" ||
+                product.category === category;
+
+
+            return nameMatch && categoryMatch;
+
+        });
+
+
+    if(filtered.length === 0){
+
+        table.innerHTML = `
+
+            <tr>
+
+                <td colspan="6">
+
+                    <div class="empty-products">
+
+                        No products found
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    table.innerHTML =
+        filtered.map(product => {
+
+
+            let statusClass =
+                "stock-good";
+
+            let statusText =
+                "In Stock";
+
+
+            if(product.stock === 0){
+
+                statusClass =
+                    "stock-out";
+
+                statusText =
+                    "Out of Stock";
+
+            }
+
+            else if(product.stock <= 10){
+
+                statusClass =
+                    "stock-low";
+
+                statusText =
+                    "Low Stock";
+
+            }
+
+
+            return `
+
+                <tr>
+
+                    <td>
+
+                        <div class="product-name">
+
+                            ${product.name}
+
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                        <span class="category">
+
+                            ${product.category}
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        Rs.
+                        ${Number(product.price).toLocaleString()}
+
+                    </td>
+
+
+                    <td>
+
+                        ${product.stock}
+
+                    </td>
+
+
+                    <td>
+
+                        <span class="${statusClass}">
+
+                            ${statusText}
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <div class="actions">
+
+                            <button
+                                class="edit-btn"
+                                onclick="editProduct(${product.id})"
+                            >
+                                Edit
+                            </button>
+
+
+                            <button
+                                class="delete-btn"
+                                onclick="deleteProduct(${product.id})"
+                            >
+                                Delete
+                            </button>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        }).join("");
+
+}
+
+
+/* =========================================
+   OPEN ADD PRODUCT
+========================================= */
+
+function openAddProduct(){
+
+    document.getElementById("modalTitle")
+        .textContent = "Add Product";
+
+
+    document.getElementById("productForm")
+        .reset();
+
+
+    document.getElementById("productForm")
+        .removeAttribute("data-edit-id");
+
+
+    document.getElementById("productModal")
+        .style.display = "flex";
+
+}
+
+
+/* =========================================
+   CLOSE MODAL
+========================================= */
+
+function closeModal(){
+
+    document.getElementById("productModal")
+        .style.display = "none";
+
+}
+
+
+/* =========================================
+   EDIT PRODUCT
+========================================= */
+
+function editProduct(id){
+
+    const product =
+        products.find(
+            item => item.id === id
+        );
+
+
+    if(!product){
+        return;
+    }
+
+
+    document.getElementById("modalTitle")
+        .textContent = "Edit Product";
+
+
+    document.getElementById("productName")
+        .value = product.name;
+
+
+    document.getElementById("productPrice")
+        .value = product.price;
+
+
+    document.getElementById("productStock")
+        .value = product.stock;
+
+
+    document.getElementById("productCategory")
+        .value = product.category;
+
+
+    document.getElementById("productForm")
+        .setAttribute(
+            "data-edit-id",
+            id
+        );
+
+
+    document.getElementById("productModal")
+        .style.display = "flex";
+
+}
+
+
+/* =========================================
+   SAVE PRODUCT
+========================================= */
+
+document
+.getElementById("productForm")
+.addEventListener(
+    "submit",
+    function(event){
+
+        event.preventDefault();
+
+
+        const name =
+            document
+            .getElementById("productName")
+            .value
+            .trim();
+
+
+        const price =
+            Number(
+                document
+                .getElementById("productPrice")
+                .value
+            );
+
+
+        const stock =
+            Number(
+                document
+                .getElementById("productStock")
+                .value
+            );
+
+
+        const category =
+            document
+            .getElementById("productCategory")
+            .value;
+
+
+        const editId =
+            this.getAttribute("data-edit-id");
+
+
+        if(
+            !name ||
+            !category ||
+            price < 0 ||
+            stock < 0
+        ){
+
+            alert(
+                "Please enter valid product details."
+            );
+
+            return;
+
+        }
+
+
+        /* EDIT */
+
+        if(editId){
+
+            const index =
+                products.findIndex(
+                    item =>
+                    item.id === Number(editId)
+                );
+
+
+            if(index !== -1){
+
+                products[index] = {
+
+                    id:Number(editId),
+
+                    name:name,
+
+                    price:price,
+
+                    stock:stock,
+
+                    category:category
+
+                };
+
+            }
+
+        }
+
+
+        /* ADD */
+
+        else{
+
+            const newId =
+                products.length > 0
+                ? Math.max(
+                    ...products.map(
+                        item => item.id
+                    )
+                  ) + 1
+                : 1;
+
+
+            products.push({
+
+                id:newId,
+
+                name:name,
+
+                price:price,
+
+                stock:stock,
+
+                category:category
+
+            });
+
+        }
+
+
+        saveProducts();
+
+        closeModal();
+
+        displayProducts();
+
+    }
+);
+
+
+/* =========================================
+   DELETE PRODUCT
+========================================= */
+
+function deleteProduct(id){
+
+    const product =
+        products.find(
+            item => item.id === id
+        );
+
+
+    if(!product){
+        return;
+    }
+
+
+    const answer =
+        confirm(
+            "Delete " +
+            product.name +
+            "?"
+        );
+
+
+    if(!answer){
+        return;
+    }
+
+
+    products =
+        products.filter(
+            item => item.id !== id
+        );
+
+
+    saveProducts();
+
+    displayProducts();
+
+}
+
+
+/* =========================================
+   CLICK OUTSIDE MODAL
+========================================= */
+
+document
+.getElementById("productModal")
+.addEventListener(
+    "click",
+    function(event){
+
+        if(event.target === this){
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   INITIAL LOAD
+========================================= */
+
+saveProducts();
+
+displayProducts();
+
+</script>
+
+</body>
+</html>

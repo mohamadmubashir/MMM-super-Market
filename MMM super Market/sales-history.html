@@ -1,0 +1,1698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MMM Super Market - Sales History</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f3f4f6;
+    color:#111827;
+}
+
+/* SIDEBAR */
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    width:230px;
+    height:100vh;
+    background:#111827;
+    color:white;
+    padding:20px 14px;
+    z-index:1000;
+}
+
+.logo{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.logo-circle{
+    width:58px;
+    height:58px;
+    background:#2563eb;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:auto;
+    font-size:19px;
+    font-weight:bold;
+}
+
+.logo h2{
+    font-size:19px;
+    margin-top:10px;
+}
+
+.menu-title{
+    color:#9ca3af;
+    font-size:12px;
+    text-transform:uppercase;
+    margin:0 10px 10px;
+    font-weight:bold;
+}
+
+.menu a{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    color:#d1d5db;
+    text-decoration:none;
+    padding:13px 12px;
+    margin-bottom:5px;
+    border-radius:8px;
+    font-size:14px;
+    transition:.2s;
+}
+
+.menu a:hover,
+.menu a.active{
+    background:#2563eb;
+    color:white;
+}
+
+.logout{
+    position:absolute;
+    left:14px;
+    right:14px;
+    bottom:20px;
+}
+
+.logout a{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    background:#dc2626;
+    color:white;
+    padding:12px;
+    border-radius:8px;
+    text-decoration:none;
+}
+
+    .logout a:hover{
+    background:#7f1d1d;
+    color:white;
+}
+
+/* MAIN */
+.main{
+    margin-left:230px;
+    min-height:100vh;
+}
+
+/* TOPBAR */
+.topbar{
+    height:70px;
+    background:white;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 30px;
+    border-bottom:1px solid #e5e7eb;
+}
+
+.topbar h1{
+    font-size:22px;
+}
+
+.user{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.user-icon{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    background:#dbeafe;
+    color:#2563eb;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+}
+
+/* CONTENT */
+.content{
+    padding:30px;
+}
+
+/* HEADER */
+.page-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.page-header h2{
+    font-size:24px;
+}
+
+.page-header p{
+    color:#6b7280;
+    margin-top:5px;
+}
+
+.new-sale-btn{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:11px 18px;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.new-sale-btn:hover{
+    background:#1d4ed8;
+}
+
+/* STATS */
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+    margin-bottom:25px;
+}
+
+.stat-card{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 2px 8px rgba(0,0,0,.06);
+}
+
+.stat-icon{
+    width:42px;
+    height:42px;
+    background:#dbeafe;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:20px;
+    margin-bottom:12px;
+}
+
+.stat-card h3{
+    font-size:25px;
+    margin-bottom:5px;
+}
+
+.stat-card p{
+    color:#6b7280;
+    font-size:14px;
+}
+
+/* TABLE */
+.table-card{
+    background:white;
+    border-radius:12px;
+    box-shadow:0 2px 8px rgba(0,0,0,.06);
+    overflow:hidden;
+}
+
+.search-area{
+    padding:20px;
+    border-bottom:1px solid #e5e7eb;
+}
+
+.search-input{
+    width:100%;
+    max-width:450px;
+    padding:12px 14px;
+    border:1px solid #d1d5db;
+    border-radius:8px;
+    outline:none;
+    font-size:14px;
+}
+
+.search-input:focus{
+    border-color:#2563eb;
+}
+
+.table-wrapper{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+thead{
+    background:#f9fafb;
+}
+
+th{
+    text-align:left;
+    padding:15px 20px;
+    font-size:13px;
+    color:#6b7280;
+    text-transform:uppercase;
+}
+
+td{
+    padding:16px 20px;
+    border-top:1px solid #f1f5f9;
+    font-size:14px;
+}
+
+.invoice{
+    font-weight:bold;
+    color:#2563eb;
+}
+
+.date{
+    color:#6b7280;
+}
+
+.total{
+    font-weight:bold;
+}
+
+.cash{
+    color:#166534;
+}
+
+.balance{
+    color:#2563eb;
+}
+
+/* BUTTONS */
+.action-buttons{
+    display:flex;
+    gap:7px;
+}
+
+.view-btn{
+    background:#dbeafe;
+    color:#1d4ed8;
+    border:none;
+    padding:8px 11px;
+    border-radius:7px;
+    cursor:pointer;
+}
+
+.print-btn{
+    background:#e5e7eb;
+    color:#374151;
+    border:none;
+    padding:8px 11px;
+    border-radius:7px;
+    cursor:pointer;
+}
+
+.delete-btn{
+    background:#fee2e2;
+    color:#dc2626;
+    border:none;
+    padding:8px 11px;
+    border-radius:7px;
+    cursor:pointer;
+}
+
+.view-btn:hover{
+    background:#bfdbfe;
+}
+
+.print-btn:hover{
+    background:#d1d5db;
+}
+
+.delete-btn:hover{
+    background:#fecaca;
+}
+
+/* EMPTY */
+.empty{
+    text-align:center;
+    padding:60px 20px;
+    color:#6b7280;
+}
+
+.empty-icon{
+    font-size:45px;
+    margin-bottom:15px;
+}
+
+/* MODAL */
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.5);
+    align-items:center;
+    justify-content:center;
+    z-index:2000;
+    padding:20px;
+}
+
+.modal-box{
+    width:650px;
+    max-width:100%;
+    max-height:90vh;
+    overflow-y:auto;
+    background:white;
+    border-radius:12px;
+    padding:25px;
+}
+
+.modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.modal-header h2{
+    font-size:21px;
+}
+
+.close-btn{
+    border:none;
+    background:#fee2e2;
+    color:#dc2626;
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    cursor:pointer;
+    font-size:18px;
+}
+
+.sale-info{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    background:#f9fafb;
+    padding:15px;
+    border-radius:8px;
+    margin-bottom:20px;
+}
+
+.info-item span{
+    display:block;
+    color:#6b7280;
+    font-size:12px;
+    margin-bottom:4px;
+}
+
+.info-item strong{
+    font-size:14px;
+}
+
+.items-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-bottom:20px;
+}
+
+.items-table th,
+.items-table td{
+    padding:10px;
+    border:1px solid #e5e7eb;
+}
+
+.items-table th{
+    background:#f9fafb;
+    font-size:12px;
+}
+
+.summary{
+    margin-left:auto;
+    width:280px;
+}
+
+.summary-row{
+    display:flex;
+    justify-content:space-between;
+    padding:8px 0;
+    color:#4b5563;
+}
+
+.summary-total{
+    border-top:2px solid #111827;
+    margin-top:5px;
+    padding-top:12px;
+    font-weight:bold;
+    font-size:18px;
+    color:#111827;
+}
+
+/* MOBILE */
+@media(max-width:900px){
+
+    .sidebar{
+        width:65px;
+        padding:15px 8px;
+    }
+
+    .logo h2,
+    .menu-title,
+    .menu a span:last-child{
+        display:none;
+    }
+
+    .logo-circle{
+        width:45px;
+        height:45px;
+        font-size:14px;
+    }
+
+    .menu a{
+        justify-content:center;
+        padding:13px 5px;
+    }
+
+    .logout a span:last-child{
+        display:none;
+    }
+
+    .logout a{
+        padding:12px 5px;
+    }
+
+    .main{
+        margin-left:65px;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:600px){
+
+    .topbar{
+        padding:0 15px;
+    }
+
+    .topbar h1{
+        font-size:18px;
+    }
+
+    .content{
+        padding:15px;
+    }
+
+    .page-header{
+        align-items:flex-start;
+        gap:10px;
+    }
+
+    .page-header h2{
+        font-size:20px;
+    }
+
+    .new-sale-btn{
+        padding:10px 12px;
+        white-space:nowrap;
+    }
+
+    th,
+    td{
+        padding:12px;
+        white-space:nowrap;
+    }
+
+    .sale-info{
+        grid-template-columns:1fr;
+    }
+
+    .summary{
+        width:100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+
+    <div class="logo">
+        <div class="logo-circle">MMM</div>
+        <h2>MMM Super Market</h2>
+    </div>
+
+    <div class="menu-title">Main Menu</div>
+
+    <div class="menu">
+
+        <a href="sales.html">
+            <span>🛒</span>
+            <span>New Sale</span>
+        </a>
+
+        <a href="products.html">
+            <span>📦</span>
+            <span>Products</span>
+        </a>
+
+        <a href="stock.html">
+            <span>📊</span>
+            <span>Stock</span>
+        </a>
+
+        <a href="customers.html">
+            <span>👥</span>
+            <span>Customers</span>
+        </a>
+
+        <a href="sales-history.html" class="active">
+            <span>💰</span>
+            <span>Sales</span>
+        </a>
+
+        <a href="reports.html">
+            <span>📈</span>
+            <span>Reports</span>
+        </a>
+
+        <a href="dashboard.html">
+            <span>🏠</span>
+            <span>Dashboard</span>
+        </a>
+
+    </div>
+
+    <div class="logout">
+
+        <a href="MMM Super Market Login.html">
+            <span>🚪</span>
+            <span>Logout</span>
+        </a>
+
+    </div>
+
+</aside>
+
+
+<!-- MAIN -->
+<main class="main">
+
+    <div class="topbar">
+
+        <h1>Sales History</h1>
+
+        <div class="user">
+
+            <div class="user-icon">A</div>
+
+            <span>Admin</span>
+
+        </div>
+
+    </div>
+
+
+    <div class="content">
+
+        <!-- HEADER -->
+        <div class="page-header">
+
+            <div>
+
+                <h2>Sales History</h2>
+
+                <p>
+                    View and manage all completed sales
+                </p>
+
+            </div>
+
+            <a
+                href="sales.html"
+                class="new-sale-btn"
+            >
+                + New Sale
+            </a>
+
+        </div>
+
+
+        <!-- STATS -->
+        <div class="stats">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    🧾
+                </div>
+
+                <h3 id="totalSales">0</h3>
+
+                <p>Total Sales</p>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    💰
+                </div>
+
+                <h3 id="totalRevenue">
+                    Rs. 0
+                </h3>
+
+                <p>Total Revenue</p>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    📦
+                </div>
+
+                <h3 id="totalItems">
+                    0
+                </h3>
+
+                <p>Items Sold</p>
+
+            </div>
+
+        </div>
+
+
+        <!-- SALES TABLE -->
+        <div class="table-card">
+
+            <div class="search-area">
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    class="search-input"
+                    placeholder="🔍 Search invoice number..."
+                    oninput="displaySales()"
+                >
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Invoice</th>
+                            <th>Date</th>
+                            <th>Items</th>
+                            <th>Total</th>
+                            <th>Cash</th>
+                            <th>Balance</th>
+                            <th>Actions</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="salesTable">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- VIEW MODAL -->
+<div class="modal" id="viewModal">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2>Sale Details</h2>
+
+            <button
+                class="close-btn"
+                onclick="closeModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="sale-info">
+
+            <div class="info-item">
+
+                <span>Invoice Number</span>
+
+                <strong id="viewInvoice">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <span>Date</span>
+
+                <strong id="viewDate">
+                    -
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <table class="items-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>Product</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                    <th>Total</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="viewItems">
+
+            </tbody>
+
+        </table>
+
+
+        <div class="summary">
+
+            <div class="summary-row">
+
+                <span>Subtotal</span>
+
+                <strong id="viewSubtotal">
+                    Rs. 0
+                </strong>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span>Discount</span>
+
+                <strong id="viewDiscount">
+                    Rs. 0
+                </strong>
+
+            </div>
+
+
+            <div class="summary-row summary-total">
+
+                <span>Total</span>
+
+                <strong id="viewTotal">
+                    Rs. 0
+                </strong>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span>Cash</span>
+
+                <strong id="viewCash">
+                    Rs. 0
+                </strong>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span>Balance</span>
+
+                <strong id="viewBalance">
+                    Rs. 0
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================
+   GET SALES
+========================= */
+
+function getSales(){
+
+    return JSON.parse(
+        localStorage.getItem("mmm_sales")
+    ) || [];
+
+}
+
+
+/* =========================
+   DISPLAY SALES
+========================= */
+
+function displaySales(){
+
+    const sales = getSales();
+
+    const search =
+        document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase()
+        .trim();
+
+
+    const filtered =
+        sales.filter(sale => {
+
+            return String(
+                sale.invoiceNumber || ""
+            )
+            .toLowerCase()
+            .includes(search);
+
+        });
+
+
+    const table =
+        document.getElementById("salesTable");
+
+    table.innerHTML = "";
+
+
+    /* STATS */
+
+    let revenue = 0;
+
+    let itemsSold = 0;
+
+
+    sales.forEach(sale => {
+
+        revenue += Number(sale.total || 0);
+
+        if(Array.isArray(sale.items)){
+
+            sale.items.forEach(item => {
+
+                itemsSold +=
+                    Number(item.quantity || 0);
+
+            });
+
+        }
+
+    });
+
+
+    document.getElementById("totalSales")
+        .textContent = sales.length;
+
+
+    document.getElementById("totalRevenue")
+        .textContent =
+        "Rs. " + revenue.toLocaleString();
+
+
+    document.getElementById("totalItems")
+        .textContent = itemsSold;
+
+
+    /* EMPTY */
+
+    if(filtered.length === 0){
+
+        table.innerHTML = `
+
+            <tr>
+
+                <td colspan="7">
+
+                    <div class="empty">
+
+                        <div class="empty-icon">
+                            🧾
+                        </div>
+
+                        <h3>
+                            No sales found
+                        </h3>
+
+                        <p>
+                            Completed sales will appear here.
+                        </p>
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    /* NEWEST FIRST */
+
+    filtered
+    .slice()
+    .reverse()
+    .forEach(sale => {
+
+        const row =
+            document.createElement("tr");
+
+
+        const itemCount =
+            Array.isArray(sale.items)
+            ? sale.items.reduce(
+                (sum,item) =>
+                    sum + Number(item.quantity || 0),
+                0
+              )
+            : 0;
+
+
+        const date =
+            sale.date
+            ? new Date(sale.date).toLocaleString()
+            : "-";
+
+
+        row.innerHTML = `
+
+            <td>
+
+                <span class="invoice">
+
+                    ${escapeHTML(
+                        sale.invoiceNumber || "-"
+                    )}
+
+                </span>
+
+            </td>
+
+
+            <td>
+
+                <span class="date">
+                    ${date}
+                </span>
+
+            </td>
+
+
+            <td>
+                ${itemCount}
+            </td>
+
+
+            <td>
+
+                <span class="total">
+
+                    Rs.
+                    ${Number(
+                        sale.total || 0
+                    ).toLocaleString()}
+
+                </span>
+
+            </td>
+
+
+            <td>
+
+                <span class="cash">
+
+                    Rs.
+                    ${Number(
+                        sale.cash || 0
+                    ).toLocaleString()}
+
+                </span>
+
+            </td>
+
+
+            <td>
+
+                <span class="balance">
+
+                    Rs.
+                    ${Number(
+                        sale.balance || 0
+                    ).toLocaleString()}
+
+                </span>
+
+            </td>
+
+
+            <td>
+
+                <div class="action-buttons">
+
+                    <button
+                        class="view-btn"
+                        onclick="viewSale(${sale.id})"
+                    >
+                        👁 View
+                    </button>
+
+
+                    <button
+                        class="print-btn"
+                        onclick="printSale(${sale.id})"
+                    >
+                        🖨 Print
+                    </button>
+
+
+                    <button
+                        class="delete-btn"
+                        onclick="deleteSale(${sale.id})"
+                    >
+                        🗑 Delete
+                    </button>
+
+                </div>
+
+            </td>
+
+        `;
+
+
+        table.appendChild(row);
+
+    });
+
+}
+
+
+/* =========================
+   VIEW SALE
+========================= */
+
+function viewSale(id){
+
+    const sales = getSales();
+
+    const sale =
+        sales.find(
+            item =>
+                Number(item.id) === Number(id)
+        );
+
+
+    if(!sale){
+
+        alert("Sale not found.");
+
+        return;
+
+    }
+
+
+    document.getElementById("viewInvoice")
+        .textContent =
+        sale.invoiceNumber || "-";
+
+
+    document.getElementById("viewDate")
+        .textContent =
+        sale.date
+        ? new Date(sale.date).toLocaleString()
+        : "-";
+
+
+    const itemsTable =
+        document.getElementById("viewItems");
+
+    itemsTable.innerHTML = "";
+
+
+    if(Array.isArray(sale.items)){
+
+        sale.items.forEach(item => {
+
+            const row =
+                document.createElement("tr");
+
+
+            row.innerHTML = `
+
+                <td>
+                    ${escapeHTML(item.name || "-")}
+                </td>
+
+                <td>
+                    ${Number(item.quantity || 0)}
+                </td>
+
+                <td>
+                    Rs.
+                    ${Number(
+                        item.price || 0
+                    ).toLocaleString()}
+                </td>
+
+                <td>
+                    Rs.
+                    ${Number(
+                        item.total || 0
+                    ).toLocaleString()}
+                </td>
+
+            `;
+
+
+            itemsTable.appendChild(row);
+
+        });
+
+    }
+
+
+    document.getElementById("viewSubtotal")
+        .textContent =
+        "Rs. " +
+        Number(
+            sale.subtotal || 0
+        ).toLocaleString();
+
+
+    document.getElementById("viewDiscount")
+        .textContent =
+        "Rs. " +
+        Number(
+            sale.discount || 0
+        ).toLocaleString();
+
+
+    document.getElementById("viewTotal")
+        .textContent =
+        "Rs. " +
+        Number(
+            sale.total || 0
+        ).toLocaleString();
+
+
+    document.getElementById("viewCash")
+        .textContent =
+        "Rs. " +
+        Number(
+            sale.cash || 0
+        ).toLocaleString();
+
+
+    document.getElementById("viewBalance")
+        .textContent =
+        "Rs. " +
+        Number(
+            sale.balance || 0
+        ).toLocaleString();
+
+
+    document.getElementById("viewModal")
+        .style.display = "flex";
+
+}
+
+
+/* =========================
+   DELETE SALE
+========================= */
+
+function deleteSale(id){
+
+    const sales = getSales();
+
+    const sale =
+        sales.find(
+            item =>
+                Number(item.id) === Number(id)
+        );
+
+
+    if(!sale) return;
+
+
+    const confirmed =
+        confirm(
+            "Delete invoice " +
+            sale.invoiceNumber +
+            "?"
+        );
+
+
+    if(!confirmed) return;
+
+
+    const updated =
+        sales.filter(
+            item =>
+                Number(item.id) !== Number(id)
+        );
+
+
+    localStorage.setItem(
+        "mmm_sales",
+        JSON.stringify(updated)
+    );
+
+
+    displaySales();
+
+}
+
+
+/* =========================
+   PRINT SALE
+========================= */
+
+function printSale(id){
+
+    const sales = getSales();
+
+    const sale =
+        sales.find(
+            item =>
+                Number(item.id) === Number(id)
+        );
+
+
+    if(!sale){
+
+        alert("Sale not found.");
+
+        return;
+
+    }
+
+
+    let itemsHTML = "";
+
+
+    if(Array.isArray(sale.items)){
+
+        sale.items.forEach(item => {
+
+            itemsHTML += `
+
+                <tr>
+
+                    <td>
+                        ${escapeHTML(item.name || "-")}
+                    </td>
+
+                    <td>
+                        ${Number(item.quantity || 0)}
+                    </td>
+
+                    <td>
+                        Rs.
+                        ${Number(
+                            item.price || 0
+                        ).toLocaleString()}
+                    </td>
+
+                    <td>
+                        Rs.
+                        ${Number(
+                            item.total || 0
+                        ).toLocaleString()}
+                    </td>
+
+                </tr>
+
+            `;
+
+        });
+
+    }
+
+
+    const printWindow =
+        window.open(
+            "",
+            "_blank",
+            "width=800,height=700"
+        );
+
+
+    printWindow.document.write(`
+
+        <!DOCTYPE html>
+
+        <html>
+
+        <head>
+
+            <title>
+                ${sale.invoiceNumber || "Invoice"}
+            </title>
+
+            <style>
+
+                body{
+                    font-family:Arial;
+                    padding:30px;
+                    color:#111;
+                }
+
+                h1{
+                    text-align:center;
+                    margin-bottom:5px;
+                }
+
+                .center{
+                    text-align:center;
+                }
+
+                .info{
+                    margin:25px 0;
+                }
+
+                table{
+                    width:100%;
+                    border-collapse:collapse;
+                    margin-top:20px;
+                }
+
+                th,td{
+                    border:1px solid #ddd;
+                    padding:10px;
+                    text-align:left;
+                }
+
+                th{
+                    background:#f3f4f6;
+                }
+
+                .summary{
+                    width:300px;
+                    margin-left:auto;
+                    margin-top:25px;
+                }
+
+                .row{
+                    display:flex;
+                    justify-content:space-between;
+                    padding:7px 0;
+                }
+
+                .total{
+                    font-size:20px;
+                    font-weight:bold;
+                    border-top:2px solid #111;
+                    padding-top:12px;
+                }
+
+                .footer{
+                    text-align:center;
+                    margin-top:40px;
+                }
+
+            </style>
+
+        </head>
+
+        <body>
+
+            <h1>
+                MMM Super Market
+            </h1>
+
+            <div class="center">
+                Sales Invoice
+            </div>
+
+            <div class="info">
+
+                <strong>
+                    Invoice:
+                </strong>
+
+                ${escapeHTML(
+                    sale.invoiceNumber || "-"
+                )}
+
+                <br><br>
+
+                <strong>
+                    Date:
+                </strong>
+
+                ${
+                    sale.date
+                    ? new Date(
+                        sale.date
+                      ).toLocaleString()
+                    : "-"
+                }
+
+            </div>
+
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Product</th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                        <th>Total</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    ${itemsHTML}
+
+                </tbody>
+
+            </table>
+
+
+            <div class="summary">
+
+                <div class="row">
+
+                    <span>
+                        Subtotal
+                    </span>
+
+                    <strong>
+                        Rs.
+                        ${Number(
+                            sale.subtotal || 0
+                        ).toLocaleString()}
+                    </strong>
+
+                </div>
+
+
+                <div class="row">
+
+                    <span>
+                        Discount
+                    </span>
+
+                    <strong>
+                        Rs.
+                        ${Number(
+                            sale.discount || 0
+                        ).toLocaleString()}
+                    </strong>
+
+                </div>
+
+
+                <div class="row total">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <strong>
+                        Rs.
+                        ${Number(
+                            sale.total || 0
+                        ).toLocaleString()}
+                    </strong>
+
+                </div>
+
+
+                <div class="row">
+
+                    <span>
+                        Cash
+                    </span>
+
+                    <strong>
+                        Rs.
+                        ${Number(
+                            sale.cash || 0
+                        ).toLocaleString()}
+                    </strong>
+
+                </div>
+
+
+                <div class="row">
+
+                    <span>
+                        Balance
+                    </span>
+
+                    <strong>
+                        Rs.
+                        ${Number(
+                            sale.balance || 0
+                        ).toLocaleString()}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="footer">
+
+                Thank You!
+
+                <br>
+
+                Come Again
+
+            </div>
+
+
+        </body>
+
+        </html>
+
+    `);
+
+
+    printWindow.document.close();
+
+    printWindow.focus();
+
+    setTimeout(function(){
+
+        printWindow.print();
+
+    },300);
+
+}
+
+
+/* =========================
+   CLOSE MODAL
+========================= */
+
+function closeModal(){
+
+    document.getElementById("viewModal")
+        .style.display = "none";
+
+}
+
+
+document.getElementById("viewModal")
+.addEventListener("click",function(event){
+
+    if(event.target === this){
+
+        closeModal();
+
+    }
+
+});
+
+
+/* =========================
+   ESCAPE HTML
+========================= */
+
+function escapeHTML(text){
+
+    return String(text)
+
+        .replace(/&/g,"&amp;")
+
+        .replace(/</g,"&lt;")
+
+        .replace(/>/g,"&gt;")
+
+        .replace(/"/g,"&quot;")
+
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+displaySales();
+
+</script>
+
+</body>
+</html>

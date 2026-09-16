@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MMM Super Market - Reports</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f3f4f6;
+    color:#111827;
+}
+
+/* SIDEBAR */
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    width:230px;
+    height:100vh;
+    background:#111827;
+    color:white;
+    padding:20px 14px;
+    z-index:1000;
+}
+
+.logo{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.logo-circle{
+    width:58px;
+    height:58px;
+    background:#2563eb;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:auto;
+    font-size:19px;
+    font-weight:bold;
+}
+
+.logo h2{
+    font-size:19px;
+    margin-top:10px;
+}
+
+.menu-title{
+    color:#9ca3af;
+    font-size:12px;
+    text-transform:uppercase;
+    margin:0 10px 10px;
+    font-weight:bold;
+}
+
+.menu a{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    color:#d1d5db;
+    text-decoration:none;
+    padding:13px 12px;
+    border-radius:8px;
+    margin-bottom:5px;
+    font-size:14px;
+    transition:.2s;
+}
+
+.menu a:hover{
+    background:#1f2937;
+    color:white;
+}
+
+.menu a.active{
+    background:#2563eb;
+    color:white;
+}
+
+.logout{
+    position:absolute;
+    left:14px;
+    right:14px;
+    bottom:20px;
+}
+
+.logout a{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    background:#dc2626;
+    color:white;
+    padding:12px;
+    border-radius:8px;
+    text-decoration:none;
+}
+
+.logout a:hover{
+    background:#7f1d1d;
+    color:white;
+}
+
+/* MAIN */
+.main{
+    margin-left:230px;
+    min-height:100vh;
+}
+
+.topbar{
+    height:70px;
+    background:white;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 30px;
+    border-bottom:1px solid #e5e7eb;
+}
+
+.page-title{
+    font-size:21px;
+    font-weight:bold;
+}
+
+.user{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.user-icon{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    background:#dbeafe;
+    color:#2563eb;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+}
+
+.user-name{
+    font-size:14px;
+    font-weight:bold;
+}
+
+/* CONTENT */
+.content{
+    padding:30px;
+}
+
+.welcome{
+    background:#2563eb;
+    color:white;
+    border-radius:12px;
+    padding:25px;
+    margin-bottom:25px;
+}
+
+.welcome h2{
+    margin-bottom:8px;
+    font-size:23px;
+}
+
+.welcome p{
+    color:#dbeafe;
+    font-size:14px;
+}
+
+/* FILTER */
+.filter-box{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.05);
+    margin-bottom:25px;
+}
+
+.filter-title{
+    font-size:16px;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+.filters{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.filter-group{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+.filter-group label{
+    font-size:13px;
+    color:#4b5563;
+    font-weight:bold;
+}
+
+.filter-group input,
+.filter-group select{
+    width:180px;
+    padding:10px 12px;
+    border:1px solid #d1d5db;
+    border-radius:7px;
+    outline:none;
+    background:white;
+}
+
+.filter-group input:focus,
+.filter-group select:focus{
+    border-color:#2563eb;
+}
+
+.btn{
+    border:none;
+    border-radius:7px;
+    padding:10px 18px;
+    cursor:pointer;
+    font-weight:bold;
+    margin-top:21px;
+}
+
+.btn-primary{
+    background:#2563eb;
+    color:white;
+}
+
+.btn-primary:hover{
+    background:#1d4ed8;
+}
+
+.btn-print{
+    background:#111827;
+    color:white;
+}
+
+/* STAT CARDS */
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+    margin-bottom:25px;
+}
+
+.stat-card{
+    background:white;
+    border-radius:12px;
+    padding:22px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.05);
+}
+
+.stat-label{
+    color:#6b7280;
+    font-size:13px;
+    margin-bottom:8px;
+}
+
+.stat-value{
+    font-size:25px;
+    font-weight:bold;
+}
+
+.stat-icon{
+    float:right;
+    width:42px;
+    height:42px;
+    border-radius:9px;
+    background:#dbeafe;
+    color:#2563eb;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:20px;
+}
+
+/* REPORT CARDS */
+.report-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:25px;
+    margin-bottom:25px;
+}
+
+.card{
+    background:white;
+    border-radius:12px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.05);
+    padding:22px;
+}
+
+.card h3{
+    font-size:17px;
+    margin-bottom:20px;
+}
+
+/* BAR CHART */
+.chart{
+    height:250px;
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-around;
+    gap:12px;
+    border-bottom:1px solid #d1d5db;
+    padding:10px 5px 0;
+}
+
+.bar-container{
+    height:100%;
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-end;
+}
+
+.bar{
+    width:70%;
+    max-width:45px;
+    background:#2563eb;
+    border-radius:5px 5px 0 0;
+    min-height:5px;
+    position:relative;
+}
+
+.bar:hover{
+    background:#1d4ed8;
+}
+
+.bar-value{
+    position:absolute;
+    top:-22px;
+    width:100%;
+    text-align:center;
+    font-size:10px;
+    color:#374151;
+}
+
+.bar-label{
+    font-size:11px;
+    color:#6b7280;
+    margin-top:8px;
+}
+
+/* CATEGORY */
+.category-row{
+    margin-bottom:18px;
+}
+
+.category-header{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:7px;
+    font-size:13px;
+}
+
+.progress{
+    width:100%;
+    height:9px;
+    background:#e5e7eb;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.progress-bar{
+    height:100%;
+    background:#2563eb;
+    border-radius:10px;
+}
+
+/* TABLE */
+.table-card{
+    background:white;
+    border-radius:12px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.05);
+    padding:22px;
+    margin-bottom:25px;
+}
+
+.table-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+}
+
+.table-header h3{
+    font-size:17px;
+}
+
+.table-wrapper{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,
+td{
+    padding:13px 12px;
+    border-bottom:1px solid #e5e7eb;
+    text-align:left;
+    font-size:13px;
+}
+
+th{
+    background:#f9fafb;
+    color:#374151;
+    font-weight:bold;
+}
+
+td{
+    color:#4b5563;
+}
+
+.amount{
+    font-weight:bold;
+    color:#111827;
+}
+
+.empty{
+    text-align:center;
+    padding:30px;
+    color:#9ca3af;
+}
+
+/* PRINT */
+@media print{
+    .sidebar,
+    .topbar,
+    .filter-box,
+    .btn-print{
+        display:none !important;
+    }
+
+    .main{
+        margin-left:0;
+    }
+
+    .content{
+        padding:10px;
+    }
+
+    body{
+        background:white;
+    }
+
+    .card,
+    .stat-card,
+    .table-card{
+        box-shadow:none;
+        border:1px solid #ddd;
+    }
+}
+
+/* RESPONSIVE */
+@media(max-width:1000px){
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .report-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:700px){
+    .sidebar{
+        width:65px;
+        padding:15px 8px;
+    }
+
+    .logo{
+        justify-content:center;
+        padding:5px 0 25px;
+    }
+
+    .logo-text,
+    .menu-title,
+    .menu a span:last-child,
+    .logout a span:last-child{
+        display:none;
+    }
+
+    .menu a{
+        justify-content:center;
+        padding:13px 5px;
+    }
+
+    .logout{
+        left:8px;
+        right:8px;
+    }
+
+    .logout a{
+        justify-content:center;
+        padding:13px 5px;
+    }
+
+    .main{
+        margin-left:65px;
+    }
+
+    .topbar{
+        padding:0 15px;
+    }
+
+    .content{
+        padding:15px;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .filters{
+        flex-direction:column;
+    }
+
+    .filter-group input,
+    .filter-group select{
+        width:100%;
+    }
+
+    .btn{
+        margin-top:5px;
+        width:100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+
+    <div class="logo">
+    <div class="logo-circle">
+        MMM
+    </div><br>
+
+    <div class="logo-text">
+      <b> MMM Super Market </b>
+    </div>
+</div>
+
+    <div class="menu-title">Main Menu</div>
+
+    <div class="menu">
+
+        <a href="sales.html">
+            <span>🛒</span>
+            <span>New Sale</span>
+        </a>
+
+        <a href="products.html">
+            <span>📦</span>
+            <span>Products</span>
+        </a>
+
+        <a href="stock.html">
+            <span>📊</span>
+            <span>Stock</span>
+        </a>
+
+        <a href="customers.html">
+            <span>👥</span>
+            <span>Customers</span>
+        </a>
+
+        <a href="sales-history.html">
+            <span>🧾</span>
+            <span>Sales</span>
+        </a>
+
+        <a href="reports.html" class="active">
+            <span>📈</span>
+            <span>Reports</span>
+        </a>
+
+        <a href="dashboard.html">
+            <span>🏠</span>
+            <span>Dashboard</span>
+        </a>
+
+    </div>
+
+    <div class="logout">
+        <a href="MMM Super Market Login.html">
+            <span>🚪</span>
+            <span>Logout</span>
+        </a>
+    </div>
+
+</div>
+
+
+<!-- MAIN -->
+<div class="main">
+
+    <div class="topbar">
+
+        <div class="page-title">
+            Reports
+        </div>
+
+        <div class="user">
+            <div class="user-icon">A</div>
+            <div class="user-name">Admin</div>
+        </div>
+
+    </div>
+
+
+    <div class="content">
+
+        <div class="welcome">
+            <h2>Sales Reports 📈</h2>
+            <p>MMM Super Market sales and business performance reports.</p>
+        </div>
+
+
+        <!-- FILTER -->
+        <div class="filter-box">
+
+            <div class="filter-title">
+                Report Period
+            </div>
+
+            <div class="filters">
+
+                <div class="filter-group">
+                    <label>From Date</label>
+                    <input type="date" id="fromDate">
+                </div>
+
+                <div class="filter-group">
+                    <label>To Date</label>
+                    <input type="date" id="toDate">
+                </div>
+
+                <button class="btn btn-primary" onclick="generateReport()">
+                    Generate Report
+                </button>
+
+                <button class="btn btn-print" onclick="window.print()">
+                    🖨 Print Report
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- STATS -->
+        <div class="stats">
+
+            <div class="stat-card">
+                <div class="stat-icon">💰</div>
+                <div class="stat-label">Total Sales</div>
+                <div class="stat-value" id="totalSales">Rs. 0.00</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">🧾</div>
+                <div class="stat-label">Total Orders</div>
+                <div class="stat-value" id="totalOrders">0</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">📦</div>
+                <div class="stat-label">Items Sold</div>
+                <div class="stat-value" id="itemsSold">0</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">💵</div>
+                <div class="stat-label">Average Order</div>
+                <div class="stat-value" id="averageOrder">Rs. 0.00</div>
+            </div>
+
+        </div>
+
+
+        <!-- CHART + CATEGORY -->
+        <div class="report-grid">
+
+            <div class="card">
+
+                <h3>Sales Overview</h3>
+
+                <div class="chart" id="salesChart">
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>Sales by Category</h3>
+
+                <div id="categoryReport">
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- TOP PRODUCTS -->
+        <div class="table-card">
+
+            <div class="table-header">
+                <h3>Top Selling Products</h3>
+            </div>
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Product</th>
+                            <th>Quantity Sold</th>
+                            <th>Total Sales</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="topProducts">
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <!-- SALES REPORT -->
+        <div class="table-card">
+
+            <div class="table-header">
+                <h3>Sales Details</h3>
+            </div>
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Invoice</th>
+                            <th>Date</th>
+                            <th>Items</th>
+                            <th>Total</th>
+                            <th>Cash</th>
+                            <th>Balance</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="salesTable">
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+let allSales = [];
+
+
+/* LOAD SALES */
+function getSales(){
+
+    try{
+
+        return JSON.parse(
+            localStorage.getItem("mmm_sales")
+        ) || [];
+
+    }catch(error){
+
+        return [];
+
+    }
+
+}
+
+
+/* CURRENCY */
+function money(value){
+
+    return "Rs. " + Number(value || 0).toLocaleString(
+        "en-LK",
+        {
+            minimumFractionDigits:2,
+            maximumFractionDigits:2
+        }
+    );
+
+}
+
+
+/* DATE */
+function formatDate(date){
+
+    if(!date) return "-";
+
+    const d = new Date(date);
+
+    if(isNaN(d.getTime())) return "-";
+
+    return d.toLocaleDateString(
+        "en-GB",
+        {
+            day:"2-digit",
+            month:"short",
+            year:"numeric"
+        }
+    );
+
+}
+
+
+/* SET DEFAULT DATES */
+function setDefaultDates(){
+
+    const today = new Date();
+
+    const firstDay = new Date(
+        today.getFullYear(),
+        today.getMonth(),
+        1
+    );
+
+    document.getElementById("fromDate").value =
+        firstDay.toISOString().split("T")[0];
+
+    document.getElementById("toDate").value =
+        today.toISOString().split("T")[0];
+
+}
+
+
+/* FILTER SALES */
+function getFilteredSales(){
+
+    const from =
+        document.getElementById("fromDate").value;
+
+    const to =
+        document.getElementById("toDate").value;
+
+    let sales = [...allSales];
+
+    if(from){
+
+        sales = sales.filter(sale => {
+
+            const date =
+                new Date(sale.date)
+                .toISOString()
+                .split("T")[0];
+
+            return date >= from;
+
+        });
+
+    }
+
+    if(to){
+
+        sales = sales.filter(sale => {
+
+            const date =
+                new Date(sale.date)
+                .toISOString()
+                .split("T")[0];
+
+            return date <= to;
+
+        });
+
+    }
+
+    return sales;
+
+}
+
+
+/* GENERATE REPORT */
+function generateReport(){
+
+    const sales = getFilteredSales();
+
+    let totalSales = 0;
+    let itemsSold = 0;
+
+    sales.forEach(sale => {
+
+        totalSales += Number(sale.total) || 0;
+
+        if(Array.isArray(sale.items)){
+
+            sale.items.forEach(item => {
+
+                itemsSold += Number(item.quantity) || 0;
+
+            });
+
+        }
+
+    });
+
+    const orders = sales.length;
+
+    const average =
+        orders > 0
+        ? totalSales / orders
+        : 0;
+
+
+    document.getElementById("totalSales").textContent =
+        money(totalSales);
+
+    document.getElementById("totalOrders").textContent =
+        orders;
+
+    document.getElementById("itemsSold").textContent =
+        itemsSold;
+
+    document.getElementById("averageOrder").textContent =
+        money(average);
+
+
+    createChart(sales);
+
+    createCategoryReport(sales);
+
+    createTopProducts(sales);
+
+    createSalesTable(sales);
+
+}
+
+
+/* SALES CHART */
+function createChart(sales){
+
+    const chart =
+        document.getElementById("salesChart");
+
+    chart.innerHTML = "";
+
+    if(sales.length === 0){
+
+        chart.innerHTML =
+            '<div class="empty">No sales data available</div>';
+
+        return;
+
+    }
+
+
+    const daily = {};
+
+    sales.forEach(sale => {
+
+        const date =
+            new Date(sale.date);
+
+        const key =
+            date.toLocaleDateString(
+                "en-GB",
+                {
+                    day:"2-digit",
+                    month:"short"
+                }
+            );
+
+        if(!daily[key]){
+            daily[key] = 0;
+        }
+
+        daily[key] += Number(sale.total) || 0;
+
+    });
+
+
+    const entries =
+        Object.entries(daily).slice(-7);
+
+
+    let max =
+        Math.max(
+            ...entries.map(item => item[1]),
+            1
+        );
+
+
+    entries.forEach(([day,value]) => {
+
+        const container =
+            document.createElement("div");
+
+        container.className =
+            "bar-container";
+
+
+        const bar =
+            document.createElement("div");
+
+        bar.className =
+            "bar";
+
+        const height =
+            Math.max(
+                5,
+                (value / max) * 190
+            );
+
+        bar.style.height =
+            height + "px";
+
+
+        const valueText =
+            document.createElement("div");
+
+        valueText.className =
+            "bar-value";
+
+        valueText.textContent =
+            Math.round(value);
+
+
+        bar.appendChild(valueText);
+
+
+        const label =
+            document.createElement("div");
+
+        label.className =
+            "bar-label";
+
+        label.textContent =
+            day;
+
+
+        container.appendChild(bar);
+
+        container.appendChild(label);
+
+        chart.appendChild(container);
+
+    });
+
+}
+
+
+/* CATEGORY REPORT */
+function createCategoryReport(sales){
+
+    const box =
+        document.getElementById("categoryReport");
+
+    box.innerHTML = "";
+
+
+    const products =
+        JSON.parse(
+            localStorage.getItem("mmm_products")
+        ) || [];
+
+
+    const categoryMap = {};
+
+    products.forEach(product => {
+
+        categoryMap[product.name] =
+            product.category || "Other";
+
+    });
+
+
+    const categories = {};
+
+
+    sales.forEach(sale => {
+
+        if(!Array.isArray(sale.items))
+            return;
+
+
+        sale.items.forEach(item => {
+
+            const category =
+                categoryMap[item.name] || "Other";
+
+            if(!categories[category]){
+                categories[category] = 0;
+            }
+
+            categories[category] +=
+                Number(item.total) ||
+                (
+                    Number(item.price || 0) *
+                    Number(item.quantity || 0)
+                );
+
+        });
+
+    });
+
+
+    const entries =
+        Object.entries(categories)
+        .sort((a,b) => b[1] - a[1]);
+
+
+    if(entries.length === 0){
+
+        box.innerHTML =
+            '<div class="empty">No category data available</div>';
+
+        return;
+
+    }
+
+
+    const max =
+        Math.max(...entries.map(x => x[1]),1);
+
+
+    entries.forEach(([category,value]) => {
+
+        const row =
+            document.createElement("div");
+
+        row.className =
+            "category-row";
+
+
+        const header =
+            document.createElement("div");
+
+        header.className =
+            "category-header";
+
+
+        header.innerHTML =
+            `<span>${category}</span>
+             <strong>${money(value)}</strong>`;
+
+
+        const progress =
+            document.createElement("div");
+
+        progress.className =
+            "progress";
+
+
+        const progressBar =
+            document.createElement("div");
+
+        progressBar.className =
+            "progress-bar";
+
+        progressBar.style.width =
+            ((value / max) * 100) + "%";
+
+
+        progress.appendChild(progressBar);
+
+        row.appendChild(header);
+
+        row.appendChild(progress);
+
+        box.appendChild(row);
+
+    });
+
+}
+
+
+/* TOP PRODUCTS */
+function createTopProducts(sales){
+
+    const tbody =
+        document.getElementById("topProducts");
+
+    tbody.innerHTML = "";
+
+
+    const products = {};
+
+
+    sales.forEach(sale => {
+
+        if(!Array.isArray(sale.items))
+            return;
+
+
+        sale.items.forEach(item => {
+
+            if(!products[item.name]){
+
+                products[item.name] = {
+                    quantity:0,
+                    total:0
+                };
+
+            }
+
+            products[item.name].quantity +=
+                Number(item.quantity) || 0;
+
+            products[item.name].total +=
+                Number(item.total) ||
+                (
+                    Number(item.price || 0) *
+                    Number(item.quantity || 0)
+                );
+
+        });
+
+    });
+
+
+    const entries =
+        Object.entries(products)
+        .sort(
+            (a,b) =>
+                b[1].quantity -
+                a[1].quantity
+        )
+        .slice(0,10);
+
+
+    if(entries.length === 0){
+
+        tbody.innerHTML =
+            '<tr><td colspan="4" class="empty">No sales data available</td></tr>';
+
+        return;
+
+    }
+
+
+    entries.forEach(([name,data],index) => {
+
+        const row =
+            document.createElement("tr");
+
+        row.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${name}</td>
+            <td>${data.quantity}</td>
+            <td class="amount">${money(data.total)}</td>
+        `;
+
+        tbody.appendChild(row);
+
+    });
+
+}
+
+
+/* SALES TABLE */
+function createSalesTable(sales){
+
+    const tbody =
+        document.getElementById("salesTable");
+
+    tbody.innerHTML = "";
+
+
+    if(sales.length === 0){
+
+        tbody.innerHTML =
+            '<tr><td colspan="6" class="empty">No sales found for this period.</td></tr>';
+
+        return;
+
+    }
+
+
+    const sorted =
+        [...sales].sort(
+            (a,b) =>
+                new Date(b.date) -
+                new Date(a.date)
+        );
+
+
+    sorted.forEach(sale => {
+
+        const itemCount =
+            Array.isArray(sale.items)
+            ? sale.items.reduce(
+                (sum,item) =>
+                    sum +
+                    Number(item.quantity || 0),
+                0
+            )
+            : 0;
+
+
+        const row =
+            document.createElement("tr");
+
+
+        row.innerHTML = `
+            <td>${sale.invoiceNumber || "-"}</td>
+            <td>${formatDate(sale.date)}</td>
+            <td>${itemCount}</td>
+            <td class="amount">${money(sale.total)}</td>
+            <td>${money(sale.cash)}</td>
+            <td>${money(sale.balance)}</td>
+        `;
+
+
+        tbody.appendChild(row);
+
+    });
+
+}
+
+
+/* START */
+allSales = getSales();
+
+setDefaultDates();
+
+generateReport();
+
+</script>
+
+</body>
+</html>

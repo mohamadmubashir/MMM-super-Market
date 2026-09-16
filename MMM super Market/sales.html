@@ -1,0 +1,2201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MMM Super Market - New Sale</title>
+
+<style>
+
+/* =========================
+   RESET
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f3f4f6;
+    color:#111827;
+}
+
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    width:230px;
+    height:100vh;
+    background:#111827;
+    color:white;
+    padding:20px 14px;
+    z-index:1000;
+}
+
+.logo{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.logo-circle{
+    width:58px;
+    height:58px;
+    background:#2563eb;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:auto;
+    font-size:19px;
+    font-weight:bold;
+}
+
+.logo h2{
+    font-size:19px;
+    margin-top:10px;
+}
+
+.menu-title{
+    color:#9ca3af;
+    font-size:12px;
+    text-transform:uppercase;
+    margin:0 10px 10px;
+    font-weight:bold;
+}
+
+.menu a{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    color:#d1d5db;
+    text-decoration:none;
+    padding:13px 12px;
+    margin-bottom:5px;
+    border-radius:8px;
+    font-size:14px;
+    transition:.2s;
+}
+
+.menu a:hover{
+    background:#2563eb;
+    color:white;
+}
+
+.menu a.active{
+    background:#2563eb;
+    color:white;
+}
+
+
+/* LOGOUT */
+
+.logout{
+    position:absolute;
+    left:14px;
+    right:14px;
+    bottom:20px;
+}
+
+.logout a{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    background:#dc2626;
+    color:white;
+    padding:12px;
+    border-radius:8px;
+    text-decoration:none;
+}
+
+.logout a:hover{
+    background:#7f1d1d;
+    color:white;
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+.main{
+    margin-left:230px;
+    min-height:100vh;
+}
+
+
+/* =========================
+   TOP BAR
+========================= */
+
+.topbar{
+    height:70px;
+    background:white;
+    border-bottom:1px solid #e5e7eb;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 25px;
+}
+
+.topbar h1{
+    font-size:22px;
+}
+
+.user{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.user-icon{
+    width:40px;
+    height:40px;
+
+    background:#dbeafe;
+    color:#2563eb;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-weight:bold;
+}
+
+.user strong{
+    font-size:14px;
+}
+
+
+/* =========================
+   CONTENT
+========================= */
+
+.content{
+    padding:25px;
+}
+
+
+/* =========================
+   SALE LAYOUT
+========================= */
+
+.sale-layout{
+    display:grid;
+    grid-template-columns:1fr 390px;
+    gap:20px;
+}
+
+
+/* =========================
+   PRODUCTS AREA
+========================= */
+
+.products-area,
+.cart-area{
+    background:white;
+    border-radius:12px;
+    padding:20px;
+
+    box-shadow:0 2px 8px rgba(0,0,0,0.05);
+}
+
+.section-title{
+    font-size:19px;
+    margin-bottom:15px;
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+.search-box{
+    display:flex;
+    gap:10px;
+    margin-bottom:20px;
+}
+
+.search-box input{
+    flex:1;
+    padding:13px;
+
+    border:1px solid #d1d5db;
+    border-radius:8px;
+
+    outline:none;
+    font-size:14px;
+}
+
+.search-box input:focus{
+    border-color:#2563eb;
+}
+
+.search-box button{
+    border:none;
+
+    background:#2563eb;
+    color:white;
+
+    padding:0 18px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+}
+
+.search-box button:hover{
+    background:#1d4ed8;
+}
+
+
+/* =========================
+   PRODUCT GRID
+========================= */
+
+.product-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.product{
+    border:1px solid #e5e7eb;
+    border-radius:10px;
+
+    padding:12px;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+    background:white;
+}
+
+.product:hover{
+    border-color:#2563eb;
+    transform:translateY(-2px);
+
+    box-shadow:0 5px 12px rgba(0,0,0,.08);
+}
+
+
+/* PRODUCT IMAGE */
+
+.product-image{
+    height:120px;
+
+    background:#f3f4f6;
+
+    border-radius:8px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    overflow:hidden;
+
+    margin-bottom:10px;
+}
+
+.product-image img{
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    display:block;
+}
+
+.product-image .emoji{
+    font-size:45px;
+}
+
+
+.product h3{
+    font-size:14px;
+    margin-bottom:5px;
+}
+
+.product p{
+    color:#2563eb;
+    font-weight:bold;
+    font-size:14px;
+}
+
+.product small{
+    display:block;
+    color:#6b7280;
+    margin-top:4px;
+    font-size:11px;
+}
+
+
+/* =========================
+   CART
+========================= */
+
+.cart-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+}
+
+.cart-header .section-title{
+    margin-bottom:0;
+}
+
+.clear-btn{
+    border:none;
+
+    background:#fee2e2;
+    color:#dc2626;
+
+    padding:7px 10px;
+
+    border-radius:6px;
+
+    cursor:pointer;
+
+    font-size:12px;
+}
+
+.clear-btn:hover{
+    background:#fecaca;
+}
+
+
+.cart-items{
+    max-height:310px;
+    overflow-y:auto;
+}
+
+
+.empty-cart{
+    text-align:center;
+    color:#9ca3af;
+    padding:40px 10px;
+    font-size:14px;
+}
+
+
+/* CART ITEM */
+
+.cart-item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    border-bottom:1px solid #e5e7eb;
+
+    padding:12px 0;
+
+    gap:8px;
+}
+
+.cart-item-info{
+    flex:1;
+}
+
+.cart-item-name{
+    font-size:13px;
+    font-weight:bold;
+}
+
+.cart-item-price{
+    font-size:11px;
+    color:#6b7280;
+    margin-top:3px;
+}
+
+
+/* QUANTITY */
+
+.qty-controls{
+    display:flex;
+    align-items:center;
+    gap:5px;
+}
+
+.qty-btn{
+    width:25px;
+    height:25px;
+
+    border:1px solid #d1d5db;
+    background:white;
+
+    border-radius:5px;
+
+    cursor:pointer;
+
+    font-weight:bold;
+}
+
+.qty-btn:hover{
+    background:#2563eb;
+    color:white;
+}
+
+.qty{
+    min-width:20px;
+    text-align:center;
+    font-size:13px;
+    font-weight:bold;
+}
+
+
+/* ITEM TOTAL */
+
+.item-total{
+    min-width:70px;
+    text-align:right;
+
+    font-size:13px;
+    font-weight:bold;
+}
+
+
+/* REMOVE */
+
+.remove-btn{
+    border:none;
+    background:none;
+
+    color:#dc2626;
+
+    cursor:pointer;
+
+    font-size:18px;
+
+    padding:2px 4px;
+}
+
+
+/* =========================
+   SUMMARY
+========================= */
+
+.summary{
+    margin-top:18px;
+    border-top:1px solid #e5e7eb;
+    padding-top:15px;
+}
+
+.summary-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:12px;
+
+    font-size:14px;
+}
+
+.summary-row.total{
+    border-top:1px solid #e5e7eb;
+
+    padding-top:14px;
+    margin-top:14px;
+
+    font-size:19px;
+    font-weight:bold;
+}
+
+
+/* DISCOUNT */
+
+.discount-input{
+    width:120px;
+
+    padding:8px;
+
+    border:1px solid #d1d5db;
+    border-radius:6px;
+
+    text-align:right;
+
+    outline:none;
+}
+
+.discount-input:focus{
+    border-color:#2563eb;
+}
+
+
+/* =========================
+   PAYMENT
+========================= */
+
+.payment{
+    margin-top:20px;
+}
+
+.payment label{
+    display:block;
+
+    font-size:13px;
+    font-weight:bold;
+
+    margin-bottom:7px;
+}
+
+.payment input{
+    width:100%;
+
+    padding:12px;
+
+    border:1px solid #d1d5db;
+    border-radius:8px;
+
+    font-size:15px;
+
+    outline:none;
+}
+
+.payment input:focus{
+    border-color:#2563eb;
+}
+
+
+/* BALANCE */
+
+.balance{
+    background:#eff6ff;
+    color:#1d4ed8;
+
+    padding:12px;
+
+    border-radius:8px;
+
+    margin-top:10px;
+
+    display:flex;
+    justify-content:space-between;
+
+    font-weight:bold;
+}
+
+
+/* PRINT BUTTON */
+
+.print-btn{
+    width:100%;
+
+    padding:14px;
+
+    margin-top:15px;
+
+    border:none;
+
+    background:#2563eb;
+    color:white;
+
+    border-radius:8px;
+
+    font-size:16px;
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+.print-btn:hover{
+    background:#1d4ed8;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:1100px){
+
+    .sale-layout{
+        grid-template-columns:1fr;
+    }
+
+    .product-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+}
+
+
+@media(max-width:750px){
+
+    .sidebar{
+        width:65px;
+        padding:15px 7px;
+    }
+
+    .logo h2,
+    .menu-title,
+    .menu a span:last-child,
+    .logout span:last-child{
+        display:none;
+    }
+
+    .logo-circle{
+        width:45px;
+        height:45px;
+        font-size:13px;
+    }
+
+    .menu a{
+        justify-content:center;
+        padding:13px 5px;
+    }
+
+    .logout{
+        left:7px;
+        right:7px;
+    }
+
+    .logout a{
+        justify-content:center;
+    }
+
+    .main{
+        margin-left:65px;
+    }
+
+    .content{
+        padding:15px;
+    }
+
+    .topbar{
+        padding:0 15px;
+    }
+
+    .product-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+
+@media(max-width:450px){
+
+    .product-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="sidebar">
+
+
+    <!-- LOGO -->
+
+    <div class="logo">
+
+        <div class="logo-circle">
+            MMM
+        </div>
+
+        <h2>
+            MMM Super Market
+        </h2>
+
+    </div>
+
+
+    <!-- MAIN MENU -->
+
+    <div class="menu-title">
+        Main Menu
+    </div>
+
+
+    <div class="menu">
+
+
+        <!-- NEW SALE ACTIVE -->
+
+        <a href="sales.html" class="active">
+
+            <span>🛒</span>
+
+            <span>
+                New Sale
+            </span>
+
+        </a>
+
+
+        <!-- PRODUCTS -->
+
+        <a href="products.html">
+
+            <span>📦</span>
+
+            <span>
+                Products
+            </span>
+
+        </a>
+
+
+        <!-- STOCK -->
+
+        <a href="stock.html">
+
+            <span>📊</span>
+
+            <span>
+                Stock
+            </span>
+
+        </a>
+
+
+        <!-- CUSTOMERS -->
+
+        <a href="customers.html">
+
+            <span>👥</span>
+
+            <span>
+                Customers
+            </span>
+
+        </a>
+
+
+        <!-- SALES HISTORY -->
+
+        <a href="sales-history.html">
+
+            <span>💰</span>
+
+            <span>
+                Sales
+            </span>
+
+        </a>
+
+
+        <!-- REPORTS -->
+
+        <a href="reports.html">
+
+            <span>📈</span>
+
+            <span>
+                Reports
+            </span>
+
+        </a>
+
+
+        <!-- DASHBOARD -->
+
+        <a href="dashboard.html">
+
+            <span>🏠</span>
+
+            <span>
+                Dashboard
+            </span>
+
+        </a>
+
+
+    </div>
+
+
+    <!-- LOGOUT -->
+
+    <div class="logout">
+
+        <a href="MMM Super Market Login.html">
+
+            <span>🚪</span>
+
+            <span>
+                Logout
+            </span>
+
+        </a>
+
+    </div>
+
+
+</aside>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="main">
+
+
+    <!-- TOP BAR -->
+
+    <header class="topbar">
+
+        <h1>
+            New Sale
+        </h1>
+
+
+        <div class="user">
+
+            <div class="user-icon">
+                A
+            </div>
+
+            <div>
+                <strong>
+                    Admin
+                </strong>
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- CONTENT -->
+
+    <section class="content">
+
+
+        <div class="sale-layout">
+
+
+            <!-- =================================================
+                 PRODUCTS
+            ================================================== -->
+
+            <div class="products-area">
+
+
+                <h2 class="section-title">
+                    Select Products
+                </h2>
+
+
+                <!-- SEARCH -->
+
+                <div class="search-box">
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search product..."
+                        oninput="searchProducts()"
+                    >
+
+
+                    <button onclick="searchProducts()">
+                        🔎 Search
+                    </button>
+
+                </div>
+
+
+
+                <!-- PRODUCT GRID -->
+
+                <div
+                    class="product-grid"
+                    id="productGrid"
+                >
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 CART
+            ================================================== -->
+
+            <div class="cart-area">
+
+
+                <div class="cart-header">
+
+                    <h2 class="section-title">
+                        Current Bill
+                    </h2>
+
+
+                    <button
+                        class="clear-btn"
+                        onclick="clearCart()"
+                    >
+                        Clear
+                    </button>
+
+                </div>
+
+
+
+                <!-- CART ITEMS -->
+
+                <div
+                    class="cart-items"
+                    id="cartItems"
+                >
+
+                    <div class="empty-cart">
+
+                        No products added yet.
+
+                        <br><br>
+
+                        Click a product to add it.
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- SUMMARY -->
+
+                <div class="summary">
+
+
+                    <!-- SUBTOTAL -->
+
+                    <div class="summary-row">
+
+                        <span>
+                            Subtotal
+                        </span>
+
+                        <strong id="subtotal">
+                            Rs. 0.00
+                        </strong>
+
+                    </div>
+
+
+
+                    <!-- DISCOUNT -->
+
+                    <div class="summary-row">
+
+                        <span>
+                            Discount
+                        </span>
+
+
+                        <input
+                            type="number"
+                            id="discount"
+                            class="discount-input"
+                            value="0"
+                            min="0"
+                            oninput="calculateTotal()"
+                        >
+
+                    </div>
+
+
+
+                    <!-- TOTAL -->
+
+                    <div class="summary-row total">
+
+                        <span>
+                            Total
+                        </span>
+
+                        <span id="total">
+                            Rs. 0.00
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- PAYMENT -->
+
+                <div class="payment">
+
+
+                    <label>
+                        Cash Received
+                    </label>
+
+
+                    <input
+                        type="number"
+                        id="cash"
+                        placeholder="Enter cash amount"
+                        oninput="calculateBalance()"
+                    >
+
+
+                    <!-- BALANCE -->
+
+                    <div class="balance">
+
+                        <span>
+                            Balance
+                        </span>
+
+                        <span id="balance">
+                            Rs. 0.00
+                        </span>
+
+                    </div>
+
+
+                    <!-- COMPLETE SALE -->
+
+                    <button
+                        class="print-btn"
+                        onclick="completeSaleAndPrint()"
+                    >
+
+                        🧾 Complete Sale & Print
+
+                    </button>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+
+<script>
+
+/* =====================================================
+   PRODUCTS
+===================================================== */
+
+const products = [
+
+    {
+        id:1,
+        name:"Rice 5kg",
+        price:1250,
+        stock:45,
+        image:"https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=500&q=80"
+    },
+
+    {
+        id:2,
+        name:"Sugar 1kg",
+        price:280,
+        stock:80,
+        image:"https://images.unsplash.com/photo-1559181567-c3190ca9959b?auto=format&fit=crop&w=500&q=80"
+    },
+
+    {
+        id:3,
+        name:"Milk Powder",
+        price:1150,
+        stock:30,
+        image:"https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=500&q=80"
+    },
+
+    {
+        id:4,
+        name:"Biscuits",
+        price:180,
+        stock:100,
+        image:"https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=500&q=80"
+    },
+
+    {
+        id:5,
+        name:"Coca Cola",
+        price:250,
+        stock:65,
+        image:"https://images.unsplash.com/photo-1629203851122-3726ecdf080e?auto=format&fit=crop&w=500&q=80"
+    },
+
+    {
+        id:6,
+        name:"Bread",
+        price:180,
+        stock:35,
+        image:"https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=500&q=80"
+    },
+
+    {
+        id:7,
+        name:"Eggs 10",
+        price:450,
+        stock:50,
+        image:"https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?auto=format&fit=crop&w=500&q=80"
+    },
+
+    {
+        id:8,
+        name:"Cooking Oil",
+        price:750,
+        stock:25,
+        image:"https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=500&q=80"
+    },
+
+    {
+        id:9,
+        name:"Noodles",
+        price:160,
+        stock:70,
+        image:"https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?auto=format&fit=crop&w=500&q=80"
+    }
+
+];
+
+
+
+/* =====================================================
+   CART
+===================================================== */
+
+let cart = [];
+
+
+
+/* =====================================================
+   DISPLAY PRODUCTS
+===================================================== */
+
+function displayProducts(list){
+
+    const grid =
+        document.getElementById("productGrid");
+
+    grid.innerHTML = "";
+
+
+    if(list.length === 0){
+
+        grid.innerHTML = `
+
+            <div style="
+                grid-column:1/-1;
+                text-align:center;
+                padding:40px;
+                color:#9ca3af;
+            ">
+
+                No products found.
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    list.forEach(product => {
+
+
+        const div =
+            document.createElement("div");
+
+
+        div.className = "product";
+
+
+        div.onclick = function(){
+
+            addToCart(product.id);
+
+        };
+
+
+        div.innerHTML = `
+
+            <div class="product-image">
+
+                <img
+                    src="${product.image}"
+                    alt="${product.name}"
+                    onerror="this.style.display='none';this.nextElementSibling.style.display='block';"
+                >
+
+                <span
+                    class="emoji"
+                    style="display:none;"
+                >
+                    📦
+                </span>
+
+            </div>
+
+
+            <h3>
+                ${product.name}
+            </h3>
+
+
+            <p>
+                Rs. ${product.price.toLocaleString()}
+            </p>
+
+
+            <small>
+                Stock: ${product.stock}
+            </small>
+
+        `;
+
+
+        grid.appendChild(div);
+
+    });
+
+}
+
+
+
+/* =====================================================
+   ADD TO CART
+===================================================== */
+
+function addToCart(id){
+
+    const product =
+        products.find(p => p.id === id);
+
+
+    if(!product){
+        return;
+    }
+
+
+    const existing =
+        cart.find(item => item.id === id);
+
+
+    if(existing){
+
+        if(existing.quantity < product.stock){
+
+            existing.quantity++;
+
+        }else{
+
+            alert("Not enough stock!");
+
+        }
+
+    }else{
+
+        cart.push({
+
+            id:product.id,
+
+            name:product.name,
+
+            price:product.price,
+
+            quantity:1
+
+        });
+
+    }
+
+
+    renderCart();
+
+}
+
+
+
+/* =====================================================
+   RENDER CART
+===================================================== */
+
+function renderCart(){
+
+    const cartItems =
+        document.getElementById("cartItems");
+
+
+    if(cart.length === 0){
+
+        cartItems.innerHTML = `
+
+            <div class="empty-cart">
+
+                No products added yet.
+
+                <br><br>
+
+                Click a product to add it.
+
+            </div>
+
+        `;
+
+        calculateTotal();
+
+        return;
+    }
+
+
+    cartItems.innerHTML = "";
+
+
+    cart.forEach(item => {
+
+
+        const div =
+            document.createElement("div");
+
+
+        div.className = "cart-item";
+
+
+        const itemTotal =
+            item.price * item.quantity;
+
+
+        div.innerHTML = `
+
+            <div class="cart-item-info">
+
+                <div class="cart-item-name">
+                    ${item.name}
+                </div>
+
+                <div class="cart-item-price">
+                    Rs. ${item.price.toLocaleString()} each
+                </div>
+
+            </div>
+
+
+            <div class="qty-controls">
+
+                <button
+                    class="qty-btn"
+                    onclick="changeQuantity(${item.id},-1)"
+                >
+                    −
+                </button>
+
+
+                <span class="qty">
+                    ${item.quantity}
+                </span>
+
+
+                <button
+                    class="qty-btn"
+                    onclick="changeQuantity(${item.id},1)"
+                >
+                    +
+                </button>
+
+            </div>
+
+
+            <div class="item-total">
+
+                Rs. ${itemTotal.toLocaleString()}
+
+            </div>
+
+
+            <button
+                class="remove-btn"
+                onclick="removeItem(${item.id})"
+            >
+                ×
+            </button>
+
+        `;
+
+
+        cartItems.appendChild(div);
+
+    });
+
+
+    calculateTotal();
+
+}
+
+
+
+/* =====================================================
+   CHANGE QUANTITY
+===================================================== */
+
+function changeQuantity(id,change){
+
+    const item =
+        cart.find(item => item.id === id);
+
+
+    if(!item){
+        return;
+    }
+
+
+    const product =
+        products.find(p => p.id === id);
+
+
+    item.quantity += change;
+
+
+    if(item.quantity > product.stock){
+
+        item.quantity = product.stock;
+
+        alert("Maximum stock reached!");
+
+    }
+
+
+    if(item.quantity <= 0){
+
+        cart =
+            cart.filter(item => item.id !== id);
+
+    }
+
+
+    renderCart();
+
+}
+
+
+
+/* =====================================================
+   REMOVE ITEM
+===================================================== */
+
+function removeItem(id){
+
+    cart =
+        cart.filter(item => item.id !== id);
+
+    renderCart();
+
+}
+
+
+
+/* =====================================================
+   CLEAR CART
+===================================================== */
+
+function clearCart(){
+
+    if(cart.length === 0){
+        return;
+    }
+
+
+    if(confirm("Clear current bill?")){
+
+        cart = [];
+
+        document.getElementById("discount").value = 0;
+
+        document.getElementById("cash").value = "";
+
+        renderCart();
+
+    }
+
+}
+
+
+
+/* =====================================================
+   CALCULATE TOTAL
+===================================================== */
+
+function calculateTotal(){
+
+    let subtotal = 0;
+
+
+    cart.forEach(item => {
+
+        subtotal +=
+            item.price * item.quantity;
+
+    });
+
+
+    let discount =
+        Number(
+            document.getElementById("discount").value
+        ) || 0;
+
+
+    if(discount > subtotal){
+
+        discount = subtotal;
+
+        document.getElementById("discount").value =
+            subtotal;
+
+    }
+
+
+    const total =
+        Math.max(0,subtotal-discount);
+
+
+    document.getElementById("subtotal").textContent =
+        "Rs. " +
+        subtotal.toLocaleString("en-US",{
+            minimumFractionDigits:2
+        });
+
+
+    document.getElementById("total").textContent =
+        "Rs. " +
+        total.toLocaleString("en-US",{
+            minimumFractionDigits:2
+        });
+
+
+    calculateBalance();
+
+}
+
+
+
+/* =====================================================
+   CALCULATE BALANCE
+===================================================== */
+
+function calculateBalance(){
+
+    let subtotal = 0;
+
+
+    cart.forEach(item => {
+
+        subtotal +=
+            item.price * item.quantity;
+
+    });
+
+
+    const discount =
+        Number(
+            document.getElementById("discount").value
+        ) || 0;
+
+
+    const total =
+        Math.max(0,subtotal-discount);
+
+
+    const cash =
+        Number(
+            document.getElementById("cash").value
+        ) || 0;
+
+
+    const balance =
+        cash-total;
+
+
+    document.getElementById("balance").textContent =
+        "Rs. " +
+        Math.max(0,balance).toLocaleString("en-US",{
+            minimumFractionDigits:2
+        });
+
+}
+
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+function searchProducts(){
+
+    const text =
+        document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase()
+        .trim();
+
+
+    const filtered =
+        products.filter(product =>
+            product.name
+            .toLowerCase()
+            .includes(text)
+        );
+
+
+    displayProducts(filtered);
+
+}
+
+
+
+/* =====================================================
+   INVOICE NUMBER
+===================================================== */
+
+function getNextInvoiceNumber(){
+
+    let number =
+        Number(
+            localStorage.getItem("mmm_invoice_number")
+        ) || 0;
+
+
+    number++;
+
+
+    localStorage.setItem(
+        "mmm_invoice_number",
+        number
+    );
+
+
+    return "INV-" +
+        String(number).padStart(4,"0");
+
+}
+
+
+
+/* =====================================================
+   COMPLETE SALE
+===================================================== */
+
+function completeSaleAndPrint(){
+
+    if(cart.length === 0){
+
+        alert("Please add products first.");
+
+        return;
+
+    }
+
+
+    let subtotal = 0;
+
+
+    cart.forEach(item => {
+
+        subtotal +=
+            item.price * item.quantity;
+
+    });
+
+
+    const discount =
+        Number(
+            document.getElementById("discount").value
+        ) || 0;
+
+
+    const total =
+        Math.max(0,subtotal-discount);
+
+
+    const cash =
+        Number(
+            document.getElementById("cash").value
+        ) || 0;
+
+
+    if(cash < total){
+
+        alert(
+            "Cash received is less than the total amount."
+        );
+
+        return;
+
+    }
+
+
+    const balance =
+        cash-total;
+
+
+    const invoiceNumber =
+        getNextInvoiceNumber();
+
+
+    /* CREATE SALE */
+
+    const sale = {
+
+        id:Date.now(),
+
+        invoiceNumber:invoiceNumber,
+
+        date:new Date().toISOString(),
+
+        items:cart.map(item => ({
+
+            name:item.name,
+
+            price:item.price,
+
+            quantity:item.quantity,
+
+            total:
+                item.price * item.quantity
+
+        })),
+
+        subtotal:subtotal,
+
+        discount:discount,
+
+        total:total,
+
+        cash:cash,
+
+        balance:balance
+
+    };
+
+
+    /* GET OLD SALES */
+
+    let sales = [];
+
+
+    try{
+
+        sales =
+            JSON.parse(
+                localStorage.getItem("mmm_sales")
+            ) || [];
+
+    }catch(error){
+
+        sales = [];
+
+    }
+
+
+    /* SAVE NEW SALE */
+
+    sales.push(sale);
+
+
+    localStorage.setItem(
+        "mmm_sales",
+        JSON.stringify(sales)
+    );
+
+
+    /* PRINT */
+
+    printBill(sale);
+
+
+    /* CLEAR */
+
+    cart = [];
+
+
+    document.getElementById("discount").value = 0;
+
+    document.getElementById("cash").value = "";
+
+
+    renderCart();
+
+}
+
+
+
+/* =====================================================
+   PRINT BILL
+===================================================== */
+
+function printBill(sale){
+
+    const printWindow =
+        window.open(
+            "",
+            "_blank",
+            "width=700,height=800"
+        );
+
+
+    if(!printWindow){
+
+        alert(
+            "Please allow pop-ups to print the bill."
+        );
+
+        return;
+
+    }
+
+
+    let itemsHTML = "";
+
+
+    sale.items.forEach(item => {
+
+        itemsHTML += `
+
+            <tr>
+
+                <td>
+                    ${item.name}
+                </td>
+
+                <td style="text-align:center;">
+                    ${item.quantity}
+                </td>
+
+                <td style="text-align:right;">
+                    Rs. ${item.price.toLocaleString()}
+                </td>
+
+                <td style="text-align:right;">
+                    Rs. ${item.total.toLocaleString()}
+                </td>
+
+            </tr>
+
+        `;
+
+    });
+
+
+    const date =
+        new Date(sale.date);
+
+
+    printWindow.document.write(`
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<title>
+${sale.invoiceNumber}
+</title>
+
+
+<style>
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    padding:30px;
+    color:#111;
+}
+
+.receipt{
+    max-width:650px;
+    margin:auto;
+}
+
+h1{
+    text-align:center;
+    margin-bottom:5px;
+}
+
+.center{
+    text-align:center;
+}
+
+.info{
+    margin:20px 0;
+    line-height:1.8;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,
+td{
+    border-bottom:1px solid #ddd;
+    padding:10px 5px;
+}
+
+th{
+    text-align:left;
+}
+
+.summary{
+    width:300px;
+    margin-left:auto;
+    margin-top:20px;
+}
+
+.row{
+    display:flex;
+    justify-content:space-between;
+    padding:7px 0;
+}
+
+.total{
+    border-top:2px solid #111;
+    padding-top:10px;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.thank{
+    text-align:center;
+    margin-top:30px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="receipt">
+
+
+<h1>
+MMM Super Market
+</h1>
+
+
+<div class="center">
+Point of Sale System
+</div>
+
+
+<div class="info">
+
+<strong>
+Invoice:
+</strong>
+
+${sale.invoiceNumber}
+
+<br>
+
+
+<strong>
+Date:
+</strong>
+
+${date.toLocaleString()}
+
+</div>
+
+
+
+<table>
+
+
+<thead>
+
+<tr>
+
+<th>
+Product
+</th>
+
+<th>
+Qty
+</th>
+
+<th>
+Price
+</th>
+
+<th>
+Total
+</th>
+
+</tr>
+
+</thead>
+
+
+<tbody>
+
+${itemsHTML}
+
+</tbody>
+
+
+</table>
+
+
+
+<div class="summary">
+
+
+<div class="row">
+
+<span>
+Subtotal
+</span>
+
+<span>
+Rs. ${sale.subtotal.toLocaleString()}
+</span>
+
+</div>
+
+
+<div class="row">
+
+<span>
+Discount
+</span>
+
+<span>
+Rs. ${sale.discount.toLocaleString()}
+</span>
+
+</div>
+
+
+<div class="row total">
+
+<span>
+Total
+</span>
+
+<span>
+Rs. ${sale.total.toLocaleString()}
+</span>
+
+</div>
+
+
+<div class="row">
+
+<span>
+Cash
+</span>
+
+<span>
+Rs. ${sale.cash.toLocaleString()}
+</span>
+
+</div>
+
+
+<div class="row">
+
+<span>
+Balance
+</span>
+
+<span>
+Rs. ${sale.balance.toLocaleString()}
+</span>
+
+</div>
+
+
+</div>
+
+
+
+<div class="thank">
+
+Thank you for shopping with us!
+
+</div>
+
+
+</div>
+
+
+<script>
+
+window.onload=function(){
+
+    window.print();
+
+};
+
+<\/script>
+
+
+</body>
+
+</html>
+
+    `);
+
+
+    printWindow.document.close();
+
+}
+
+
+
+/* =====================================================
+   START
+===================================================== */
+
+displayProducts(products);
+
+renderCart();
+
+</script>
+
+
+</body>
+</html>
