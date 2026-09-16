@@ -1,0 +1,1912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MMM Super Market - Dashboard</title>
+
+<style>
+
+/* =====================================================
+   BASIC
+===================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    background:#f3f4f6;
+    color:#111827;
+}
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+
+    width:230px;
+    height:100vh;
+
+    background:#111827;
+    color:white;
+
+    padding:20px 14px;
+
+    z-index:100;
+}
+
+.logo{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.logo-circle{
+    width:58px;
+    height:58px;
+
+    background:#2563eb;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    margin:auto;
+
+    font-size:19px;
+    font-weight:bold;
+}
+
+.logo h2{
+    font-size:19px;
+    margin-top:10px;
+}
+
+.menu-title{
+    color:#6b7280;
+    font-size:11px;
+
+    text-transform:uppercase;
+
+    margin:0 0 10px 12px;
+
+    font-weight:bold;
+}
+
+.menu a{
+    display:flex;
+    align-items:center;
+
+    gap:12px;
+
+    color:#d1d5db;
+
+    text-decoration:none;
+
+    padding:13px 12px;
+
+    margin-bottom:5px;
+
+    border-radius:8px;
+
+    font-size:14px;
+
+    transition:0.2s;
+}
+
+.menu a:hover{
+    background:#1f2937;
+    color:white;
+}
+
+.menu a.active{
+    background:#2563eb;
+    color:white;
+}
+
+.menu a span:first-child{
+    width:20px;
+    text-align:center;
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+.logout{
+    position:absolute;
+
+    left:14px;
+    right:14px;
+
+    bottom:20px;
+}
+
+.logout a{
+    display:block;
+
+    text-align:center;
+
+    background:#dc2626;
+
+    color:white;
+
+    padding:12px;
+
+    border-radius:8px;
+
+    text-decoration:none;
+
+    font-size:14px;
+}
+
+.logout a:hover{
+    background:#b91c1c;
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.main{
+    margin-left:230px;
+
+    min-height:100vh;
+}
+
+
+/* =====================================================
+   TOP BAR
+===================================================== */
+
+.topbar{
+    height:70px;
+
+    background:white;
+
+    border-bottom:1px solid #e5e7eb;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:0 25px;
+}
+
+.topbar h1{
+    font-size:22px;
+}
+
+.user{
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+}
+
+.user-icon{
+    width:40px;
+    height:40px;
+
+    background:#dbeafe;
+
+    color:#2563eb;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    font-weight:bold;
+}
+
+
+/* =====================================================
+   CONTENT
+===================================================== */
+
+.content{
+    padding:25px;
+}
+
+
+/* =====================================================
+   WELCOME
+===================================================== */
+
+.welcome{
+    background:linear-gradient(
+        135deg,
+        #2563eb,
+        #1d4ed8
+    );
+
+    color:white;
+
+    border-radius:14px;
+
+    padding:25px;
+
+    margin-bottom:22px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    overflow:hidden;
+
+    position:relative;
+}
+
+.welcome h2{
+    font-size:24px;
+
+    margin-bottom:8px;
+}
+
+.welcome p{
+    font-size:14px;
+
+    opacity:0.9;
+}
+
+.welcome-right{
+    font-size:55px;
+
+    opacity:0.18;
+
+    position:absolute;
+
+    right:35px;
+
+    top:12px;
+}
+
+
+/* =====================================================
+   STAT CARDS
+===================================================== */
+
+.stats{
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:18px;
+
+    margin-bottom:22px;
+}
+
+.stat-card{
+    background:white;
+
+    border-radius:12px;
+
+    padding:20px;
+
+    box-shadow:
+        0 2px 8px
+        rgba(0,0,0,0.05);
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    transition:0.2s;
+}
+
+.stat-card:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 5px 15px
+        rgba(0,0,0,0.08);
+}
+
+.stat-icon{
+    width:50px;
+    height:50px;
+
+    border-radius:10px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:23px;
+}
+
+.sales-icon{
+    background:#dcfce7;
+}
+
+.orders-icon{
+    background:#dbeafe;
+}
+
+.products-icon{
+    background:#fef3c7;
+}
+
+.stock-icon{
+    background:#fee2e2;
+}
+
+.stat-info{
+    flex:1;
+}
+
+.stat-info p{
+    color:#6b7280;
+
+    font-size:12px;
+
+    margin-bottom:5px;
+}
+
+.stat-info h3{
+    font-size:21px;
+}
+
+
+/* =====================================================
+   DASHBOARD GRID
+===================================================== */
+
+.dashboard-grid{
+    display:grid;
+
+    grid-template-columns:
+        1.4fr 1fr;
+
+    gap:20px;
+
+    margin-bottom:20px;
+}
+
+
+/* =====================================================
+   CARD
+===================================================== */
+
+.card{
+    background:white;
+
+    border-radius:12px;
+
+    padding:20px;
+
+    box-shadow:
+        0 2px 8px
+        rgba(0,0,0,0.05);
+}
+
+.card-header{
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:20px;
+}
+
+.card-header h3{
+    font-size:17px;
+}
+
+.card-header span{
+    color:#6b7280;
+
+    font-size:12px;
+}
+
+
+/* =====================================================
+   SALES OVERVIEW
+===================================================== */
+
+.sales-overview{
+    height:280px;
+
+    display:flex;
+
+    flex-direction:column;
+}
+
+.chart{
+    flex:1;
+
+    display:flex;
+
+    align-items:flex-end;
+
+    justify-content:space-around;
+
+    gap:12px;
+
+    padding:
+        20px 5px 5px;
+}
+
+.bar-item{
+    height:100%;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:flex-end;
+
+    flex:1;
+}
+
+.bar{
+    width:28px;
+
+    background:#2563eb;
+
+    border-radius:
+        6px 6px 0 0;
+
+    min-height:5px;
+
+    transition:0.3s;
+}
+
+.bar:hover{
+    background:#1d4ed8;
+}
+
+.bar-label{
+    font-size:10px;
+
+    color:#6b7280;
+
+    margin-top:7px;
+}
+
+
+/* =====================================================
+   TOP PRODUCTS
+===================================================== */
+
+.top-product{
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:12px 0;
+
+    border-bottom:
+        1px solid #e5e7eb;
+}
+
+.top-product:last-child{
+    border-bottom:none;
+}
+
+.product-number{
+    width:30px;
+    height:30px;
+
+    border-radius:8px;
+
+    background:#eff6ff;
+
+    color:#2563eb;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-weight:bold;
+
+    font-size:13px;
+}
+
+.product-info{
+    flex:1;
+}
+
+.product-info strong{
+    display:block;
+
+    font-size:13px;
+
+    margin-bottom:3px;
+}
+
+.product-info span{
+    color:#6b7280;
+
+    font-size:11px;
+}
+
+.product-total{
+    font-size:13px;
+
+    font-weight:bold;
+
+    color:#2563eb;
+}
+
+
+/* =====================================================
+   RECENT SALES
+===================================================== */
+
+.recent-sales{
+    margin-top:20px;
+}
+
+.sales-table{
+    width:100%;
+
+    border-collapse:collapse;
+}
+
+.sales-table th,
+.sales-table td{
+    padding:12px;
+
+    text-align:left;
+
+    border-bottom:
+        1px solid #e5e7eb;
+}
+
+.sales-table th{
+    background:#f9fafb;
+
+    font-size:12px;
+
+    color:#6b7280;
+}
+
+.sales-table td{
+    font-size:13px;
+}
+
+.amount{
+    font-weight:bold;
+
+    color:#15803d;
+}
+
+.sale-status{
+    background:#dcfce7;
+
+    color:#15803d;
+
+    padding:5px 8px;
+
+    border-radius:15px;
+
+    font-size:10px;
+}
+
+
+/* =====================================================
+   QUICK ACTIONS
+===================================================== */
+
+.quick-actions{
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:12px;
+}
+
+.quick-btn{
+    border:1px solid #e5e7eb;
+
+    background:white;
+
+    border-radius:9px;
+
+    padding:15px;
+
+    text-decoration:none;
+
+    color:#111827;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    font-size:13px;
+
+    transition:0.2s;
+}
+
+.quick-btn:hover{
+    border-color:#2563eb;
+
+    background:#eff6ff;
+
+    color:#2563eb;
+}
+
+.quick-icon{
+    font-size:20px;
+}
+
+
+/* =====================================================
+   LOW STOCK
+===================================================== */
+
+.low-stock{
+    margin-top:20px;
+}
+
+.low-stock-item{
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:12px 0;
+
+    border-bottom:
+        1px solid #e5e7eb;
+}
+
+.low-stock-item:last-child{
+    border-bottom:none;
+}
+
+.low-stock-name{
+    font-size:13px;
+
+    font-weight:bold;
+}
+
+.low-stock-count{
+    color:#dc2626;
+
+    background:#fee2e2;
+
+    padding:5px 9px;
+
+    border-radius:15px;
+
+    font-size:11px;
+
+    font-weight:bold;
+}
+
+
+/* =====================================================
+   EMPTY
+===================================================== */
+
+.empty{
+    text-align:center;
+
+    color:#9ca3af;
+
+    padding:25px;
+
+    font-size:13px;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:1100px){
+
+    .stats{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .dashboard-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+
+@media(max-width:700px){
+
+    .sidebar{
+        width:65px;
+
+        padding:15px 7px;
+    }
+
+    .logo h2,
+    .menu-title,
+    .menu a span:last-child,
+    .logout span:last-child{
+        display:none;
+    }
+
+    .logo-circle{
+        width:45px;
+
+        height:45px;
+
+        font-size:13px;
+    }
+
+    .menu a{
+        justify-content:center;
+
+        padding:13px 5px;
+    }
+
+    .logout{
+        left:7px;
+
+        right:7px;
+    }
+
+    .main{
+        margin-left:65px;
+    }
+
+    .content{
+        padding:15px;
+    }
+
+    .topbar{
+        padding:0 15px;
+    }
+
+    .topbar h1{
+        font-size:18px;
+    }
+
+    .welcome{
+        padding:20px;
+    }
+
+    .welcome h2{
+        font-size:20px;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .quick-actions{
+        grid-template-columns:1fr;
+    }
+
+    .sales-table{
+        min-width:600px;
+    }
+
+    .recent-sales{
+        overflow-x:auto;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+
+        <div class="logo-circle">
+            MMM
+        </div>
+
+        <h2>
+            MMM Super Market
+        </h2>
+
+    </div>
+
+
+    <div class="menu-title">
+        Main Menu
+    </div>
+
+
+    <div class="menu">
+
+        <a href="sales.html">
+            <span>🛒</span>
+            <span>New Sale</span>
+        </a>
+
+
+        <a href="products.html">
+            <span>📦</span>
+            <span>Products</span>
+        </a>
+
+
+        <a href="stock.html">
+            <span>📊</span>
+            <span>Stock</span>
+        </a>
+
+
+        <a href="customers.html">
+            <span>👥</span>
+            <span>Customers</span>
+        </a>
+
+
+        <a href="sales-history.html">
+            <span>💰</span>
+            <span>Sales</span>
+        </a>
+
+
+        <a href="reports.html">
+            <span>📈</span>
+            <span>Reports</span>
+        </a>
+
+
+        <!-- DASHBOARD ACTIVE -->
+
+        <a href="dashboard.html" class="active">
+            <span>🏠</span>
+            <span>Dashboard</span>
+        </a>
+
+    </div>
+
+
+    <div class="logout">
+
+        <a href="MMM Super Market Login.html">
+
+            <span>🚪</span>
+
+            <span>
+                Logout
+            </span>
+
+        </a>
+
+    </div>
+
+</aside>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="main">
+
+
+    <!-- TOP BAR -->
+
+    <div class="topbar">
+
+        <h1>
+            Dashboard
+        </h1>
+
+
+        <div class="user">
+
+            <div class="user-icon">
+                M
+            </div>
+
+            <div>
+                <strong>
+                    Admin
+                </strong>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- CONTENT -->
+
+    <div class="content">
+
+
+        <!-- =================================================
+             WELCOME
+        ================================================= -->
+
+        <div class="welcome">
+
+            <div>
+
+                <h2>
+                    Welcome back, Admin 👋
+                </h2>
+
+                <p>
+                    Here's what's happening in your supermarket today.
+                </p>
+
+            </div>
+
+
+            <div class="welcome-right">
+                🛒
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             STAT CARDS
+        ================================================= -->
+
+        <div class="stats">
+
+
+            <!-- SALES -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon sales-icon">
+                    💰
+                </div>
+
+                <div class="stat-info">
+
+                    <p>
+                        Today's Sales
+                    </p>
+
+                    <h3 id="todaySales">
+                        Rs. 0
+                    </h3>
+
+                </div>
+
+            </div>
+
+
+            <!-- ORDERS -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon orders-icon">
+                    🧾
+                </div>
+
+                <div class="stat-info">
+
+                    <p>
+                        Today's Orders
+                    </p>
+
+                    <h3 id="todayOrders">
+                        0
+                    </h3>
+
+                </div>
+
+            </div>
+
+
+            <!-- PRODUCTS -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon products-icon">
+                    📦
+                </div>
+
+                <div class="stat-info">
+
+                    <p>
+                        Total Products
+                    </p>
+
+                    <h3 id="totalProducts">
+                        0
+                    </h3>
+
+                </div>
+
+            </div>
+
+
+            <!-- LOW STOCK -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon stock-icon">
+                    ⚠️
+                </div>
+
+                <div class="stat-info">
+
+                    <p>
+                        Low Stock
+                    </p>
+
+                    <h3 id="lowStock">
+                        0
+                    </h3>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             MAIN GRID
+        ================================================= -->
+
+        <div class="dashboard-grid">
+
+
+            <!-- SALES OVERVIEW -->
+
+            <div class="card sales-overview">
+
+                <div class="card-header">
+
+                    <h3>
+                        Sales Overview
+                    </h3>
+
+                    <span>
+                        Last 7 days
+                    </span>
+
+                </div>
+
+
+                <div
+                    class="chart"
+                    id="salesChart"
+                >
+                </div>
+
+            </div>
+
+
+
+            <!-- TOP PRODUCTS -->
+
+            <div class="card">
+
+                <div class="card-header">
+
+                    <h3>
+                        Top Products
+                    </h3>
+
+                    <span>
+                        Best sellers
+                    </span>
+
+                </div>
+
+
+                <div id="topProducts">
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             QUICK ACTIONS
+        ================================================= -->
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <h3>
+                    Quick Actions
+                </h3>
+
+            </div>
+
+
+            <div class="quick-actions">
+
+
+                <a
+                    href="sales.html"
+                    class="quick-btn"
+                >
+
+                    <span class="quick-icon">
+                        🛒
+                    </span>
+
+                    <span>
+                        New Sale
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="products.html"
+                    class="quick-btn"
+                >
+
+                    <span class="quick-icon">
+                        📦
+                    </span>
+
+                    <span>
+                        Add Product
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="stock.html"
+                    class="quick-btn"
+                >
+
+                    <span class="quick-icon">
+                        📊
+                    </span>
+
+                    <span>
+                        Manage Stock
+                    </span>
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             RECENT SALES
+        ================================================= -->
+
+        <div class="card recent-sales">
+
+            <div class="card-header">
+
+                <h3>
+                    Recent Sales
+                </h3>
+
+                <span>
+                    Latest transactions
+                </span>
+
+            </div>
+
+
+            <table class="sales-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Invoice
+                        </th>
+
+                        <th>
+                            Date
+                        </th>
+
+                        <th>
+                            Items
+                        </th>
+
+                        <th>
+                            Amount
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="recentSales">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+
+        <!-- =================================================
+             LOW STOCK PRODUCTS
+        ================================================= -->
+
+        <div class="card low-stock">
+
+            <div class="card-header">
+
+                <h3>
+                    Low Stock Products
+                </h3>
+
+                <span>
+                    Needs attention
+                </span>
+
+            </div>
+
+
+            <div id="lowStockProducts">
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</main>
+
+
+
+<script>
+
+/* =====================================================
+   GET PRODUCTS
+===================================================== */
+
+function getProducts(){
+
+    try{
+
+        return JSON.parse(
+            localStorage.getItem("mmm_products")
+        ) || [];
+
+    }
+
+    catch(error){
+
+        return [];
+
+    }
+
+}
+
+
+/* =====================================================
+   GET SALES
+===================================================== */
+
+function getSales(){
+
+    try{
+
+        return JSON.parse(
+            localStorage.getItem("mmm_sales")
+        ) || [];
+
+    }
+
+    catch(error){
+
+        return [];
+
+    }
+
+}
+
+
+/* =====================================================
+   TODAY CHECK
+===================================================== */
+
+function isToday(dateValue){
+
+    if(!dateValue){
+        return false;
+    }
+
+    const date =
+        new Date(dateValue);
+
+    const today =
+        new Date();
+
+
+    return (
+
+        date.getDate() === today.getDate()
+
+        &&
+
+        date.getMonth() === today.getMonth()
+
+        &&
+
+        date.getFullYear() === today.getFullYear()
+
+    );
+
+}
+
+
+/* =====================================================
+   TODAY SALES
+===================================================== */
+
+function loadTodayStats(){
+
+    const products =
+        getProducts();
+
+    const sales =
+        getSales();
+
+
+    const todaySales =
+        sales.filter(
+            sale => isToday(sale.date)
+        );
+
+
+    let total = 0;
+
+
+    todaySales.forEach(
+        sale => {
+
+            total +=
+                Number(
+                    sale.total || 0
+                );
+
+        }
+    );
+
+
+    document.getElementById(
+        "todaySales"
+    ).textContent =
+        "Rs. " +
+        total.toLocaleString();
+
+
+    document.getElementById(
+        "todayOrders"
+    ).textContent =
+        todaySales.length;
+
+
+    document.getElementById(
+        "totalProducts"
+    ).textContent =
+        products.length;
+
+
+    const low =
+        products.filter(
+            product =>
+                Number(product.stock) <= 10
+        );
+
+
+    document.getElementById(
+        "lowStock"
+    ).textContent =
+        low.length;
+
+}
+
+
+/* =====================================================
+   SALES CHART
+===================================================== */
+
+function loadSalesChart(){
+
+    const sales =
+        getSales();
+
+
+    const chart =
+        document.getElementById(
+            "salesChart"
+        );
+
+
+    const days = [];
+
+
+    for(let i=6;i>=0;i--){
+
+        const date =
+            new Date();
+
+        date.setDate(
+            date.getDate() - i
+        );
+
+
+        let total = 0;
+
+
+        sales.forEach(
+            sale => {
+
+                const saleDate =
+                    new Date(sale.date);
+
+
+                if(
+
+                    saleDate.getDate()
+                    ===
+                    date.getDate()
+
+                    &&
+
+                    saleDate.getMonth()
+                    ===
+                    date.getMonth()
+
+                    &&
+
+                    saleDate.getFullYear()
+                    ===
+                    date.getFullYear()
+
+                ){
+
+                    total +=
+                        Number(
+                            sale.total || 0
+                        );
+
+                }
+
+            }
+        );
+
+
+        days.push({
+
+            name:
+                date.toLocaleDateString(
+                    "en-US",
+                    {
+                        weekday:"short"
+                    }
+                ),
+
+            total:total
+
+        });
+
+    }
+
+
+    const max =
+        Math.max(
+            ...days.map(
+                day => day.total
+            ),
+            1
+        );
+
+
+    chart.innerHTML =
+        days.map(day => {
+
+            const height =
+                Math.max(
+                    (day.total / max) * 85,
+                    5
+                );
+
+
+            return `
+
+                <div class="bar-item">
+
+                    <div
+                        class="bar"
+                        style="height:${height}%"
+                        title="Rs. ${day.total.toLocaleString()}"
+                    ></div>
+
+                    <div class="bar-label">
+                        ${day.name}
+                    </div>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+}
+
+
+/* =====================================================
+   TOP PRODUCTS
+===================================================== */
+
+function loadTopProducts(){
+
+    const sales =
+        getSales();
+
+
+    const productSales = {};
+
+
+    sales.forEach(
+        sale => {
+
+            if(!sale.items){
+                return;
+            }
+
+
+            sale.items.forEach(
+                item => {
+
+                    const name =
+                        item.name;
+
+
+                    if(!productSales[name]){
+
+                        productSales[name] = 0;
+
+                    }
+
+
+                    productSales[name] +=
+                        Number(
+                            item.quantity || 0
+                        );
+
+                }
+            );
+
+        }
+    );
+
+
+    const sorted =
+        Object.entries(
+            productSales
+        )
+        .sort(
+            (a,b) => b[1] - a[1]
+        )
+        .slice(0,5);
+
+
+    const container =
+        document.getElementById(
+            "topProducts"
+        );
+
+
+    if(sorted.length === 0){
+
+        container.innerHTML = `
+
+            <div class="empty">
+                No sales yet
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        sorted.map(
+            (item,index) => `
+
+                <div class="top-product">
+
+                    <div class="product-number">
+                        ${index + 1}
+                    </div>
+
+                    <div class="product-info">
+
+                        <strong>
+                            ${item[0]}
+                        </strong>
+
+                        <span>
+                            ${item[1]} units sold
+                        </span>
+
+                    </div>
+
+                    <div class="product-total">
+                        ${item[1]}
+                    </div>
+
+                </div>
+
+            `
+        ).join("");
+
+}
+
+
+/* =====================================================
+   RECENT SALES
+===================================================== */
+
+function loadRecentSales(){
+
+    const sales =
+        getSales();
+
+
+    const recent =
+        [...sales]
+        .sort(
+            (a,b) =>
+                new Date(b.date)
+                -
+                new Date(a.date)
+        )
+        .slice(0,5);
+
+
+    const container =
+        document.getElementById(
+            "recentSales"
+        );
+
+
+    if(recent.length === 0){
+
+        container.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="5"
+                    class="empty"
+                >
+                    No sales yet
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        recent.map(
+            sale => {
+
+                const date =
+                    new Date(
+                        sale.date
+                    );
+
+
+                const itemCount =
+                    sale.items
+                    ?
+                    sale.items.reduce(
+                        (total,item) =>
+                            total +
+                            Number(
+                                item.quantity || 0
+                            ),
+                        0
+                    )
+                    :
+                    0;
+
+
+                return `
+
+                    <tr>
+
+                        <td>
+                            <strong>
+                                ${sale.invoice || "Invoice"}
+                            </strong>
+                        </td>
+
+                        <td>
+                            ${date.toLocaleDateString()}
+                        </td>
+
+                        <td>
+                            ${itemCount}
+                        </td>
+
+                        <td class="amount">
+                            Rs.
+                            ${Number(
+                                sale.total || 0
+                            ).toLocaleString()}
+                        </td>
+
+                        <td>
+
+                            <span class="sale-status">
+                                Completed
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+            }
+        ).join("");
+
+}
+
+
+/* =====================================================
+   LOW STOCK PRODUCTS
+===================================================== */
+
+function loadLowStockProducts(){
+
+    const products =
+        getProducts();
+
+
+    const low =
+        products
+        .filter(
+            product =>
+                Number(product.stock) <= 10
+        )
+        .sort(
+            (a,b) =>
+                Number(a.stock)
+                -
+                Number(b.stock)
+        )
+        .slice(0,5);
+
+
+    const container =
+        document.getElementById(
+            "lowStockProducts"
+        );
+
+
+    if(low.length === 0){
+
+        container.innerHTML = `
+
+            <div class="empty">
+
+                All products have enough stock ✓
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        low.map(
+            product => `
+
+                <div class="low-stock-item">
+
+                    <div class="low-stock-name">
+                        ${product.name}
+                    </div>
+
+                    <div class="low-stock-count">
+                        ${product.stock} left
+                    </div>
+
+                </div>
+
+            `
+        ).join("");
+
+}
+
+
+/* =====================================================
+   LOAD DASHBOARD
+===================================================== */
+
+loadTodayStats();
+
+loadSalesChart();
+
+loadTopProducts();
+
+loadRecentSales();
+
+loadLowStockProducts();
+
+</script>
+
+
+</body>
+</html>
