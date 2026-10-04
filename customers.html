@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>MMM Super Market - Customers</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+body{background:#f5f6f7;color:#111827}
+.sidebar{position:fixed;left:0;top:0;width:230px;height:100vh;background:#181a1d;color:white}
+.logoBox{height:90px;display:flex;align-items:center;gap:12px;padding:18px;border-bottom:1px solid #2d3035}
+.logo{width:48px;height:48px;border-radius:50%;background:#f97316;display:flex;align-items:center;justify-content:center;font-size:25px;font-weight:bold}
+.logoText strong{display:block;font-size:15px}.logoText span{font-size:10px;color:#9ca3af}
+.nav{padding:18px 12px}.nav a{display:flex;align-items:center;gap:12px;padding:13px 14px;margin-bottom:6px;color:#d1d5db;text-decoration:none;border-radius:8px;font-size:14px}
+.nav a:hover,.nav a.active{background:#26292d;color:white}.nav a.active{border-left:3px solid #f97316}
+.navIcon{width:24px;text-align:center}.logout{position:absolute;bottom:18px;left:12px;right:12px}.logout a{display:flex;gap:12px;color:#d1d5db;text-decoration:none;padding:12px 14px}
+.main{margin-left:230px}.topbar{height:70px;background:white;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between;padding:0 28px}
+.pageTitle h1{font-size:21px}.pageTitle p{font-size:12px;color:#6b7280;margin-top:4px}.topRight{display:flex;gap:18px;align-items:center}.clock{color:#6b7280;font-size:13px}
+.user{display:flex;gap:9px;align-items:center;font-size:13px;font-weight:bold}.userDot{width:34px;height:34px;border-radius:50%;background:#f97316;color:white;display:flex;align-items:center;justify-content:center}
+.content{padding:28px}.toolbar{display:flex;gap:10px;margin-bottom:20px}.search{flex:1;padding:13px;border:1px solid #d1d5db;border-radius:8px;outline:none;background:white}
+.panel{background:white;border:1px solid #e5e7eb;border-radius:10px;overflow:hidden}table{width:100%;border-collapse:collapse}
+th{background:#f9fafb;color:#6b7280;font-size:11px;text-align:left;padding:14px}td{padding:14px;border-top:1px solid #f0f0f0;font-size:13px}
+.name{font-weight:bold}.small{font-size:11px;color:#9ca3af;margin-top:4px}
+@media(max-width:750px){.sidebar{width:65px}.logoText{display:none}.logoBox{justify-content:center}.nav a{justify-content:center}.nav a span:not(.navIcon){display:none}.logout span:not(.navIcon){display:none}.main{margin-left:65px}.content{padding:18px}.clock{display:none}}
+</style>
+</head>
+
+<body>
+
+<aside class="sidebar">
+<div class="logoBox"><div class="logo">M</div><div class="logoText"><strong>MMM SUPER MARKET</strong><span>POINT OF SALE</span></div></div>
+<nav class="nav">
+<a href="dashboard.html"><span class="navIcon">▦</span><span>Dashboard</span></a>
+<a href="sales.html"><span class="navIcon">＋</span><span>New Sale</span></a>
+<a href="products.html"><span class="navIcon">▤</span><span>Products</span></a>
+<a href="stock.html"><span class="navIcon">▥</span><span>Stock</span></a>
+<a href="customers.html" class="active"><span class="navIcon">♙</span><span>Customers</span></a>
+<a href="sales-history.html"><span class="navIcon">◷</span><span>Sales History</span></a>
+<a href="reports.html"><span class="navIcon">▥</span><span>Reports</span></a>
+</nav>
+<div class="logout"><a href="MMM Super Market Login.html"><span class="navIcon">↪</span><span>Logout</span></a></div>
+</aside>
+
+<main class="main">
+<header class="topbar">
+<div class="pageTitle"><h1>Customers</h1><p>Customer information</p></div>
+<div class="topRight"><div id="clock" class="clock"></div><div class="user"><div class="userDot">M</div>Administrator</div></div>
+</header>
+
+<section class="content">
+
+<div class="toolbar">
+<input class="search" id="search" placeholder="Search customers..." oninput="render()">
+</div>
+
+<div class="panel">
+<table>
+<thead><tr><th>CUSTOMER</th><th>SALES</th><th>TOTAL SPENT</th></tr></thead>
+<tbody id="table"></tbody>
+</table>
+</div>
+
+</section>
+</main>
+
+<script>
+function getSales(){
+try{return JSON.parse(localStorage.getItem("mmm_sales"))||[]}catch(e){return[]}
+}
+function money(n){return Number(n||0).toLocaleString("en-LK",{minimumFractionDigits:2,maximumFractionDigits:2})}
+function esc(v){return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
+
+function render(){
+
+const search=document.getElementById("search").value.toLowerCase().trim();
+const sales=getSales();
+const map={};
+
+sales.forEach(s=>{
+const name=s.customer||"Walk-in Customer";
+
+if(!map[name])map[name]={name,sales:0,total:0};
+
+map[name].sales++;
+map[name].total+=Number(s.total||0);
+});
+
+const list=Object.values(map).filter(c=>
+c.name.toLowerCase().includes(search)
+);
+
+const table=document.getElementById("table");
+
+if(!list.length){
+table.innerHTML='<tr><td colspan="3" style="text-align:center;padding:35px;color:#9ca3af">No customers found.</td></tr>';
+return;
+}
+
+table.innerHTML=list.map(c=>`
+<tr>
+<td><div class="name">${esc(c.name)}</div><div class="small">Customer</div></td>
+<td>${c.sales}</td>
+<td><b>Rs. ${money(c.total)}</b></td>
+</tr>
+`).join("");
+}
+
+function clock(){document.getElementById("clock").textContent=new Date().toLocaleTimeString()}
+
+document.addEventListener("DOMContentLoaded",()=>{
+render();clock();setInterval(clock,1000);
+});
+</script>
+
+</body>
+</html>
