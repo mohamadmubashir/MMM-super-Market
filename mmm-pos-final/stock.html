@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>MMM Super Market - Stock</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+body{background:#f5f6f7;color:#111827}
+.sidebar{position:fixed;left:0;top:0;width:230px;height:100vh;background:#181a1d;color:white}
+.logoBox{height:90px;display:flex;align-items:center;gap:12px;padding:18px;border-bottom:1px solid #2d3035}
+.logo{width:48px;height:48px;border-radius:50%;background:#f97316;display:flex;align-items:center;justify-content:center;font-size:25px;font-weight:bold}
+.logoText strong{display:block;font-size:15px}.logoText span{font-size:10px;color:#9ca3af}
+.nav{padding:18px 12px}.nav a{display:flex;align-items:center;gap:12px;padding:13px 14px;margin-bottom:6px;color:#d1d5db;text-decoration:none;border-radius:8px;font-size:14px}
+.nav a:hover,.nav a.active{background:#26292d;color:white}.nav a.active{border-left:3px solid #f97316}
+.navIcon{width:24px;text-align:center}.logout{position:absolute;bottom:18px;left:12px;right:12px}
+.logout a{display:flex;gap:12px;color:#d1d5db;text-decoration:none;padding:12px 14px}
+.main{margin-left:230px}.topbar{height:70px;background:white;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between;padding:0 28px}
+.pageTitle h1{font-size:21px}.pageTitle p{font-size:12px;color:#6b7280;margin-top:4px}
+.topRight{display:flex;gap:18px;align-items:center}.clock{color:#6b7280;font-size:13px}
+.user{display:flex;gap:9px;align-items:center;font-size:13px;font-weight:bold}.userDot{width:34px;height:34px;border-radius:50%;background:#f97316;color:white;display:flex;align-items:center;justify-content:center}
+.content{padding:28px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:20px}
+.card{background:white;border:1px solid #e5e7eb;border-radius:10px;padding:20px}.label{font-size:12px;color:#6b7280}.value{font-size:28px;font-weight:bold;margin-top:12px}
+.panel{background:white;border:1px solid #e5e7eb;border-radius:10px;overflow:hidden}
+.panelHeader{padding:18px 20px;border-bottom:1px solid #e5e7eb;font-weight:bold}
+table{width:100%;border-collapse:collapse}
+th{background:#f9fafb;color:#6b7280;font-size:11px;text-align:left;padding:14px}
+td{padding:14px;border-top:1px solid #f0f0f0;font-size:13px}
+.low{color:#dc2626;font-weight:bold}.good{color:#16a34a;font-weight:bold}
+
+/* ONLY FOR EDIT BUTTON */
+.editBtn{
+    background:#f97316;
+    color:white;
+    border:none;
+    border-radius:6px;
+    padding:7px 12px;
+    font-size:12px;
+    font-weight:bold;
+    cursor:pointer;
+}
+.editBtn:hover{
+    background:#ea580c;
+}
+
+/* ONLY FOR EDIT BOX */
+.editBox{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    align-items:center;
+    justify-content:center;
+    z-index:1000;
+}
+.editBox.show{
+    display:flex;
+}
+.editCard{
+    background:white;
+    width:360px;
+    max-width:90%;
+    border-radius:10px;
+    padding:22px;
+    box-shadow:0 10px 30px rgba(0,0,0,.2);
+}
+.editCard h2{
+    font-size:18px;
+    margin-bottom:8px;
+}
+.editProductName{
+    font-size:13px;
+    color:#6b7280;
+    margin-bottom:18px;
+}
+.editLabel{
+    display:block;
+    font-size:12px;
+    color:#6b7280;
+    margin-bottom:6px;
+}
+.stockInput{
+    width:100%;
+    height:42px;
+    border:1px solid #d1d5db;
+    border-radius:7px;
+    padding:0 12px;
+    font-size:15px;
+    outline:none;
+}
+.stockInput:focus{
+    border-color:#f97316;
+}
+.editActions{
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+    margin-top:18px;
+}
+.cancelBtn{
+    background:#f3f4f6;
+    color:#111827;
+    border:1px solid #d1d5db;
+    border-radius:6px;
+    padding:8px 14px;
+    cursor:pointer;
+}
+.saveBtn{
+    background:#f97316;
+    color:white;
+    border:none;
+    border-radius:6px;
+    padding:8px 16px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+@media(max-width:900px){.cards{grid-template-columns:1fr}}
+@media(max-width:750px){
+.sidebar{width:65px}.logoText{display:none}.logoBox{justify-content:center}
+.nav a{justify-content:center}.nav a span:not(.navIcon){display:none}
+.logout span:not(.navIcon){display:none}.main{margin-left:65px}
+.content{padding:18px}.clock{display:none}
+}
+</style>
+</head>
+
+<body>
+
+<aside class="sidebar">
+<div class="logoBox"><div class="logo">M</div><div class="logoText"><strong>MMM SUPER MARKET</strong><span>POINT OF SALE</span></div></div>
+<nav class="nav">
+<a href="dashboard.html"><span class="navIcon">▦</span><span>Dashboard</span></a>
+<a href="sales.html"><span class="navIcon">＋</span><span>New Sale</span></a>
+<a href="products.html"><span class="navIcon">▤</span><span>Products</span></a>
+<a href="stock.html" class="active"><span class="navIcon">▥</span><span>Stock</span></a>
+<a href="customers.html"><span class="navIcon">♙</span><span>Customers</span></a>
+<a href="sales-history.html"><span class="navIcon">◷</span><span>Sales History</span></a>
+<a href="reports.html"><span class="navIcon">▥</span><span>Reports</span></a>
+</nav>
+<div class="logout"><a href="MMM Super Market Login.html"><span class="navIcon">↪</span><span>Logout</span></a></div>
+</aside>
+
+<main class="main">
+<header class="topbar">
+<div class="pageTitle"><h1>Stock</h1><p>Current inventory overview</p></div>
+<div class="topRight">
+<div id="clock" class="clock"></div>
+<div class="user"><div class="userDot">M</div>Administrator</div>
+</div>
+</header>
+
+<section class="content">
+
+<div class="cards">
+<div class="card">
+<div class="label">TOTAL PRODUCTS</div>
+<div class="value" id="totalProducts">0</div>
+</div>
+
+<div class="card">
+<div class="label">TOTAL UNITS</div>
+<div class="value" id="totalUnits">0</div>
+</div>
+
+<div class="card">
+<div class="label">LOW STOCK</div>
+<div class="value" id="lowStock">0</div>
+</div>
+</div>
+
+<div class="panel">
+<div class="panelHeader">Inventory Stock</div>
+
+<table>
+<thead>
+<tr>
+<th>PRODUCT</th>
+<th>BARCODE</th>
+<th>PRICE</th>
+<th>STOCK</th>
+<th>STATUS</th>
+<th>ACTION</th>
+</tr>
+</thead>
+
+<tbody id="stockTable"></tbody>
+</table>
+</div>
+
+</section>
+</main>
+
+
+<!-- EDIT STOCK BOX -->
+<div class="editBox" id="editBox">
+
+<div class="editCard">
+
+<h2>Edit Stock</h2>
+
+<div class="editProductName" id="editProductName"></div>
+
+<label class="editLabel">Stock Quantity</label>
+
+<input
+type="number"
+id="stockInput"
+class="stockInput"
+min="0"
+step="1"
+>
+
+<div class="editActions">
+
+<button class="cancelBtn" onclick="closeEdit()">Cancel</button>
+
+<button class="saveBtn" onclick="saveStock()">Save</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+let editingProductId = null;
+
+
+/* GET PRODUCTS */
+function products(){
+try{
+return JSON.parse(localStorage.getItem("mmm_products"))||[];
+}catch(e){
+return[];
+}
+}
+
+
+/* MONEY */
+function money(n){
+return Number(n||0).toLocaleString("en-LK",{
+minimumFractionDigits:2,
+maximumFractionDigits:2
+});
+}
+
+
+/* ESCAPE TEXT */
+function esc(v){
+return String(v??"")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;");
+}
+
+
+/* LOAD STOCK */
+function loadStock(){
+
+const data=products();
+
+document.getElementById("totalProducts").textContent=data.length;
+
+document.getElementById("totalUnits").textContent=
+data.reduce((s,p)=>s+Number(p.stock||0),0);
+
+document.getElementById("lowStock").textContent=
+data.filter(p=>Number(p.stock||0)<=10).length;
+
+
+document.getElementById("stockTable").innerHTML=
+
+data.map(p=>{
+
+const stock=Number(p.stock||0);
+
+const low=stock<=10;
+
+return `
+<tr>
+
+<td>
+<b>${esc(p.name)}</b>
+</td>
+
+<td>
+${esc(p.barcode||"-")}
+</td>
+
+<td>
+Rs. ${money(p.price)}
+</td>
+
+<td class="${low?"low":"good"}">
+${stock}
+</td>
+
+<td class="${low?"low":"good"}">
+${low?"LOW STOCK":"IN STOCK"}
+</td>
+
+<td>
+<button
+class="editBtn"
+onclick="editStock('${esc(p.id)}')">
+Edit
+</button>
+</td>
+
+</tr>
+`;
+
+}).join("");
+
+}
+
+
+/* OPEN EDIT */
+function editStock(id){
+
+const data=products();
+
+const product=data.find(p=>String(p.id)===String(id));
+
+if(!product){
+alert("Product not found.");
+return;
+}
+
+editingProductId=id;
+
+document.getElementById("editProductName").textContent=
+product.name || "Product";
+
+document.getElementById("stockInput").value=
+Number(product.stock||0);
+
+document.getElementById("editBox").classList.add("show");
+
+setTimeout(()=>{
+document.getElementById("stockInput").focus();
+document.getElementById("stockInput").select();
+},50);
+
+}
+
+
+/* SAVE STOCK */
+function saveStock(){
+
+if(editingProductId===null){
+return;
+}
+
+const input=document.getElementById("stockInput");
+
+const newStock=Number(input.value);
+
+if(!Number.isFinite(newStock) || newStock<0){
+
+alert("Please enter a valid stock quantity.");
+
+return;
+}
+
+if(!Number.isInteger(newStock)){
+
+alert("Stock quantity must be a whole number.");
+
+return;
+}
+
+
+const data=products();
+
+const index=data.findIndex(
+p=>String(p.id)===String(editingProductId)
+);
+
+if(index===-1){
+
+alert("Product not found.");
+
+return;
+}
+
+
+/* UPDATE STOCK */
+data[index].stock=newStock;
+
+
+/* SAVE TO LOCAL STORAGE */
+localStorage.setItem(
+"mmm_products",
+JSON.stringify(data)
+);
+
+
+/* REFRESH TABLE */
+loadStock();
+
+
+/* CLOSE */
+closeEdit();
+
+}
+
+
+/* CLOSE EDIT */
+function closeEdit(){
+
+editingProductId=null;
+
+document.getElementById("editBox").classList.remove("show");
+
+}
+
+
+/* CLOSE WHEN CLICK OUTSIDE */
+document.getElementById("editBox").addEventListener("click",function(e){
+
+if(e.target===this){
+closeEdit();
+}
+
+});
+
+
+/* ENTER TO SAVE */
+document.getElementById("stockInput").addEventListener("keydown",function(e){
+
+if(e.key==="Enter"){
+saveStock();
+}
+
+if(e.key==="Escape"){
+closeEdit();
+}
+
+});
+
+
+/* CLOCK */
+function clock(){
+
+document.getElementById("clock").textContent=
+new Date().toLocaleTimeString();
+
+}
+
+
+/* START */
+document.addEventListener("DOMContentLoaded",()=>{
+
+loadStock();
+
+clock();
+
+setInterval(clock,1000);
+
+});
+
+</script>
+
+</body>
+</html>

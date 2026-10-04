@@ -1,0 +1,4386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MMM Super Market - New Sale</title>
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#ffffff;
+    color:#111827;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+header{
+    height:68px;
+    background:#181a1d;
+    display:flex;
+    align-items:center;
+    padding:0 22px;
+    color:#fff;
+    box-shadow:0 3px 15px rgba(0,0,0,.10);
+}
+
+.logo{
+    width:44px;
+    height:44px;
+    border-radius:11px;
+
+    /* subtle orange */
+    background:linear-gradient(
+        135deg,
+        #f97316,
+        #fb923c
+    );
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:22px;
+    font-weight:900;
+    color:#fff;
+
+    margin-right:13px;
+
+    box-shadow:0 4px 12px rgba(249,115,22,.18);
+}
+
+.brand{
+    line-height:1.1;
+}
+
+.brand h1{
+    font-size:18px;
+    letter-spacing:1px;
+    font-weight:800;
+}
+
+.brand p{
+    font-size:10px;
+    color:#9ca3af;
+    margin-top:3px;
+    letter-spacing:1.4px;
+}
+
+.headerRight{
+    margin-left:auto;
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.clock{
+    font-size:14px;
+    color:#d1d5db;
+}
+
+.user{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:13px;
+}
+
+.userDot{
+    width:34px;
+    height:34px;
+    border-radius:50%;
+
+    background:#f97316;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-weight:bold;
+    color:white;
+}
+
+
+/* =========================================================
+   APP
+========================================================= */
+
+.app{
+    display:grid;
+    grid-template-columns:minmax(600px,1fr) 410px;
+
+    gap:18px;
+    padding:18px;
+
+    min-height:calc(100vh - 68px);
+}
+
+.left,
+.right{
+    min-width:0;
+}
+
+
+/* =========================================================
+   PANELS
+========================================================= */
+
+.searchPanel,
+.invoicePanel,
+.totalBox,
+.checkoutInfo,
+.rightSection{
+
+    background:#fff;
+
+    border:1px solid #e5e7eb;
+
+    border-radius:13px;
+
+    box-shadow:
+        0 5px 20px rgba(0,0,0,.05);
+}
+
+
+/* =========================================================
+   SEARCH PANEL
+========================================================= */
+
+.searchPanel{
+    padding:18px;
+    margin-bottom:18px;
+}
+
+.searchTop{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    margin-bottom:13px;
+}
+
+.searchTitle{
+    font-size:13px;
+    font-weight:800;
+    color:#111827;
+    letter-spacing:.8px;
+}
+
+.searchHint{
+    font-size:11px;
+    color:#9ca3af;
+}
+
+.searchRow{
+    display:flex;
+    gap:10px;
+}
+
+#productSearch{
+
+    flex:1;
+
+    height:50px;
+
+    border:1px solid #dfe3e8;
+
+    border-radius:10px;
+
+    padding:0 16px;
+
+    font-size:14px;
+
+    outline:none;
+
+    background:#fff;
+
+    color:#111827;
+
+    transition:.2s;
+}
+
+#productSearch:focus{
+
+    border-color:#f97316;
+
+    box-shadow:
+        0 0 0 3px rgba(249,115,22,.08);
+}
+
+#productSearch::placeholder{
+    color:#9ca3af;
+}
+
+
+/* =========================================================
+   BARCODE BUTTON
+========================================================= */
+
+.bigScanBtn{
+
+    min-width:140px;
+
+    height:50px;
+
+    border:1px solid #ea580c;
+
+    border-radius:10px;
+
+    /* small amount of orange */
+    background:linear-gradient(
+        135deg,
+        #f97316,
+        #fb923c
+    );
+
+    color:#fff;
+
+    font-size:12px;
+
+    font-weight:800;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 4px 10px rgba(249,115,22,.12);
+
+    transition:.2s;
+}
+
+.bigScanBtn:hover{
+
+    background:linear-gradient(
+        135deg,
+        #ea580c,
+        #f97316
+    );
+
+    transform:translateY(-1px);
+}
+
+
+/* =========================================================
+   SEARCH RESULTS
+========================================================= */
+
+.searchResults{
+    margin-top:12px;
+
+    max-height:260px;
+
+    overflow-y:auto;
+}
+
+.searchResultItem{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:11px 13px;
+
+    border:1px solid #eeeeee;
+
+    border-radius:9px;
+
+    margin-bottom:7px;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.searchResultItem:hover{
+
+    border-color:#fdba74;
+
+    background:#fffaf5;
+}
+
+.resultInfo{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:4px;
+}
+
+.resultName{
+    font-size:14px;
+    font-weight:700;
+}
+
+.resultBarcode{
+    font-size:11px;
+    color:#9ca3af;
+}
+
+.resultPrice{
+
+    font-size:14px;
+
+    font-weight:800;
+
+    color:#ea580c;
+}
+
+
+/* =========================================================
+   INVOICE PANEL
+========================================================= */
+
+.invoicePanel{
+    padding:18px;
+    overflow:hidden;
+}
+
+.invoiceHeader{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    margin-bottom:15px;
+}
+
+.invoiceTitle{
+
+    font-size:14px;
+
+    font-weight:800;
+
+    letter-spacing:.7px;
+}
+
+.invoiceNoText{
+
+    font-size:12px;
+
+    color:#6b7280;
+}
+
+.tableWrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+thead th{
+
+    text-align:left;
+
+    background:#f8f9fa;
+
+    color:#6b7280;
+
+    font-size:11px;
+
+    padding:12px 10px;
+
+    border-bottom:1px solid #e5e7eb;
+}
+
+tbody td{
+
+    padding:13px 10px;
+
+    border-bottom:1px solid #f0f0f0;
+
+    font-size:13px;
+}
+
+.emptyCart{
+
+    text-align:center;
+
+    padding:45px 10px !important;
+
+    color:#9ca3af;
+
+    font-size:13px;
+}
+
+
+/* =========================================================
+   QUANTITY
+========================================================= */
+
+.qtyBox{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:5px;
+}
+
+.qtyBtn{
+
+    width:27px;
+
+    height:27px;
+
+    border:1px solid #fb923c;
+
+    border-radius:7px;
+
+    background:#fff7ed;
+
+    color:#ea580c;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.18s;
+}
+
+.qtyBtn:hover{
+
+    background:#f97316;
+
+    color:#fff;
+}
+
+.qtyValue{
+
+    min-width:28px;
+
+    text-align:center;
+
+    font-weight:700;
+}
+
+
+/* =========================================================
+   DELETE
+========================================================= */
+
+.deleteBtn{
+
+    width:30px;
+
+    height:30px;
+
+    border:1px solid #fb923c;
+
+    border-radius:7px;
+
+    background:#fff7ed;
+
+    color:#ea580c;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    transition:.2s;
+}
+
+.deleteBtn:hover{
+
+    background:#f97316;
+
+    color:white;
+}
+
+
+/* =========================================================
+   RIGHT
+========================================================= */
+
+.right{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:15px;
+}
+
+
+/* =========================================================
+   TOTAL
+========================================================= */
+
+.totalBox{
+
+    padding:20px;
+}
+
+.totalRow{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:8px 0;
+
+    font-size:14px;
+}
+
+.totalRow span:first-child{
+    color:#6b7280;
+}
+
+.totalRow span:last-child{
+    font-weight:700;
+}
+
+.grandTotal{
+
+    border-top:1px dashed #d1d5db;
+
+    margin-top:8px;
+
+    padding-top:16px;
+
+    font-size:19px;
+}
+
+.grandTotal span:last-child{
+
+    color:#ea580c;
+
+    font-size:24px;
+
+    font-weight:900;
+}
+
+
+/* =========================================================
+   CHECKOUT
+========================================================= */
+
+.checkoutInfo{
+    padding:18px;
+}
+
+.sectionTitle{
+
+    font-size:13px;
+
+    font-weight:800;
+
+    letter-spacing:.7px;
+
+    margin-bottom:13px;
+}
+
+.infoRow{
+
+    display:grid;
+
+    grid-template-columns:120px 1fr;
+
+    align-items:center;
+
+    padding:8px 0;
+}
+
+.infoLabel{
+
+    font-size:12px;
+
+    color:#6b7280;
+}
+
+.infoValue{
+
+    font-size:13px;
+
+    font-weight:700;
+
+    text-align:right;
+
+    color:#111827;
+}
+
+
+/* =========================================================
+   NEW / PRINT DOCUMENT
+========================================================= */
+
+.checkoutButtons{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:10px;
+
+    margin-top:15px;
+}
+
+.newDocBig,
+.printDocBig{
+
+    height:47px;
+
+    border-radius:9px;
+
+    color:#fff;
+
+    font-weight:800;
+
+    font-size:11px;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+
+/* New Document - darker orange */
+
+.newDocBig{
+
+    border:1px solid #ea580c;
+
+    background:#f97316;
+
+    box-shadow:
+        0 4px 10px rgba(249,115,22,.10);
+}
+
+
+/* Print Document - lighter */
+
+.printDocBig{
+
+    border:1px solid #fb923c;
+
+    background:#fb923c;
+
+    box-shadow:
+        0 4px 10px rgba(249,115,22,.08);
+}
+
+.newDocBig:hover,
+.printDocBig:hover{
+
+    transform:translateY(-1px);
+
+    box-shadow:
+        0 6px 13px rgba(249,115,22,.18);
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.rightSection{
+
+    padding:18px;
+}
+
+.actionGrid{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:9px;
+}
+
+.actionBtn{
+
+    min-height:42px;
+
+    border:1px solid #e5e7eb;
+
+    border-radius:8px;
+
+    background:#f9fafb;
+
+    color:#374151;
+
+    font-size:11px;
+
+    font-weight:800;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.actionBtn:hover{
+
+    border-color:#fb923c;
+
+    background:#fff7ed;
+
+    color:#ea580c;
+
+    transform:translateY(-1px);
+}
+
+
+/* =========================================================
+   QUICK STOCK
+========================================================= */
+
+.quickStock{
+    padding:18px;
+}
+
+.stockTitle{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:10px;
+}
+
+.stockTitle strong{
+    font-size:13px;
+}
+
+.stockTitle span{
+
+    font-size:11px;
+
+    color:#9ca3af;
+}
+
+.quickStockList{
+
+    max-height:230px;
+
+    overflow-y:auto;
+}
+
+.stockItem{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:10px 0;
+
+    border-bottom:1px solid #f0f0f0;
+}
+
+.stockName{
+
+    font-size:12px;
+
+    font-weight:700;
+}
+
+.stockQty{
+
+    font-size:11px;
+
+    color:#6b7280;
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(17,24,39,.55);
+
+    display:none;
+
+    align-items:center;
+
+    justify-content:center;
+
+    z-index:1000;
+
+    padding:20px;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modalBox{
+
+    width:100%;
+
+    max-width:500px;
+
+    background:#fff;
+
+    border-radius:15px;
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.25);
+
+    overflow:hidden;
+
+    animation:modalIn .2s ease;
+}
+
+@keyframes modalIn{
+
+    from{
+        opacity:0;
+        transform:translateY(12px) scale(.98);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+}
+
+.modalHeader{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:17px 20px;
+
+    border-bottom:1px solid #eeeeee;
+}
+
+.modalHeader h3{
+    font-size:15px;
+}
+
+.closeModal{
+
+    width:32px;
+
+    height:32px;
+
+    border:none;
+
+    border-radius:8px;
+
+    background:#f3f4f6;
+
+    cursor:pointer;
+
+    font-size:18px;
+}
+
+.modalBody{
+    padding:20px;
+}
+
+.modalInput{
+
+    width:100%;
+
+    height:44px;
+
+    border:1px solid #d1d5db;
+
+    border-radius:8px;
+
+    padding:0 12px;
+
+    outline:none;
+}
+
+.modalInput:focus{
+
+    border-color:#f97316;
+
+    box-shadow:
+        0 0 0 3px rgba(249,115,22,.08);
+}
+
+.modalFooter{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:8px;
+
+    padding:15px 20px;
+
+    border-top:1px solid #eeeeee;
+}
+
+.modalBtn{
+
+    min-width:90px;
+
+    height:40px;
+
+    padding:0 16px;
+
+    border:1px solid #ea580c;
+
+    border-radius:8px;
+
+    background:#f97316;
+
+    color:#fff;
+
+    font-weight:800;
+
+    cursor:pointer;
+}
+
+.modalBtn.cancel{
+
+    background:#f3f4f6;
+
+    border-color:#e5e7eb;
+
+    color:#374151;
+}
+
+
+/* =========================================================
+   HISTORY
+========================================================= */
+
+.historyList{
+
+    max-height:420px;
+
+    overflow-y:auto;
+}
+
+.historyItem{
+
+    border:1px solid #e5e7eb;
+
+    border-radius:10px;
+
+    padding:13px;
+
+    margin-bottom:9px;
+}
+
+.historyTop{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-bottom:7px;
+}
+
+.historyInvoice{
+
+    font-size:13px;
+
+    font-weight:800;
+}
+
+.historyDate{
+
+    font-size:10px;
+
+    color:#9ca3af;
+}
+
+.historyDetails{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    font-size:12px;
+}
+
+.historyTotal{
+
+    color:#ea580c;
+
+    font-weight:800;
+}
+
+.noHistory{
+
+    text-align:center;
+
+    color:#9ca3af;
+
+    padding:35px 10px;
+
+    font-size:13px;
+}
+
+
+/* =========================================================
+   STATUS BAR
+========================================================= */
+
+.statusBar{
+
+    position:fixed;
+
+    left:0;
+
+    right:0;
+
+    bottom:0;
+
+    height:28px;
+
+    background:#181a1d;
+
+    color:#d1d5db;
+
+    display:flex;
+
+    align-items:center;
+
+    padding:0 15px;
+
+    font-size:10px;
+
+    z-index:100;
+}
+
+.statusLeft{
+
+    display:flex;
+
+    gap:16px;
+}
+
+.statusRight{
+    margin-left:auto;
+}
+
+
+/* =========================================================
+   MARK
+========================================================= */
+
+mark{
+
+    background:#ffedd5;
+
+    color:#c2410c;
+
+    border-radius:3px;
+
+    padding:1px 3px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1100px){
+
+    .app{
+        grid-template-columns:1fr;
+    }
+
+    .right{
+
+        display:grid;
+
+        grid-template-columns:1fr 1fr;
+
+        align-items:start;
+    }
+}
+
+
+@media(max-width:750px){
+
+    header{
+        padding:0 12px;
+    }
+
+    .brand h1{
+        font-size:15px;
+    }
+
+    .brand p{
+        display:none;
+    }
+
+    .clock{
+        display:none;
+    }
+
+    .user span{
+        display:none;
+    }
+
+    .app{
+
+        padding:10px;
+
+        gap:10px;
+    }
+
+    .searchRow{
+        flex-direction:column;
+    }
+
+    .bigScanBtn{
+        width:100%;
+    }
+
+    .right{
+
+        display:flex;
+
+        flex-direction:column;
+    }
+
+    .checkoutButtons{
+
+        grid-template-columns:1fr;
+    }
+
+    .invoicePanel{
+        padding:10px;
+    }
+
+    thead th,
+    tbody td{
+
+        padding:10px 7px;
+
+        font-size:11px;
+    }
+
+    .statusBar{
+        display:none;
+    }
+}
+
+
+@media(max-width:450px){
+
+    .actionGrid{
+        grid-template-columns:1fr;
+    }
+
+    .logo{
+
+        width:40px;
+
+        height:40px;
+    }
+
+    .brand h1{
+        font-size:13px;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header>
+
+    <div class="logo">
+        M
+    </div>
+
+    <div class="brand">
+
+        <h1>
+            MMM SUPER MARKET
+        </h1>
+
+        <p>
+            POINT OF SALE SYSTEM
+        </p>
+
+    </div>
+
+
+    <div class="headerRight">
+
+        <div
+            class="clock"
+            id="clock"
+        >
+            00:00:00
+        </div>
+
+
+        <div class="user">
+
+            <div class="userDot">
+                M
+            </div>
+
+            <span>
+                Administrator
+            </span>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =========================================================
+     APP
+========================================================= -->
+
+<div class="app">
+
+
+    <!-- =====================================================
+         LEFT
+    ====================================================== -->
+
+    <div class="left">
+
+
+        <!-- SEARCH -->
+
+        <div class="searchPanel">
+
+            <div class="searchTop">
+
+                <div class="searchTitle">
+                    PRODUCT / BARCODE SEARCH
+                </div>
+
+                <div class="searchHint">
+                    Search product name or barcode
+                </div>
+
+            </div>
+
+
+            <div class="searchRow">
+
+                <input
+                    type="text"
+                    id="productSearch"
+                    placeholder="Search product name or barcode..."
+                    autocomplete="off"
+                    oninput="showProductSearch()"
+                    onkeydown="searchKeyDown(event)"
+                >
+
+
+                <button
+                    class="bigScanBtn"
+                    onclick="scanBarcode()"
+                >
+                    📷 BARCODE
+                </button>
+
+            </div>
+
+
+            <div
+                class="searchResults"
+                id="searchResults"
+            ></div>
+
+        </div>
+
+
+        <!-- SALE DOCUMENT -->
+
+        <div class="invoicePanel">
+
+            <div class="invoiceHeader">
+
+                <div class="invoiceTitle">
+                    SALE DOCUMENT
+                </div>
+
+                <div class="invoiceNoText">
+
+                    Invoice:
+
+                    <strong id="invoiceNoText">
+                        INV-000001
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="tableWrap">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                PRODUCT
+                            </th>
+
+                            <th>
+                                BARCODE
+                            </th>
+
+                            <th>
+                                QTY
+                            </th>
+
+                            <th>
+                                PRICE
+                            </th>
+
+                            <th>
+                                TOTAL
+                            </th>
+
+                            <th></th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="cartItems">
+
+                        <tr>
+
+                            <td
+                                colspan="6"
+                                class="emptyCart"
+                            >
+                                No items added to this sale
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         RIGHT
+    ====================================================== -->
+
+    <div class="right">
+
+
+        <!-- TOTAL -->
+
+        <div class="totalBox">
+
+            <div class="totalRow">
+
+                <span>
+                    Subtotal
+                </span>
+
+                <span id="subtotal">
+                    Rs. 0.00
+                </span>
+
+            </div>
+
+
+            <div class="totalRow">
+
+                <span>
+                    Discount
+                </span>
+
+                <span id="discount">
+                    Rs. 0.00
+                </span>
+
+            </div>
+
+
+            <div class="totalRow grandTotal">
+
+                <span>
+                    GRAND TOTAL
+                </span>
+
+                <span id="total">
+                    Rs. 0.00
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- CHECKOUT -->
+
+        <div class="checkoutInfo">
+
+            <div class="sectionTitle">
+                CHECKOUT
+            </div>
+
+
+            <div class="infoRow">
+
+                <div class="infoLabel">
+                    Document No
+                </div>
+
+                <div
+                    class="infoValue"
+                    id="invoiceDisplay"
+                >
+                    INV-000001
+                </div>
+
+            </div>
+
+
+            <div class="infoRow">
+
+                <div class="infoLabel">
+                    Salesman
+                </div>
+
+                <div
+                    class="infoValue"
+                    id="salesmanDisplay"
+                >
+                    Administrator
+                </div>
+
+            </div>
+
+
+            <div class="infoRow">
+
+                <div class="infoLabel">
+                    Customer
+                </div>
+
+                <div
+                    class="infoValue"
+                    id="customerDisplay"
+                >
+                    Walk-in Customer
+                </div>
+
+            </div>
+
+
+            <div class="infoRow">
+
+                <div class="infoLabel">
+                    Balance
+                </div>
+
+                <div
+                    class="infoValue"
+                    id="balance"
+                >
+                    Rs. 0.00
+                </div>
+
+            </div>
+
+
+            <div class="checkoutButtons">
+
+                <button
+                    class="newDocBig"
+                    onclick="newDocument()"
+                >
+                    NEW DOCUMENT
+                </button>
+
+
+                <button
+                    class="printDocBig"
+                    onclick="completeSaleAndPrint()"
+                >
+                    PRINT DOCUMENT
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ACTIONS -->
+
+        <div class="rightSection">
+
+            <div class="sectionTitle">
+                ACTIONS
+            </div>
+
+
+            <div class="actionGrid">
+
+                <button
+                    class="actionBtn"
+                    onclick="deleteSelectedItem()"
+                >
+                    🗑 DELETE ITEM
+                </button>
+
+
+                <button
+                    class="actionBtn"
+                    onclick="openCustomerModal()"
+                >
+                    👤 SET CUSTOMER
+                </button>
+
+
+                <button
+                    class="actionBtn"
+                    onclick="openSalesmanModal()"
+                >
+                    👨‍💼 SET SALESMAN
+                </button>
+
+
+                <button
+                    class="actionBtn"
+                    onclick="openDiscountModal()"
+                >
+                    💰 DISCOUNT
+                </button>
+
+
+                <button
+                    class="actionBtn"
+                    onclick="creditSale()"
+                >
+                    🧾 CREDIT SALE
+                </button>
+
+
+                <button
+                    class="actionBtn"
+                    onclick="openHistoryModal()"
+                >
+                    📋 SALES HISTORY
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- QUICK STOCK -->
+
+        <div class="rightSection quickStock">
+
+            <div class="stockTitle">
+
+                <strong>
+                    QUICK STOCK
+                </strong>
+
+                <span>
+                    Available Products
+                </span>
+
+            </div>
+
+
+            <div
+                class="quickStockList"
+                id="quickStockList"
+            ></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     PAYMENT MODAL
+========================================================= -->
+
+<div
+    class="modal"
+    id="paymentModal"
+>
+
+    <div class="modalBox">
+
+        <div class="modalHeader">
+
+            <h3>
+                Cash Payment
+            </h3>
+
+            <button
+                class="closeModal"
+                onclick="closeModal('paymentModal')"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="modalBody">
+
+            <p
+                style="
+                    font-size:13px;
+                    color:#6b7280;
+                    margin-bottom:10px;
+                "
+            >
+                Total Amount
+            </p>
+
+
+            <div
+                id="paymentTotal"
+                style="
+                    font-size:24px;
+                    font-weight:900;
+                    color:#ea580c;
+                    margin-bottom:18px;
+                "
+            >
+                Rs. 0.00
+            </div>
+
+
+            <input
+                type="number"
+                id="cash"
+                class="modalInput"
+                placeholder="Enter cash amount"
+                min="0"
+                step="0.01"
+                oninput="calculateBalance()"
+            >
+
+
+            <div
+                style="
+                    margin-top:12px;
+                    font-size:13px;
+                "
+            >
+
+                Balance:
+
+                <strong
+                    id="paymentBalance"
+                    style="color:#ea580c;"
+                >
+                    Rs. 0.00
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="modalFooter">
+
+            <button
+                class="modalBtn cancel"
+                onclick="closeModal('paymentModal')"
+            >
+                CANCEL
+            </button>
+
+
+            <button
+                class="modalBtn"
+                onclick="finishCashPayment()"
+            >
+                COMPLETE SALE
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     CUSTOMER MODAL
+========================================================= -->
+
+<div
+    class="modal"
+    id="customerModal"
+>
+
+    <div class="modalBox">
+
+        <div class="modalHeader">
+
+            <h3>
+                Set Customer
+            </h3>
+
+            <button
+                class="closeModal"
+                onclick="closeModal('customerModal')"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="modalBody">
+
+            <input
+                type="text"
+                id="customerInput"
+                class="modalInput"
+                placeholder="Customer name"
+            >
+
+        </div>
+
+
+        <div class="modalFooter">
+
+            <button
+                class="modalBtn cancel"
+                onclick="closeModal('customerModal')"
+            >
+                CANCEL
+            </button>
+
+
+            <button
+                class="modalBtn"
+                onclick="saveCustomer()"
+            >
+                SAVE
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     SALESMAN MODAL
+========================================================= -->
+
+<div
+    class="modal"
+    id="salesmanModal"
+>
+
+    <div class="modalBox">
+
+        <div class="modalHeader">
+
+            <h3>
+                Set Salesman
+            </h3>
+
+            <button
+                class="closeModal"
+                onclick="closeModal('salesmanModal')"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="modalBody">
+
+            <input
+                type="text"
+                id="salesmanInput"
+                class="modalInput"
+                placeholder="Salesman name"
+            >
+
+        </div>
+
+
+        <div class="modalFooter">
+
+            <button
+                class="modalBtn cancel"
+                onclick="closeModal('salesmanModal')"
+            >
+                CANCEL
+            </button>
+
+
+            <button
+                class="modalBtn"
+                onclick="saveSalesman()"
+            >
+                SAVE
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     DISCOUNT MODAL
+========================================================= -->
+
+<div
+    class="modal"
+    id="discountModal"
+>
+
+    <div class="modalBox">
+
+        <div class="modalHeader">
+
+            <h3>
+                Set Discount
+            </h3>
+
+            <button
+                class="closeModal"
+                onclick="closeModal('discountModal')"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="modalBody">
+
+            <input
+                type="number"
+                id="discountInput"
+                class="modalInput"
+                placeholder="Discount amount"
+                min="0"
+                step="0.01"
+            >
+
+        </div>
+
+
+        <div class="modalFooter">
+
+            <button
+                class="modalBtn cancel"
+                onclick="closeModal('discountModal')"
+            >
+                CANCEL
+            </button>
+
+
+            <button
+                class="modalBtn"
+                onclick="saveDiscount()"
+            >
+                APPLY
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     HISTORY MODAL
+========================================================= -->
+
+<div
+    class="modal"
+    id="historyModal"
+>
+
+    <div
+        class="modalBox"
+        style="max-width:650px;"
+    >
+
+        <div class="modalHeader">
+
+            <h3>
+                Sales History
+            </h3>
+
+            <button
+                class="closeModal"
+                onclick="closeModal('historyModal')"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="modalBody">
+
+            <div
+                class="historyList"
+                id="historyList"
+            ></div>
+
+        </div>
+
+
+        <div class="modalFooter">
+
+            <button
+                class="modalBtn"
+                onclick="closeModal('historyModal')"
+            >
+                CLOSE
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     STATUS BAR
+========================================================= -->
+
+<div class="statusBar">
+
+    <div class="statusLeft">
+
+        <span>
+            F2 Search
+        </span>
+
+        <span>
+            F4 Customer
+        </span>
+
+        <span>
+            F6 Discount
+        </span>
+
+        <span>
+            F8 New Document
+        </span>
+
+        <span>
+            F10 Checkout
+        </span>
+
+    </div>
+
+
+    <div class="statusRight">
+        MMM Super Market POS
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   PRODUCTS
+========================================================= */
+
+const products = [
+
+/* GROCERY */
+
+{id:"P001",name:"Rice 5kg",price:1250,stock:45,barcode:"890000000001"},
+{id:"P002",name:"Rice 10kg",price:2450,stock:30,barcode:"890000000002"},
+{id:"P003",name:"Nadu Rice 5kg",price:1380,stock:35,barcode:"890000000003"},
+{id:"P004",name:"Samba Rice 5kg",price:1450,stock:40,barcode:"890000000004"},
+{id:"P005",name:"Keeri Samba 5kg",price:1750,stock:25,barcode:"890000000005"},
+{id:"P006",name:"White Sugar 1kg",price:280,stock:80,barcode:"890000000006"},
+{id:"P007",name:"Brown Sugar 1kg",price:340,stock:55,barcode:"890000000007"},
+{id:"P008",name:"Dhal 1kg",price:420,stock:60,barcode:"890000000008"},
+{id:"P009",name:"Green Gram 500g",price:390,stock:42,barcode:"890000000009"},
+{id:"P010",name:"Chickpeas 500g",price:360,stock:40,barcode:"890000000010"},
+{id:"P011",name:"Red Lentils 1kg",price:450,stock:50,barcode:"890000000011"},
+{id:"P012",name:"Wheat Flour 1kg",price:260,stock:70,barcode:"890000000012"},
+{id:"P013",name:"Kurakkan Flour 500g",price:310,stock:38,barcode:"890000000013"},
+{id:"P014",name:"Corn Flour 500g",price:290,stock:35,barcode:"890000000014"},
+{id:"P015",name:"Coconut Powder 250g",price:330,stock:32,barcode:"890000000015"},
+{id:"P016",name:"Cooking Oil 1L",price:750,stock:25,barcode:"890000000016"},
+{id:"P017",name:"Coconut Oil 750ml",price:920,stock:28,barcode:"890000000017"},
+{id:"P018",name:"Sunflower Oil 1L",price:980,stock:22,barcode:"890000000018"},
+{id:"P019",name:"Salt 1kg",price:180,stock:90,barcode:"890000000019"},
+{id:"P020",name:"Iodized Salt 1kg",price:210,stock:65,barcode:"890000000020"},
+{id:"P021",name:"Black Pepper 100g",price:280,stock:30,barcode:"890000000021"},
+{id:"P022",name:"Chilli Powder 100g",price:220,stock:45,barcode:"890000000022"},
+{id:"P023",name:"Turmeric Powder 100g",price:190,stock:50,barcode:"890000000023"},
+{id:"P024",name:"Curry Powder 100g",price:200,stock:55,barcode:"890000000024"},
+{id:"P025",name:"Cinnamon 50g",price:250,stock:25,barcode:"890000000025"},
+{id:"P026",name:"Cardamom 25g",price:420,stock:20,barcode:"890000000026"},
+{id:"P027",name:"Cloves 25g",price:350,stock:22,barcode:"890000000027"},
+{id:"P028",name:"Tea 200g",price:480,stock:45,barcode:"890000000028"},
+{id:"P029",name:"Tea 400g",price:880,stock:30,barcode:"890000000029"},
+{id:"P030",name:"Coffee 100g",price:420,stock:35,barcode:"890000000030"},
+{id:"P031",name:"Coffee 200g",price:790,stock:24,barcode:"890000000031"},
+{id:"P032",name:"Noodles 400g",price:160,stock:70,barcode:"890000000032"},
+{id:"P033",name:"Vermicelli 400g",price:240,stock:40,barcode:"890000000033"},
+{id:"P034",name:"Pasta 500g",price:420,stock:35,barcode:"890000000034"},
+{id:"P035",name:"Tomato Sauce 500g",price:480,stock:38,barcode:"890000000035"},
+{id:"P036",name:"Chilli Sauce 250g",price:320,stock:35,barcode:"890000000036"},
+{id:"P037",name:"Soy Sauce 250ml",price:350,stock:30,barcode:"890000000037"},
+{id:"P038",name:"Vinegar 500ml",price:290,stock:40,barcode:"890000000038"},
+{id:"P039",name:"Coconut Milk 400ml",price:280,stock:50,barcode:"890000000039"},
+{id:"P040",name:"Canned Fish 425g",price:650,stock:32,barcode:"890000000040"},
+{id:"P041",name:"Corned Beef 340g",price:920,stock:20,barcode:"890000000041"},
+{id:"P042",name:"Green Peas 400g",price:430,stock:30,barcode:"890000000042"},
+{id:"P043",name:"Red Beans 500g",price:390,stock:35,barcode:"890000000043"},
+{id:"P044",name:"Mung Beans 500g",price:410,stock:32,barcode:"890000000044"},
+{id:"P045",name:"Jelly 200g",price:350,stock:30,barcode:"890000000045"},
+{id:"P046",name:"Honey 500g",price:1150,stock:20,barcode:"890000000046"},
+{id:"P047",name:"Peanut Butter 340g",price:980,stock:25,barcode:"890000000047"},
+{id:"P048",name:"Mayonnaise 500g",price:720,stock:30,barcode:"890000000048"},
+{id:"P049",name:"Ketchup 500g",price:520,stock:38,barcode:"890000000049"},
+{id:"P050",name:"Mustard Sauce 250g",price:390,stock:26,barcode:"890000000050"},
+
+/* DAIRY */
+
+{id:"P051",name:"Milk Powder 400g",price:1150,stock:30,barcode:"890000000051"},
+{id:"P052",name:"Milk Powder 1kg",price:2750,stock:20,barcode:"890000000052"},
+{id:"P053",name:"Full Cream Milk 1L",price:480,stock:40,barcode:"890000000053"},
+{id:"P054",name:"Fresh Milk 500ml",price:260,stock:50,barcode:"890000000054"},
+{id:"P055",name:"Chocolate Milk 500ml",price:320,stock:35,barcode:"890000000055"},
+{id:"P056",name:"Yoghurt Cup",price:90,stock:80,barcode:"890000000056"},
+{id:"P057",name:"Vanilla Yoghurt",price:110,stock:60,barcode:"890000000057"},
+{id:"P058",name:"Strawberry Yoghurt",price:120,stock:55,barcode:"890000000058"},
+{id:"P059",name:"Cheese 200g",price:850,stock:25,barcode:"890000000059"},
+{id:"P060",name:"Processed Cheese 500g",price:1450,stock:20,barcode:"890000000060"},
+{id:"P061",name:"Butter 100g",price:450,stock:40,barcode:"890000000061"},
+{id:"P062",name:"Butter 200g",price:820,stock:30,barcode:"890000000062"},
+{id:"P063",name:"Margarine 250g",price:360,stock:45,barcode:"890000000063"},
+{id:"P064",name:"Margarine 500g",price:650,stock:30,barcode:"890000000064"},
+{id:"P065",name:"Curd 500ml",price:250,stock:45,barcode:"890000000065"},
+{id:"P066",name:"Whipping Cream 200ml",price:620,stock:20,barcode:"890000000066"},
+{id:"P067",name:"Cooking Cream 200ml",price:580,stock:22,barcode:"890000000067"},
+{id:"P068",name:"Milk Drink Chocolate",price:300,stock:35,barcode:"890000000068"},
+{id:"P069",name:"Milk Drink Vanilla",price:300,stock:32,barcode:"890000000069"},
+{id:"P070",name:"Custard Powder 100g",price:180,stock:50,barcode:"890000000070"},
+{id:"P071",name:"Milkshake Mix 200g",price:450,stock:28,barcode:"890000000071"},
+{id:"P072",name:"Condensed Milk 390g",price:620,stock:30,barcode:"890000000072"},
+{id:"P073",name:"Evaporated Milk 400ml",price:480,stock:25,barcode:"890000000073"},
+{id:"P074",name:"Cream Cheese 200g",price:920,stock:18,barcode:"890000000074"},
+{id:"P075",name:"Mozzarella Cheese 200g",price:1050,stock:18,barcode:"890000000075"},
+
+/* SNACKS */
+
+{id:"P076",name:"Biscuits 100g",price:180,stock:100,barcode:"890000000076"},
+{id:"P077",name:"Chocolate Biscuits 120g",price:240,stock:70,barcode:"890000000077"},
+{id:"P078",name:"Cream Crackers 125g",price:210,stock:80,barcode:"890000000078"},
+{id:"P079",name:"Chocolate Wafer",price:150,stock:65,barcode:"890000000079"},
+{id:"P080",name:"Vanilla Wafer",price:140,stock:60,barcode:"890000000080"},
+{id:"P081",name:"Potato Chips 100g",price:280,stock:70,barcode:"890000000081"},
+{id:"P082",name:"Potato Chips 150g",price:390,stock:55,barcode:"890000000082"},
+{id:"P083",name:"Cheese Balls 80g",price:250,stock:60,barcode:"890000000083"},
+{id:"P084",name:"Peanut Snacks 100g",price:220,stock:55,barcode:"890000000084"},
+{id:"P085",name:"Cashew 100g",price:750,stock:30,barcode:"890000000085"},
+{id:"P086",name:"Peanuts 200g",price:450,stock:35,barcode:"890000000086"},
+{id:"P087",name:"Mixed Nuts 200g",price:980,stock:25,barcode:"890000000087"},
+{id:"P088",name:"Popcorn 100g",price:220,stock:45,barcode:"890000000088"},
+{id:"P089",name:"Corn Snacks 100g",price:240,stock:50,barcode:"890000000089"},
+{id:"P090",name:"Chocolate Bar",price:180,stock:80,barcode:"890000000090"},
+{id:"P091",name:"Milk Chocolate Bar",price:220,stock:70,barcode:"890000000091"},
+{id:"P092",name:"Dark Chocolate Bar",price:260,stock:55,barcode:"890000000092"},
+{id:"P093",name:"White Chocolate Bar",price:250,stock:50,barcode:"890000000093"},
+{id:"P094",name:"Chocolate Box",price:850,stock:25,barcode:"890000000094"},
+{id:"P095",name:"Jelly Candy 100g",price:180,stock:60,barcode:"890000000095"},
+{id:"P096",name:"Fruit Candy 100g",price:160,stock:70,barcode:"890000000096"},
+{id:"P097",name:"Mint Candy 100g",price:170,stock:65,barcode:"890000000097"},
+{id:"P098",name:"Lollipop Pack",price:250,stock:50,barcode:"890000000098"},
+{id:"P099",name:"Marshmallow 100g",price:280,stock:45,barcode:"890000000099"},
+{id:"P100",name:"Cookies 200g",price:420,stock:40,barcode:"890000000100"},
+
+/* DRINKS */
+
+{id:"P101",name:"Coca Cola 500ml",price:250,stock:65,barcode:"890000000101"},
+{id:"P102",name:"Coca Cola 1.5L",price:450,stock:45,barcode:"890000000102"},
+{id:"P103",name:"Pepsi 500ml",price:240,stock:60,barcode:"890000000103"},
+{id:"P104",name:"Pepsi 1.5L",price:430,stock:42,barcode:"890000000104"},
+{id:"P105",name:"Sprite 500ml",price:240,stock:55,barcode:"890000000105"},
+{id:"P106",name:"Sprite 1.5L",price:430,stock:40,barcode:"890000000106"},
+{id:"P107",name:"Fanta 500ml",price:240,stock:50,barcode:"890000000107"},
+{id:"P108",name:"Fanta 1.5L",price:430,stock:38,barcode:"890000000108"},
+{id:"P109",name:"Ginger Beer 500ml",price:260,stock:45,barcode:"890000000109"},
+{id:"P110",name:"Soda 500ml",price:180,stock:55,barcode:"890000000110"},
+{id:"P111",name:"Mineral Water 500ml",price:100,stock:100,barcode:"890000000111"},
+{id:"P112",name:"Mineral Water 1.5L",price:180,stock:80,barcode:"890000000112"},
+{id:"P113",name:"Orange Juice 1L",price:620,stock:35,barcode:"890000000113"},
+{id:"P114",name:"Mango Juice 1L",price:650,stock:32,barcode:"890000000114"},
+{id:"P115",name:"Mixed Fruit Juice 1L",price:680,stock:30,barcode:"890000000115"},
+{id:"P116",name:"Apple Juice 1L",price:720,stock:28,barcode:"890000000116"},
+{id:"P117",name:"Energy Drink 250ml",price:320,stock:45,barcode:"890000000117"},
+{id:"P118",name:"Energy Drink 500ml",price:520,stock:35,barcode:"890000000118"},
+{id:"P119",name:"Iced Tea 500ml",price:280,stock:50,barcode:"890000000119"},
+{id:"P120",name:"Lemon Drink 500ml",price:240,stock:45,barcode:"890000000120"},
+{id:"P121",name:"Orange Drink 500ml",price:240,stock:50,barcode:"890000000121"},
+{id:"P122",name:"Malt Drink 500ml",price:420,stock:35,barcode:"890000000122"},
+{id:"P123",name:"Chocolate Drink 500ml",price:380,stock:40,barcode:"890000000123"},
+{id:"P124",name:"Coffee Drink 250ml",price:320,stock:35,barcode:"890000000124"},
+{id:"P125",name:"Sports Drink 500ml",price:350,stock:40,barcode:"890000000125"},
+
+/* BAKERY */
+
+{id:"P126",name:"Bread 450g",price:180,stock:35,barcode:"890000000126"},
+{id:"P127",name:"Sandwich Bread",price:220,stock:30,barcode:"890000000127"},
+{id:"P128",name:"Brown Bread",price:240,stock:28,barcode:"890000000128"},
+{id:"P129",name:"Whole Wheat Bread",price:280,stock:25,barcode:"890000000129"},
+{id:"P130",name:"Burger Buns",price:300,stock:30,barcode:"890000000130"},
+{id:"P131",name:"Hot Dog Buns",price:320,stock:25,barcode:"890000000131"},
+{id:"P132",name:"Croissant",price:250,stock:25,barcode:"890000000132"},
+{id:"P133",name:"Chocolate Croissant",price:320,stock:20,barcode:"890000000133"},
+{id:"P134",name:"Cup Cake",price:180,stock:35,barcode:"890000000134"},
+{id:"P135",name:"Chocolate Cup Cake",price:220,stock:30,barcode:"890000000135"},
+{id:"P136",name:"Vanilla Cake Slice",price:350,stock:20,barcode:"890000000136"},
+{id:"P137",name:"Chocolate Cake Slice",price:390,stock:20,barcode:"890000000137"},
+{id:"P138",name:"Swiss Roll",price:450,stock:25,barcode:"890000000138"},
+{id:"P139",name:"Chocolate Swiss Roll",price:520,stock:22,barcode:"890000000139"},
+{id:"P140",name:"Donut",price:180,stock:30,barcode:"890000000140"},
+{id:"P141",name:"Chocolate Donut",price:220,stock:28,barcode:"890000000141"},
+{id:"P142",name:"Muffin",price:220,stock:30,barcode:"890000000142"},
+{id:"P143",name:"Chocolate Muffin",price:260,stock:25,barcode:"890000000143"},
+{id:"P144",name:"Garlic Bread",price:350,stock:22,barcode:"890000000144"},
+{id:"P145",name:"Fish Bun",price:250,stock:30,barcode:"890000000145"},
+{id:"P146",name:"Vegetable Bun",price:220,stock:32,barcode:"890000000146"},
+{id:"P147",name:"Sausage Bun",price:280,stock:25,barcode:"890000000147"},
+{id:"P148",name:"Egg Bun",price:250,stock:28,barcode:"890000000148"},
+{id:"P149",name:"Cream Bun",price:220,stock:30,barcode:"890000000149"},
+{id:"P150",name:"Jam Bun",price:220,stock:30,barcode:"890000000150"}
+
+];
+
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+let cart = [];
+
+let selectedItemIndex = -1;
+
+let customer = "Walk-in Customer";
+
+let salesman = "Administrator";
+
+let discountAmount = 0;
+
+let invoiceNumber =
+    localStorage.getItem("mmm_invoice") ||
+    "INV-000001";
+
+
+/* =========================================================
+   START
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        loadProducts();
+
+        updateInvoiceDisplay();
+
+        updateCart();
+
+        updateTotals();
+
+        updateClock();
+
+        setInterval(
+            updateClock,
+            1000
+        );
+
+    }
+);
+
+
+/* =========================================================
+   LOAD PRODUCTS
+========================================================= */
+
+function loadProducts(){
+
+    const saved =
+        localStorage.getItem(
+            "mmm_products"
+        );
+
+    if(saved){
+
+        try{
+
+            const savedProducts =
+                JSON.parse(saved);
+
+            savedProducts.forEach(
+                savedProduct => {
+
+                    const product =
+                        products.find(
+                            p =>
+                                p.id ===
+                                savedProduct.id
+                        );
+
+                    if(product){
+
+                        product.stock =
+                            savedProduct.stock;
+
+                    }
+
+                }
+            );
+
+        }catch(error){
+
+            console.log(
+                "Product storage error"
+            );
+
+        }
+
+    }
+
+    renderQuickStock();
+
+}
+
+
+/* =========================================================
+   QUICK STOCK
+========================================================= */
+
+function renderQuickStock(){
+
+    const list =
+        document.getElementById(
+            "quickStockList"
+        );
+
+    list.innerHTML = "";
+
+    products
+        .slice(0,10)
+        .forEach(product => {
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+            item.className =
+                "stockItem";
+
+            item.innerHTML = `
+
+                <div class="stockName">
+                    ${product.name}
+                </div>
+
+                <div class="stockQty">
+                    Stock: ${product.stock}
+                </div>
+
+            `;
+
+            list.appendChild(item);
+
+        });
+
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+function showProductSearch(){
+
+    const input =
+        document.getElementById(
+            "productSearch"
+        );
+
+    const value =
+        input.value
+            .trim()
+            .toLowerCase();
+
+    const results =
+        document.getElementById(
+            "searchResults"
+        );
+
+    results.innerHTML = "";
+
+    if(!value){
+        return;
+    }
+
+
+    const matches =
+        products
+            .filter(product =>
+
+                product.name
+                    .toLowerCase()
+                    .includes(value)
+
+                ||
+
+                product.barcode
+                    .toLowerCase()
+                    .includes(value)
+
+                ||
+
+                product.id
+                    .toLowerCase()
+                    .includes(value)
+
+            )
+            .slice(0,12);
+
+
+    if(matches.length === 0){
+
+        results.innerHTML = `
+
+            <div
+                style="
+                    padding:15px;
+                    text-align:center;
+                    color:#9ca3af;
+                    font-size:13px;
+                "
+            >
+                No product found
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    matches.forEach(product => {
+
+        const item =
+            document.createElement(
+                "div"
+            );
+
+        item.className =
+            "searchResultItem";
+
+
+        item.innerHTML = `
+
+            <div class="resultInfo">
+
+                <div class="resultName">
+
+                    ${highlightText(
+                        product.name,
+                        value
+                    )}
+
+                </div>
+
+                <div class="resultBarcode">
+
+                    Barcode:
+                    ${product.barcode}
+
+                    &nbsp; | &nbsp;
+
+                    Stock:
+                    ${product.stock}
+
+                </div>
+
+            </div>
+
+
+            <div class="resultPrice">
+
+                Rs.
+                ${formatMoney(
+                    product.price
+                )}
+
+            </div>
+
+        `;
+
+
+        item.onclick = function(){
+
+            addToCart(product);
+
+            input.value = "";
+
+            results.innerHTML = "";
+
+        };
+
+
+        results.appendChild(item);
+
+    });
+
+}
+
+
+/* =========================================================
+   HIGHLIGHT
+========================================================= */
+
+function highlightText(
+    text,
+    search
+){
+
+    const index =
+        text
+            .toLowerCase()
+            .indexOf(
+                search.toLowerCase()
+            );
+
+
+    if(index === -1){
+        return text;
+    }
+
+
+    return (
+
+        text.substring(
+            0,
+            index
+        )
+
+        +
+
+        "<mark>"
+
+        +
+
+        text.substring(
+            index,
+            index + search.length
+        )
+
+        +
+
+        "</mark>"
+
+        +
+
+        text.substring(
+            index + search.length
+        )
+
+    );
+
+}
+
+
+/* =========================================================
+   SEARCH ENTER
+========================================================= */
+
+function searchKeyDown(event){
+
+    if(event.key !== "Enter"){
+        return;
+    }
+
+
+    const input =
+        document.getElementById(
+            "productSearch"
+        );
+
+
+    const value =
+        input.value
+            .trim()
+            .toLowerCase();
+
+
+    if(!value){
+        return;
+    }
+
+
+    let product =
+        products.find(
+            p =>
+                p.barcode
+                    .toLowerCase() === value
+
+                ||
+
+                p.id
+                    .toLowerCase() === value
+        );
+
+
+    if(!product){
+
+        product =
+            products.find(
+                p =>
+                    p.name
+                        .toLowerCase()
+                        .includes(value)
+            );
+
+    }
+
+
+    if(product){
+
+        addToCart(product);
+
+        input.value = "";
+
+        document.getElementById(
+            "searchResults"
+        ).innerHTML = "";
+
+    }else{
+
+        alert(
+            "Product not found."
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   BARCODE BUTTON
+========================================================= */
+
+function scanBarcode(){
+
+    const input =
+        document.getElementById(
+            "productSearch"
+        );
+
+    input.focus();
+
+    input.select();
+
+}
+
+
+/* =========================================================
+   ADD CART
+========================================================= */
+
+function addToCart(product){
+
+    if(product.stock <= 0){
+
+        alert(
+            product.name +
+            " is out of stock."
+        );
+
+        return;
+
+    }
+
+
+    const existingIndex =
+        cart.findIndex(
+            item =>
+                item.id === product.id
+        );
+
+
+    if(existingIndex !== -1){
+
+        if(
+            cart[existingIndex].qty
+            >=
+            product.stock
+        ){
+
+            alert(
+                "Maximum available stock reached."
+            );
+
+            return;
+
+        }
+
+
+        cart[existingIndex].qty++;
+
+    }else{
+
+        cart.push({
+
+            id:product.id,
+
+            name:product.name,
+
+            barcode:product.barcode,
+
+            price:product.price,
+
+            qty:1
+
+        });
+
+    }
+
+
+    selectedItemIndex =
+        cart.length - 1;
+
+
+    updateCart();
+
+    updateTotals();
+
+}
+
+
+/* =========================================================
+   UPDATE CART
+========================================================= */
+
+function updateCart(){
+
+    const tbody =
+        document.getElementById(
+            "cartItems"
+        );
+
+    tbody.innerHTML = "";
+
+
+    if(cart.length === 0){
+
+        tbody.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="6"
+                    class="emptyCart"
+                >
+                    No items added to this sale
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    cart.forEach(
+        (item,index) => {
+
+            const row =
+                document.createElement(
+                    "tr"
+                );
+
+
+            if(
+                index ===
+                selectedItemIndex
+            ){
+
+                row.style.background =
+                    "#fff8f1";
+
+            }
+
+
+            row.onclick =
+                function(){
+
+                    selectedItemIndex =
+                        index;
+
+                    updateCart();
+
+                };
+
+
+            row.innerHTML = `
+
+                <td>
+                    <strong>
+                        ${item.name}
+                    </strong>
+                </td>
+
+
+                <td>
+                    ${item.barcode}
+                </td>
+
+
+                <td>
+
+                    <div class="qtyBox">
+
+                        <button
+                            class="qtyBtn"
+                            onclick="
+                                event.stopPropagation();
+                                changeQty(${index},-1)
+                            "
+                        >
+                            −
+                        </button>
+
+
+                        <div class="qtyValue">
+                            ${item.qty}
+                        </div>
+
+
+                        <button
+                            class="qtyBtn"
+                            onclick="
+                                event.stopPropagation();
+                                changeQty(${index},1)
+                            "
+                        >
+                            +
+                        </button>
+
+                    </div>
+
+                </td>
+
+
+                <td>
+                    Rs.
+                    ${formatMoney(
+                        item.price
+                    )}
+                </td>
+
+
+                <td>
+
+                    <strong>
+
+                        Rs.
+                        ${formatMoney(
+                            item.price *
+                            item.qty
+                        )}
+
+                    </strong>
+
+                </td>
+
+
+                <td>
+
+                    <button
+                        class="deleteBtn"
+                        onclick="
+                            event.stopPropagation();
+                            removeItem(${index})
+                        "
+                    >
+                        ×
+                    </button>
+
+                </td>
+
+            `;
+
+
+            tbody.appendChild(row);
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   QUANTITY
+========================================================= */
+
+function changeQty(
+    index,
+    change
+){
+
+    const item =
+        cart[index];
+
+
+    const product =
+        products.find(
+            p =>
+                p.id === item.id
+        );
+
+
+    const newQty =
+        item.qty + change;
+
+
+    if(newQty <= 0){
+
+        removeItem(index);
+
+        return;
+
+    }
+
+
+    if(
+        newQty >
+        product.stock
+    ){
+
+        alert(
+            "Available stock: " +
+            product.stock
+        );
+
+        return;
+
+    }
+
+
+    item.qty = newQty;
+
+    selectedItemIndex =
+        index;
+
+
+    updateCart();
+
+    updateTotals();
+
+}
+
+
+/* =========================================================
+   REMOVE
+========================================================= */
+
+function removeItem(index){
+
+    cart.splice(
+        index,
+        1
+    );
+
+
+    if(cart.length === 0){
+
+        selectedItemIndex = -1;
+
+    }else if(
+        selectedItemIndex >=
+        cart.length
+    ){
+
+        selectedItemIndex =
+            cart.length - 1;
+
+    }
+
+
+    updateCart();
+
+    updateTotals();
+
+}
+
+
+/* =========================================================
+   DELETE SELECTED
+========================================================= */
+
+function deleteSelectedItem(){
+
+    if(
+        selectedItemIndex < 0
+        ||
+        !cart[selectedItemIndex]
+    ){
+
+        alert(
+            "Please select an item first."
+        );
+
+        return;
+
+    }
+
+
+    removeItem(
+        selectedItemIndex
+    );
+
+}
+
+
+/* =========================================================
+   SUBTOTAL
+========================================================= */
+
+function calculateSubtotal(){
+
+    return cart.reduce(
+        (sum,item) =>
+            sum +
+            item.price *
+            item.qty,
+        0
+    );
+
+}
+
+
+/* =========================================================
+   TOTAL
+========================================================= */
+
+function updateTotals(){
+
+    const subtotal =
+        calculateSubtotal();
+
+
+    const total =
+        Math.max(
+            0,
+            subtotal -
+            discountAmount
+        );
+
+
+    document.getElementById(
+        "subtotal"
+    ).textContent =
+        "Rs. " +
+        formatMoney(
+            subtotal
+        );
+
+
+    document.getElementById(
+        "discount"
+    ).textContent =
+        "Rs. " +
+        formatMoney(
+            discountAmount
+        );
+
+
+    document.getElementById(
+        "total"
+    ).textContent =
+        "Rs. " +
+        formatMoney(
+            total
+        );
+
+
+    document.getElementById(
+        "paymentTotal"
+    ).textContent =
+        "Rs. " +
+        formatMoney(
+            total
+        );
+
+
+    calculateBalance();
+
+}
+
+
+/* =========================================================
+   CUSTOMER
+========================================================= */
+
+function openCustomerModal(){
+
+    document.getElementById(
+        "customerInput"
+    ).value =
+        customer ===
+        "Walk-in Customer"
+        ? ""
+        : customer;
+
+
+    openModal(
+        "customerModal"
+    );
+
+
+    setTimeout(
+        () =>
+            document.getElementById(
+                "customerInput"
+            ).focus(),
+        100
+    );
+
+}
+
+
+function saveCustomer(){
+
+    const value =
+        document.getElementById(
+            "customerInput"
+        ).value.trim();
+
+
+    customer =
+        value ||
+        "Walk-in Customer";
+
+
+    document.getElementById(
+        "customerDisplay"
+    ).textContent =
+        customer;
+
+
+    closeModal(
+        "customerModal"
+    );
+
+}
+
+
+/* =========================================================
+   SALESMAN
+========================================================= */
+
+function openSalesmanModal(){
+
+    document.getElementById(
+        "salesmanInput"
+    ).value =
+        salesman;
+
+
+    openModal(
+        "salesmanModal"
+    );
+
+
+    setTimeout(
+        () =>
+            document.getElementById(
+                "salesmanInput"
+            ).focus(),
+        100
+    );
+
+}
+
+
+function saveSalesman(){
+
+    const value =
+        document.getElementById(
+            "salesmanInput"
+        ).value.trim();
+
+
+    salesman =
+        value ||
+        "Administrator";
+
+
+    document.getElementById(
+        "salesmanDisplay"
+    ).textContent =
+        salesman;
+
+
+    closeModal(
+        "salesmanModal"
+    );
+
+}
+
+
+/* =========================================================
+   DISCOUNT
+========================================================= */
+
+function openDiscountModal(){
+
+    document.getElementById(
+        "discountInput"
+    ).value =
+        discountAmount ||
+        "";
+
+
+    openModal(
+        "discountModal"
+    );
+
+
+    setTimeout(
+        () =>
+            document.getElementById(
+                "discountInput"
+            ).focus(),
+        100
+    );
+
+}
+
+
+function saveDiscount(){
+
+    let value =
+        parseFloat(
+            document.getElementById(
+                "discountInput"
+            ).value
+        );
+
+
+    if(
+        isNaN(value)
+        ||
+        value < 0
+    ){
+
+        value = 0;
+
+    }
+
+
+    const subtotal =
+        calculateSubtotal();
+
+
+    if(value > subtotal){
+
+        value = subtotal;
+
+    }
+
+
+    discountAmount =
+        value;
+
+
+    updateTotals();
+
+
+    closeModal(
+        "discountModal"
+    );
+
+}
+
+
+/* =========================================================
+   CREDIT SALE
+========================================================= */
+
+function creditSale(){
+
+    if(cart.length === 0){
+
+        alert(
+            "Please add products first."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        !confirm(
+            "Complete this as a credit sale?"
+        )
+    ){
+
+        return;
+
+    }
+
+
+    saveSale(
+        "CREDIT",
+        0
+    );
+
+}
+
+
+/* =========================================================
+   CHECKOUT
+========================================================= */
+
+function completeSaleAndPrint(){
+
+    if(cart.length === 0){
+
+        alert(
+            "Please add products first."
+        );
+
+        return;
+
+    }
+
+
+    const total =
+        Math.max(
+            0,
+            calculateSubtotal()
+            -
+            discountAmount
+        );
+
+
+    document.getElementById(
+        "cash"
+    ).value = "";
+
+
+    document.getElementById(
+        "paymentTotal"
+    ).textContent =
+        "Rs. " +
+        formatMoney(
+            total
+        );
+
+
+    document.getElementById(
+        "paymentBalance"
+    ).textContent =
+        "Rs. 0.00";
+
+
+    openModal(
+        "paymentModal"
+    );
+
+}
+
+
+/* =========================================================
+   BALANCE
+========================================================= */
+
+function calculateBalance(){
+
+    const total =
+        Math.max(
+            0,
+            calculateSubtotal()
+            -
+            discountAmount
+        );
+
+
+    const cash =
+        parseFloat(
+            document.getElementById(
+                "cash"
+            ).value
+        ) || 0;
+
+
+    const balance =
+        Math.max(
+            0,
+            cash - total
+        );
+
+
+    document.getElementById(
+        "paymentBalance"
+    ).textContent =
+        "Rs. " +
+        formatMoney(
+            balance
+        );
+
+
+    document.getElementById(
+        "balance"
+    ).textContent =
+        "Rs. " +
+        formatMoney(
+            balance
+        );
+
+}
+
+
+/* =========================================================
+   FINISH CASH
+========================================================= */
+
+function finishCashPayment(){
+
+    const total =
+        Math.max(
+            0,
+            calculateSubtotal()
+            -
+            discountAmount
+        );
+
+
+    const cash =
+        parseFloat(
+            document.getElementById(
+                "cash"
+            ).value
+        ) || 0;
+
+
+    if(cash < total){
+
+        alert(
+            "Cash amount is less than the total."
+        );
+
+        return;
+
+    }
+
+
+    saveSale(
+        "CASH",
+        cash
+    );
+
+}
+
+
+/* =========================================================
+   SAVE SALE
+========================================================= */
+
+function saveSale(
+    paymentType,
+    cashAmount
+){
+
+    if(cart.length === 0){
+
+        alert(
+            "No products in the sale."
+        );
+
+        return;
+
+    }
+
+
+    const subtotal =
+        calculateSubtotal();
+
+
+    const total =
+        Math.max(
+            0,
+            subtotal -
+            discountAmount
+        );
+
+
+    const balance =
+        Math.max(
+            0,
+            cashAmount -
+            total
+        );
+
+
+    /* REDUCE STOCK */
+
+    cart.forEach(
+        item => {
+
+            const product =
+                products.find(
+                    p =>
+                        p.id ===
+                        item.id
+                );
+
+
+            if(product){
+
+                product.stock -=
+                    item.qty;
+
+            }
+
+        }
+    );
+
+
+    localStorage.setItem(
+        "mmm_products",
+        JSON.stringify(
+            products
+        )
+    );
+
+
+    /* HISTORY */
+
+    let sales = [];
+
+
+    try{
+
+        sales =
+            JSON.parse(
+                localStorage.getItem(
+                    "mmm_sales"
+                )
+            ) || [];
+
+    }catch(error){
+
+        sales = [];
+
+    }
+
+
+    const sale = {
+
+        invoice:
+            invoiceNumber,
+
+        date:
+            new Date()
+                .toLocaleString(),
+
+        customer:
+            customer,
+
+        salesman:
+            salesman,
+
+        subtotal:
+            subtotal,
+
+        discount:
+            discountAmount,
+
+        total:
+            total,
+
+        paymentType:
+            paymentType,
+
+        cash:
+            cashAmount,
+
+        balance:
+            balance,
+
+        items:
+            cart.map(
+                item => ({
+
+                    id:item.id,
+
+                    name:item.name,
+
+                    barcode:item.barcode,
+
+                    qty:item.qty,
+
+                    price:item.price,
+
+                    total:
+                        item.price *
+                        item.qty
+
+                })
+            )
+
+    };
+
+
+    sales.unshift(
+        sale
+    );
+
+
+    localStorage.setItem(
+        "mmm_sales",
+        JSON.stringify(
+            sales
+        )
+    );
+
+
+    printInvoice(
+        sale
+    );
+
+
+    invoiceNumber =
+        nextInvoiceNumber(
+            invoiceNumber
+        );
+
+
+    localStorage.setItem(
+        "mmm_invoice",
+        invoiceNumber
+    );
+
+
+    closeModal(
+        "paymentModal"
+    );
+
+
+    newDocument(false);
+
+}
+
+
+/* =========================================================
+   PRINT
+========================================================= */
+
+function printInvoice(sale){
+
+    const itemRows =
+        sale.items
+            .map(
+                item => `
+
+                    <tr>
+
+                        <td>
+                            ${item.name}
+                        </td>
+
+                        <td>
+                            ${item.qty}
+                        </td>
+
+                        <td>
+                            Rs.
+                            ${formatMoney(
+                                item.price
+                            )}
+                        </td>
+
+                        <td>
+                            Rs.
+                            ${formatMoney(
+                                item.total
+                            )}
+                        </td>
+
+                    </tr>
+
+                `
+            )
+            .join("");
+
+
+    const printWindow =
+        window.open(
+            "",
+            "_blank",
+            "width=800,height=700"
+        );
+
+
+    if(!printWindow){
+
+        alert(
+            "Please allow popups to print the invoice."
+        );
+
+        return;
+
+    }
+
+
+    printWindow.document.write(`
+
+        <!DOCTYPE html>
+
+        <html>
+
+        <head>
+
+            <title>
+                ${sale.invoice}
+            </title>
+
+            <style>
+
+                body{
+                    font-family:Arial;
+                    padding:30px;
+                    color:#111;
+                }
+
+                h1{
+                    margin-bottom:4px;
+                }
+
+                .center{
+                    text-align:center;
+                }
+
+                table{
+                    width:100%;
+                    border-collapse:collapse;
+                    margin-top:20px;
+                }
+
+                th,
+                td{
+                    border-bottom:1px solid #ddd;
+                    padding:9px;
+                    text-align:left;
+                }
+
+                .right{
+                    text-align:right;
+                }
+
+                .total{
+                    font-size:20px;
+                    font-weight:bold;
+                }
+
+            </style>
+
+        </head>
+
+
+        <body>
+
+            <div class="center">
+
+                <h1>
+                    MMM SUPER MARKET
+                </h1>
+
+                <p>
+                    POINT OF SALE SYSTEM
+                </p>
+
+                <p>
+                    ${sale.invoice}
+                </p>
+
+            </div>
+
+
+            <hr>
+
+
+            <p>
+                <strong>Date:</strong>
+                ${sale.date}
+            </p>
+
+
+            <p>
+                <strong>Customer:</strong>
+                ${sale.customer}
+            </p>
+
+
+            <p>
+                <strong>Salesman:</strong>
+                ${sale.salesman}
+            </p>
+
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Product
+                        </th>
+
+                        <th>
+                            Qty
+                        </th>
+
+                        <th>
+                            Price
+                        </th>
+
+                        <th>
+                            Total
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    ${itemRows}
+
+                </tbody>
+
+            </table>
+
+
+            <div class="right">
+
+                <p>
+                    Subtotal:
+                    Rs.
+                    ${formatMoney(
+                        sale.subtotal
+                    )}
+                </p>
+
+
+                <p>
+                    Discount:
+                    Rs.
+                    ${formatMoney(
+                        sale.discount
+                    )}
+                </p>
+
+
+                <p class="total">
+                    Grand Total:
+                    Rs.
+                    ${formatMoney(
+                        sale.total
+                    )}
+                </p>
+
+
+                <p>
+                    Payment:
+                    ${sale.paymentType}
+                </p>
+
+
+                <p>
+                    Cash:
+                    Rs.
+                    ${formatMoney(
+                        sale.cash
+                    )}
+                </p>
+
+
+                <p>
+                    Balance:
+                    Rs.
+                    ${formatMoney(
+                        sale.balance
+                    )}
+                </p>
+
+            </div>
+
+
+            <hr>
+
+
+            <div class="center">
+                Thank you for shopping with us!
+            </div>
+
+        </body>
+
+        </html>
+
+    `);
+
+
+    printWindow.document.close();
+
+    printWindow.focus();
+
+
+    setTimeout(
+        () => {
+
+            printWindow.print();
+
+        },
+        300
+    );
+
+}
+
+
+/* =========================================================
+   NEW DOCUMENT
+========================================================= */
+
+function newDocument(
+    ask = true
+){
+
+    if(
+        ask &&
+        cart.length > 0
+    ){
+
+        const confirmNew =
+            confirm(
+                "Start a new document? Current sale will be cleared."
+            );
+
+
+        if(!confirmNew){
+            return;
+        }
+
+    }
+
+
+    cart = [];
+
+    selectedItemIndex = -1;
+
+    customer =
+        "Walk-in Customer";
+
+    salesman =
+        "Administrator";
+
+    discountAmount = 0;
+
+
+    document.getElementById(
+        "customerDisplay"
+    ).textContent =
+        customer;
+
+
+    document.getElementById(
+        "salesmanDisplay"
+    ).textContent =
+        salesman;
+
+
+    document.getElementById(
+        "balance"
+    ).textContent =
+        "Rs. 0.00";
+
+
+    document.getElementById(
+        "productSearch"
+    ).value = "";
+
+
+    document.getElementById(
+        "searchResults"
+    ).innerHTML = "";
+
+
+    updateInvoiceDisplay();
+
+    updateCart();
+
+    updateTotals();
+
+}
+
+
+/* =========================================================
+   INVOICE DISPLAY
+========================================================= */
+
+function updateInvoiceDisplay(){
+
+    document.getElementById(
+        "invoiceNoText"
+    ).textContent =
+        invoiceNumber;
+
+
+    document.getElementById(
+        "invoiceDisplay"
+    ).textContent =
+        invoiceNumber;
+
+}
+
+
+/* =========================================================
+   NEXT INVOICE
+========================================================= */
+
+function nextInvoiceNumber(
+    current
+){
+
+    const match =
+        current.match(
+            /(\d+)$/
+        );
+
+
+    if(!match){
+
+        return "INV-000001";
+
+    }
+
+
+    const number =
+        parseInt(
+            match[1],
+            10
+        ) + 1;
+
+
+    return (
+        "INV-" +
+        String(number)
+            .padStart(
+                6,
+                "0"
+            )
+    );
+
+}
+
+
+/* =========================================================
+   HISTORY
+========================================================= */
+
+function openHistoryModal(){
+
+    const list =
+        document.getElementById(
+            "historyList"
+        );
+
+
+    let sales = [];
+
+
+    try{
+
+        sales =
+            JSON.parse(
+                localStorage.getItem(
+                    "mmm_sales"
+                )
+            ) || [];
+
+    }catch(error){
+
+        sales = [];
+
+    }
+
+
+    list.innerHTML = "";
+
+
+    if(sales.length === 0){
+
+        list.innerHTML = `
+
+            <div class="noHistory">
+
+                No sales history available.
+
+            </div>
+
+        `;
+
+
+        openModal(
+            "historyModal"
+        );
+
+        return;
+
+    }
+
+
+    sales.forEach(
+        sale => {
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+
+            item.className =
+                "historyItem";
+
+
+            item.innerHTML = `
+
+                <div class="historyTop">
+
+                    <div class="historyInvoice">
+                        ${sale.invoice}
+                    </div>
+
+                    <div class="historyDate">
+                        ${sale.date}
+                    </div>
+
+                </div>
+
+
+                <div class="historyDetails">
+
+                    <span>
+                        Customer:
+                        ${sale.customer}
+                    </span>
+
+
+                    <span class="historyTotal">
+                        Rs.
+                        ${formatMoney(
+                            sale.total
+                        )}
+                    </span>
+
+                </div>
+
+
+                <div
+                    style="
+                        margin-top:7px;
+                        font-size:11px;
+                        color:#6b7280;
+                    "
+                >
+
+                    ${sale.items.length}
+                    product type(s)
+
+                    &nbsp; | &nbsp;
+
+                    Payment:
+                    ${sale.paymentType}
+
+                </div>
+
+            `;
+
+
+            list.appendChild(
+                item
+            );
+
+        }
+    );
+
+
+    openModal(
+        "historyModal"
+    );
+
+}
+
+
+/* =========================================================
+   MODALS
+========================================================= */
+
+function openModal(id){
+
+    document
+        .getElementById(id)
+        .classList.add(
+            "show"
+        );
+
+}
+
+
+function closeModal(id){
+
+    document
+        .getElementById(id)
+        .classList.remove(
+            "show"
+        );
+
+}
+
+
+/* =========================================================
+   CLOCK
+========================================================= */
+
+function updateClock(){
+
+    const now =
+        new Date();
+
+
+    const time =
+        now.toLocaleTimeString(
+            [],
+            {
+                hour:"2-digit",
+                minute:"2-digit",
+                second:"2-digit"
+            }
+        );
+
+
+    document.getElementById(
+        "clock"
+    ).textContent =
+        time;
+
+}
+
+
+/* =========================================================
+   MONEY
+========================================================= */
+
+function formatMoney(
+    number
+){
+
+    return Number(
+        number || 0
+    ).toLocaleString(
+        "en-US",
+        {
+            minimumFractionDigits:2,
+            maximumFractionDigits:2
+        }
+    );
+
+}
+
+
+/* =========================================================
+   KEYBOARD SHORTCUTS
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "F2"){
+
+            event.preventDefault();
+
+            document.getElementById(
+                "productSearch"
+            ).focus();
+
+        }
+
+
+        if(event.key === "F4"){
+
+            event.preventDefault();
+
+            openCustomerModal();
+
+        }
+
+
+        if(event.key === "F6"){
+
+            event.preventDefault();
+
+            openDiscountModal();
+
+        }
+
+
+        if(event.key === "F8"){
+
+            event.preventDefault();
+
+            newDocument();
+
+        }
+
+
+        if(event.key === "F10"){
+
+            event.preventDefault();
+
+            completeSaleAndPrint();
+
+        }
+
+
+        if(event.key === "Escape"){
+
+            document
+                .querySelectorAll(
+                    ".modal.show"
+                )
+                .forEach(
+                    modal => {
+
+                        modal.classList.remove(
+                            "show"
+                        );
+
+                    }
+                );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   CLICK OUTSIDE MODAL
+========================================================= */
+
+document
+    .querySelectorAll(".modal")
+    .forEach(
+        modal => {
+
+            modal.addEventListener(
+                "click",
+                function(event){
+
+                    if(
+                        event.target ===
+                        modal
+                    ){
+
+                        modal.classList.remove(
+                            "show"
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MMM Super Market - Dashboard</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f5f6f7;
+    color:#111827;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    width:230px;
+    height:100vh;
+    background:#181a1d;
+    color:white;
+    z-index:100;
+}
+
+.logoBox{
+    height:90px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:18px;
+    border-bottom:1px solid #2d3035;
+}
+
+.logo{
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    background:#f97316;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:25px;
+    font-weight:bold;
+}
+
+.logoText strong{
+    display:block;
+    font-size:15px;
+    letter-spacing:.5px;
+}
+
+.logoText span{
+    display:block;
+    margin-top:4px;
+    font-size:10px;
+    color:#9ca3af;
+}
+
+.nav{
+    padding:18px 12px;
+}
+
+.nav a{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:13px 14px;
+    margin-bottom:6px;
+    color:#d1d5db;
+    text-decoration:none;
+    border-radius:8px;
+    font-size:14px;
+    transition:.2s;
+}
+
+.nav a:hover,
+.nav a.active{
+    background:#26292d;
+    color:white;
+}
+
+.nav a.active{
+    border-left:3px solid #f97316;
+}
+
+.navIcon{
+    width:24px;
+    text-align:center;
+    font-size:17px;
+}
+
+.logout{
+    position:absolute;
+    bottom:18px;
+    left:12px;
+    right:12px;
+}
+
+.logout a{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    color:#d1d5db;
+    text-decoration:none;
+    padding:12px 14px;
+    border-radius:8px;
+}
+
+.logout a:hover{
+    background:#26292d;
+    color:white;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.main{
+    margin-left:230px;
+    min-height:100vh;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.topbar{
+    height:70px;
+    background:white;
+    border-bottom:1px solid #e5e7eb;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 28px;
+}
+
+.pageTitle h1{
+    font-size:21px;
+    color:#111827;
+}
+
+.pageTitle p{
+    font-size:12px;
+    color:#6b7280;
+    margin-top:4px;
+}
+
+.topRight{
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+
+.clock{
+    font-size:13px;
+    color:#6b7280;
+}
+
+.user{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.userDot{
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    background:#f97316;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+/* =========================
+   CONTENT
+========================= */
+
+.content{
+    padding:28px;
+}
+
+/* =========================
+   STAT CARDS
+========================= */
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    margin-bottom:25px;
+}
+
+.card{
+    background:white;
+    border:1px solid #e5e7eb;
+    border-radius:10px;
+    padding:20px;
+    min-height:130px;
+}
+
+.cardTop{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.cardLabel{
+    color:#6b7280;
+    font-size:13px;
+}
+
+.cardIcon{
+    width:40px;
+    height:40px;
+    border-radius:8px;
+    background:#fff7ed;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:19px;
+}
+
+.cardValue{
+    font-size:27px;
+    font-weight:bold;
+    margin-top:18px;
+    color:#111827;
+}
+
+.cardSub{
+    margin-top:6px;
+    font-size:11px;
+    color:#9ca3af;
+}
+
+/* =========================
+   GRID
+========================= */
+
+.dashboardGrid{
+    display:grid;
+    grid-template-columns:1.5fr 1fr;
+    gap:20px;
+}
+
+/* =========================
+   PANELS
+========================= */
+
+.panel{
+    background:white;
+    border:1px solid #e5e7eb;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.panelHeader{
+    padding:18px 20px;
+    border-bottom:1px solid #e5e7eb;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.panelHeader h2{
+    font-size:16px;
+}
+
+.panelHeader a{
+    color:#f97316;
+    text-decoration:none;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.panelBody{
+    padding:0;
+}
+
+/* =========================
+   SALES TABLE
+========================= */
+
+.tableWrap{
+    width:100%;
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#f9fafb;
+    color:#6b7280;
+    font-size:11px;
+    font-weight:bold;
+    text-align:left;
+    padding:12px 15px;
+    border-bottom:1px solid #e5e7eb;
+}
+
+td{
+    padding:13px 15px;
+    border-bottom:1px solid #f0f0f0;
+    font-size:12px;
+}
+
+tbody tr:hover{
+    background:#fafafa;
+}
+
+.invoice{
+    font-weight:bold;
+    color:#111827;
+}
+
+.amount{
+    font-weight:bold;
+}
+
+.payment{
+    display:inline-block;
+    padding:5px 8px;
+    border-radius:5px;
+    font-size:10px;
+    font-weight:bold;
+    background:#f3f4f6;
+}
+
+.payment.cash{
+    color:#166534;
+    background:#f0fdf4;
+}
+
+.payment.credit{
+    color:#92400e;
+    background:#fffbeb;
+}
+
+/* =========================
+   QUICK INFO
+========================= */
+
+.infoList{
+    padding:8px 20px 18px;
+}
+
+.infoRow{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 0;
+    border-bottom:1px solid #f0f0f0;
+}
+
+.infoRow:last-child{
+    border-bottom:none;
+}
+
+.infoName{
+    font-size:13px;
+    font-weight:bold;
+}
+
+.infoSmall{
+    font-size:11px;
+    color:#9ca3af;
+    margin-top:4px;
+}
+
+.infoNumber{
+    font-size:16px;
+    font-weight:bold;
+}
+
+.lowStock{
+    color:#dc2626;
+}
+
+.normalStock{
+    color:#16a34a;
+}
+
+/* =========================
+   QUICK BUTTONS
+========================= */
+
+.quickActions{
+    margin-top:20px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.quickBtn{
+    background:white;
+    border:1px solid #e5e7eb;
+    border-radius:9px;
+    padding:17px;
+    text-decoration:none;
+    color:#111827;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    transition:.2s;
+}
+
+.quickBtn:hover{
+    border-color:#f97316;
+    transform:translateY(-1px);
+}
+
+.quickBtnIcon{
+    width:38px;
+    height:38px;
+    border-radius:7px;
+    background:#fff7ed;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.quickBtn strong{
+    font-size:13px;
+    display:block;
+}
+
+.quickBtn span{
+    color:#9ca3af;
+    font-size:10px;
+    display:block;
+    margin-top:3px;
+}
+
+/* =========================
+   EMPTY
+========================= */
+
+.empty{
+    text-align:center;
+    padding:35px 15px;
+    color:#9ca3af;
+    font-size:13px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:1100px){
+
+    .cards{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .dashboardGrid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:750px){
+
+    .sidebar{
+        width:65px;
+    }
+
+    .logoBox{
+        justify-content:center;
+        padding:10px;
+    }
+
+    .logoText{
+        display:none;
+    }
+
+    .nav a{
+        justify-content:center;
+        padding:13px 5px;
+    }
+
+    .nav a span:not(.navIcon){
+        display:none;
+    }
+
+    .logout{
+        left:7px;
+        right:7px;
+    }
+
+    .logout a{
+        justify-content:center;
+    }
+
+    .logout a span{
+        display:none;
+    }
+
+    .main{
+        margin-left:65px;
+    }
+
+    .topbar{
+        padding:0 15px;
+    }
+
+    .clock{
+        display:none;
+    }
+
+    .content{
+        padding:18px;
+    }
+
+    .quickActions{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:500px){
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+    .pageTitle h1{
+        font-size:18px;
+    }
+
+    .user{
+        font-size:11px;
+    }
+
+    .userDot{
+        width:30px;
+        height:30px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     SIDEBAR
+========================= -->
+
+<aside class="sidebar">
+
+    <div class="logoBox">
+
+        <div class="logo">M</div>
+
+        <div class="logoText">
+            <strong>MMM SUPER MARKET</strong>
+            <span>POINT OF SALE</span>
+        </div>
+
+    </div>
+
+
+    <nav class="nav">
+
+        <a href="dashboard.html" class="active">
+            <span class="navIcon">▦</span>
+            <span>Dashboard</span>
+        </a>
+
+        <a href="sales.html">
+            <span class="navIcon">＋</span>
+            <span>New Sale</span>
+        </a>
+
+        <a href="products.html">
+            <span class="navIcon">▤</span>
+            <span>Products</span>
+        </a>
+
+        <a href="stock.html">
+            <span class="navIcon">▥</span>
+            <span>Stock</span>
+        </a>
+
+        <a href="customers.html">
+            <span class="navIcon">♙</span>
+            <span>Customers</span>
+        </a>
+
+        <a href="sales-history.html">
+            <span class="navIcon">◷</span>
+            <span>Sales History</span>
+        </a>
+
+        <a href="reports.html">
+            <span class="navIcon">▥</span>
+            <span>Reports</span>
+        </a>
+
+    </nav>
+
+
+    <div class="logout">
+
+        <a href="MMM Super Market Login.html">
+            <span class="navIcon">↪</span>
+            <span>Logout</span>
+        </a>
+
+    </div>
+
+</aside>
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main class="main">
+
+    <header class="topbar">
+
+        <div class="pageTitle">
+            <h1>Dashboard</h1>
+            <p>MMM Super Market overview</p>
+        </div>
+
+        <div class="topRight">
+
+            <div class="clock" id="clock">
+                00:00:00
+            </div>
+
+            <div class="user">
+                <div class="userDot">M</div>
+                Administrator
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <section class="content">
+
+        <!-- =========================
+             STAT CARDS
+        ========================= -->
+
+        <div class="cards">
+
+            <div class="card">
+
+                <div class="cardTop">
+
+                    <div class="cardLabel">
+                        TODAY'S SALES
+                    </div>
+
+                    <div class="cardIcon">
+                        💰
+                    </div>
+
+                </div>
+
+                <div class="cardValue" id="todaySales">
+                    Rs. 0.00
+                </div>
+
+                <div class="cardSub" id="todayTransactions">
+                    0 transactions
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="cardTop">
+
+                    <div class="cardLabel">
+                        TOTAL SALES
+                    </div>
+
+                    <div class="cardIcon">
+                        📊
+                    </div>
+
+                </div>
+
+                <div class="cardValue" id="totalSales">
+                    Rs. 0.00
+                </div>
+
+                <div class="cardSub" id="totalTransactions">
+                    0 transactions
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="cardTop">
+
+                    <div class="cardLabel">
+                        PRODUCTS
+                    </div>
+
+                    <div class="cardIcon">
+                        📦
+                    </div>
+
+                </div>
+
+                <div class="cardValue" id="productCount">
+                    0
+                </div>
+
+                <div class="cardSub">
+                    Products in system
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="cardTop">
+
+                    <div class="cardLabel">
+                        LOW STOCK
+                    </div>
+
+                    <div class="cardIcon">
+                        ⚠
+                    </div>
+
+                </div>
+
+                <div class="cardValue" id="lowStockCount">
+                    0
+                </div>
+
+                <div class="cardSub">
+                    Items need attention
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             DASHBOARD GRID
+        ========================= -->
+
+        <div class="dashboardGrid">
+
+
+            <!-- RECENT SALES -->
+
+            <div class="panel">
+
+                <div class="panelHeader">
+
+                    <h2>Recent Sales</h2>
+
+                    <a href="sales-history.html">
+                        View All
+                    </a>
+
+                </div>
+
+                <div class="panelBody">
+
+                    <div class="tableWrap">
+
+                        <table>
+
+                            <thead>
+
+                                <tr>
+                                    <th>INVOICE</th>
+                                    <th>CUSTOMER</th>
+                                    <th>TOTAL</th>
+                                    <th>PAYMENT</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="recentSales">
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- STOCK -->
+
+            <div class="panel">
+
+                <div class="panelHeader">
+
+                    <h2>Stock Overview</h2>
+
+                    <a href="stock.html">
+                        View Stock
+                    </a>
+
+                </div>
+
+                <div class="infoList" id="stockOverview">
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             QUICK ACTIONS
+        ========================= -->
+
+        <div class="quickActions">
+
+            <a href="sales.html" class="quickBtn">
+
+                <div class="quickBtnIcon">
+                    ＋
+                </div>
+
+                <div>
+                    <strong>New Sale</strong>
+                    <span>Create a new sales invoice</span>
+                </div>
+
+            </a>
+
+
+            <a href="products.html" class="quickBtn">
+
+                <div class="quickBtnIcon">
+                    📦
+                </div>
+
+                <div>
+                    <strong>Products</strong>
+                    <span>Manage your products</span>
+                </div>
+
+            </a>
+
+
+            <a href="sales-history.html" class="quickBtn">
+
+                <div class="quickBtnIcon">
+                    ◷
+                </div>
+
+                <div>
+                    <strong>Sales History</strong>
+                    <span>View completed sales</span>
+                </div>
+
+            </a>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<script>
+
+/* =========================================================
+   DASHBOARD DATA
+========================================================= */
+
+function getProducts(){
+
+    try{
+        return JSON.parse(
+            localStorage.getItem("mmm_products")
+        ) || [];
+    }
+    catch(error){
+        return [];
+    }
+}
+
+
+function getSales(){
+
+    try{
+        return JSON.parse(
+            localStorage.getItem("mmm_sales")
+        ) || [];
+    }
+    catch(error){
+        return [];
+    }
+}
+
+
+/* =========================================================
+   MONEY
+========================================================= */
+
+function money(value){
+
+    return Number(value || 0).toLocaleString(
+        "en-LK",
+        {
+            minimumFractionDigits:2,
+            maximumFractionDigits:2
+        }
+    );
+}
+
+
+/* =========================================================
+   TODAY CHECK
+========================================================= */
+
+function isToday(dateValue){
+
+    if(!dateValue) return false;
+
+    const saleDate = new Date(dateValue);
+
+    if(isNaN(saleDate.getTime())){
+
+        return false;
+    }
+
+    const today = new Date();
+
+    return (
+        saleDate.getDate() === today.getDate() &&
+        saleDate.getMonth() === today.getMonth() &&
+        saleDate.getFullYear() === today.getFullYear()
+    );
+}
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+function loadDashboard(){
+
+    const products = getProducts();
+    const sales = getSales();
+
+
+    /* -------------------------
+       PRODUCT COUNT
+    ------------------------- */
+
+    const productCount =
+        document.getElementById("productCount");
+
+    if(productCount){
+
+        productCount.textContent =
+            products.length;
+    }
+
+
+    /* -------------------------
+       LOW STOCK
+    ------------------------- */
+
+    const lowStock =
+        products.filter(
+            product =>
+                Number(product.stock) <= 10
+        );
+
+    const lowStockCount =
+        document.getElementById("lowStockCount");
+
+    if(lowStockCount){
+
+        lowStockCount.textContent =
+            lowStock.length;
+    }
+
+
+    /* -------------------------
+       TOTAL SALES
+    ------------------------- */
+
+    let totalSales = 0;
+
+    sales.forEach(sale => {
+
+        totalSales +=
+            Number(sale.total) || 0;
+
+    });
+
+
+    document.getElementById(
+        "totalSales"
+    ).textContent =
+        "Rs. " + money(totalSales);
+
+
+    document.getElementById(
+        "totalTransactions"
+    ).textContent =
+        sales.length +
+        (
+            sales.length === 1
+                ? " transaction"
+                : " transactions"
+        );
+
+
+    /* -------------------------
+       TODAY SALES
+    ------------------------- */
+
+    const todaySalesList =
+        sales.filter(
+            sale => isToday(sale.date)
+        );
+
+    let todaySales = 0;
+
+    todaySalesList.forEach(sale => {
+
+        todaySales +=
+            Number(sale.total) || 0;
+
+    });
+
+
+    document.getElementById(
+        "todaySales"
+    ).textContent =
+        "Rs. " + money(todaySales);
+
+
+    document.getElementById(
+        "todayTransactions"
+    ).textContent =
+        todaySalesList.length +
+        (
+            todaySalesList.length === 1
+                ? " transaction today"
+                : " transactions today"
+        );
+
+
+    /* -------------------------
+       RECENT SALES
+    ------------------------- */
+
+    renderRecentSales(sales);
+
+
+    /* -------------------------
+       STOCK
+    ------------------------- */
+
+    renderStock(products);
+
+}
+
+
+/* =========================================================
+   RECENT SALES
+========================================================= */
+
+function renderRecentSales(sales){
+
+    const container =
+        document.getElementById("recentSales");
+
+    if(!container) return;
+
+
+    if(!sales.length){
+
+        container.innerHTML = `
+            <tr>
+                <td colspan="4">
+                    <div class="empty">
+                        No sales recorded yet.
+                    </div>
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+
+    container.innerHTML =
+        sales
+        .slice(0,8)
+        .map(sale => {
+
+            const payment =
+                String(
+                    sale.paymentType || "CASH"
+                ).toUpperCase();
+
+            const paymentClass =
+                payment === "CREDIT"
+                    ? "credit"
+                    : "cash";
+
+
+            return `
+                <tr>
+
+                    <td class="invoice">
+                        ${escapeHTML(
+                            sale.invoice ||
+                            "INV"
+                        )}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(
+                            sale.customer ||
+                            "Walk-in Customer"
+                        )}
+                    </td>
+
+                    <td class="amount">
+                        Rs.
+                        ${money(
+                            sale.total
+                        )}
+                    </td>
+
+                    <td>
+
+                        <span class="payment ${paymentClass}">
+                            ${escapeHTML(payment)}
+                        </span>
+
+                    </td>
+
+                </tr>
+            `;
+
+        })
+        .join("");
+}
+
+
+/* =========================================================
+   STOCK OVERVIEW
+========================================================= */
+
+function renderStock(products){
+
+    const container =
+        document.getElementById("stockOverview");
+
+    if(!container) return;
+
+
+    if(!products.length){
+
+        container.innerHTML = `
+            <div class="empty">
+                No products available.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    const sorted =
+        [...products]
+        .sort(
+            (a,b) =>
+                Number(a.stock || 0) -
+                Number(b.stock || 0)
+        )
+        .slice(0,7);
+
+
+    container.innerHTML =
+        sorted.map(product => {
+
+            const stock =
+                Number(product.stock || 0);
+
+            const low =
+                stock <= 10;
+
+
+            return `
+                <div class="infoRow">
+
+                    <div>
+
+                        <div class="infoName">
+                            ${escapeHTML(
+                                product.name
+                            )}
+                        </div>
+
+                        <div class="infoSmall">
+                            ${escapeHTML(
+                                product.barcode ||
+                                product.id ||
+                                ""
+                            )}
+                        </div>
+
+                    </div>
+
+                    <div class="
+                        infoNumber
+                        ${low
+                            ? "lowStock"
+                            : "normalStock"}
+                    ">
+                        ${stock}
+                    </div>
+
+                </div>
+            `;
+
+        })
+        .join("");
+}
+
+
+/* =========================================================
+   CLOCK
+========================================================= */
+
+function updateClock(){
+
+    const clock =
+        document.getElementById("clock");
+
+    if(!clock) return;
+
+
+    const now =
+        new Date();
+
+
+    clock.textContent =
+        now.toLocaleTimeString(
+            [],
+            {
+                hour:"2-digit",
+                minute:"2-digit",
+                second:"2-digit"
+            }
+        );
+}
+
+
+/* =========================================================
+   HTML ESCAPE
+========================================================= */
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        loadDashboard();
+
+        updateClock();
+
+        setInterval(
+            updateClock,
+            1000
+        );
+
+        /*
+           Refresh dashboard when user comes back
+           to this browser tab.
+        */
+
+        window.addEventListener(
+            "focus",
+            loadDashboard
+        );
+
+    }
+);
+
+</script>
+
+</body>
+</html>
